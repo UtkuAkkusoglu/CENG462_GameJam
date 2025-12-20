@@ -53,7 +53,7 @@ public class ClientGameManager
             _allocation.Key,
             _allocation.ConnectionData,
             _allocation.HostConnectionData,
-            isSecure: true  // dtls kullanımı için true
+            isSecure: false  // dtls'i kapatıp udp'ye geçtim çünkü clientlar bağlanamıyordu
         );
 
         // Client’ı başlat

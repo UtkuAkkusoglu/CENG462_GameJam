@@ -7,7 +7,7 @@ using Unity.Netcode.Transports.UTP;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 
-public class HostGameManager : MonoBehaviour
+public class HostGameManager
 {
     private const int MaxConnections = 20;
     private const string GameSceneName = "Game";
@@ -41,7 +41,7 @@ public class HostGameManager : MonoBehaviour
             _allocation.AllocationIdBytes,
             _allocation.Key,
             _allocation.ConnectionData,
-            isSecure: true  // dtls kullanımı için true
+            isSecure: false  // dtls'i kapatıp udp'ye geçtim çünkü clientlar bağlanamıyordu
         );
 
         // 4️⃣ Host başlat + sahne yükle

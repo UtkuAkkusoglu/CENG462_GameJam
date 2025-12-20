@@ -23,6 +23,7 @@ public class HostSingleton : MonoBehaviour
             return instance;
         }
     }
+    
     public HostGameManager GameManager { get; private set; }
 
     public void CreateHost()
