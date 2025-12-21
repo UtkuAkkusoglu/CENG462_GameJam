@@ -600,6 +600,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 776543037888099749, guid: e1c76745320159a4bb4cc11c5e08a312, type: 3}
+      propertyPath: m_Spacing
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 776543037888099749, guid: e1c76745320159a4bb4cc11c5e08a312, type: 3}
+      propertyPath: m_Padding.m_Top
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 776543037888099749, guid: e1c76745320159a4bb4cc11c5e08a312, type: 3}
+      propertyPath: m_Padding.m_Bottom
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 1061483261863410159, guid: e1c76745320159a4bb4cc11c5e08a312, type: 3}
       propertyPath: m_Name
       value: Main Menu Canvas

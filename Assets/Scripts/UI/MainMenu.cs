@@ -28,6 +28,8 @@ public class MainMenu : MonoBehaviour
     {
         lobbiesBackground.SetActive(true);
         mainButtonsLayout.SetActive(false);
+
+        RefreshLobbiesList();
     }
 
     // Lobi listesi panelini açar
