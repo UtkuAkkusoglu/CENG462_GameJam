@@ -1,29 +1,51 @@
 using UnityEngine;
-using TMPro; // TMP_InputField için
+using TMPro;
+using System.Threading.Tasks;
 
 public class MainMenu : MonoBehaviour
 {
-    [SerializeField] private TMP_InputField joinCodeField;
+    [Header("References")]
+    [SerializeField] private TMP_InputField joinByCodeField;
+    [SerializeField] private GameObject mainButtonsLayout; // Ana Menü İlk Sekmesi
+    [SerializeField] private GameObject lobbiesBackground; // Lobbies Background Paneli 
 
     // Host başlatma metodu
     public async void StartHost()
     {
+        // TODO: StartHostAsync içerisinde artık Lobby de oluşturulacak
         await HostSingleton.Instance.GameManager.StartHostAsync();
     }
 
-    // Client bağlanma metodu
+    // Manuel Join Code ile Client bağlanma metodu
     public async void StartClient()
     {
-        await ClientSingleton.Instance.GameManager.StartClientAsync(joinCodeField.text);
+        await ClientSingleton.Instance.GameManager.StartClientAsync(joinByCodeField.text);
+    }
+
+    // Lobi listesi panelini açar 
+    public void OpenLobbiesLayout()
+    {
+        lobbiesBackground.SetActive(true);
+        mainButtonsLayout.SetActive(false);
+    }
+
+    // Lobi listesi panelini açar
+    public void CloseLobbiesLayout()
+    {
+        lobbiesBackground.SetActive(false);
+        mainButtonsLayout.SetActive(true);
+    }
+
+    public void RefreshLobbiesList()
+    {
+        // TODO: Lobi listesini yenileme fonksiyonunu buraya ekle
     }
 
     public void QuitGame()
     {
-        // Eğer Unity Editor içindeysek Play modunu durdur
         #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
         #else
-            // Eğer Build alınmış gerçek uygulamadaysak oyunu kapat
             Application.Quit();
         #endif
         
