@@ -15,7 +15,7 @@ public class Bootstrap : MonoBehaviour
     private void Start()
     {
         // Varsa eski ismi getir, bizde şu anda Utku - Burak. Sıfırlamak için: PlayerPrefs.DeleteAll();
-        nameField.text = PlayerPrefs.GetString("PlayerName", "");
+        nameField.text = PlayerPrefs.GetString("player name", "");
         OnNameChanged(nameField.text); 
     }
 
@@ -28,7 +28,7 @@ public class Bootstrap : MonoBehaviour
     public void Connect()
     {
         // İsmi kaydet
-        PlayerPrefs.SetString("PlayerName", nameField.text);
+        PlayerPrefs.SetString("player name", nameField.text);
         
         // NetBootstrap sahnesine geç
         SceneManager.LoadScene(NetBootstrapSceneName);

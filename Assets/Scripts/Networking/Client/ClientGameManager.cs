@@ -2,11 +2,13 @@ using System.Threading.Tasks;
 using Unity.Services.Core;
 using UnityEngine.SceneManagement;
 using System; // Exception için
+using System.Text; // Encoding için
 using Unity.Services.Relay; // RelayService ve Allocation için
 using Unity.Services.Relay.Models; // Allocation modeli için
 using UnityEngine;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP; // UnityTransport için
+using Unity.Services.Authentication; // AuthId için
 // using Unity.Networking.Transport.Relay; // RelayServerData için
 
 public class ClientGameManager
@@ -45,6 +47,16 @@ public class ClientGameManager
             Debug.LogError(e);
             return;
         }
+
+        // --- QUEST 6: PAYLOAD PREPARATION (Hocanın İstediği) ---
+        UserData userData = new UserData
+        {
+            username = PlayerPrefs.GetString("player name", "missing name"),
+            userAuthId = Unity.Services.Authentication.AuthenticationService.Instance.PlayerId
+        };
+
+        NetworkManager.Singleton.NetworkConfig.ConnectionData = Encoding.UTF8.GetBytes(JsonUtility.ToJson(userData));
+        // ------------------------------------
         
         var transport = NetworkManager.Singleton.GetComponent<UnityTransport>(); // UnityTransport’u RelayServerData ile ayarla      
         transport.SetClientRelayData(

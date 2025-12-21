@@ -1,4 +1,5 @@
 using System;
+using System.Text; // Encoding için
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -15,10 +16,11 @@ public class HostGameManager
 {
     private const int MaxConnections = 20;
     private const string GameSceneName = "Game";
-
     private Allocation _allocation;
     private string _joinCode;
     private Lobby _hostLobby; // Kurulan lobiyi tutmak için
+
+    public NetworkServer NetworkServer { get; private set; }
 
     public async Task StartHostAsync()
     {
@@ -41,6 +43,19 @@ public class HostGameManager
             return;
         }
 
+        // --- QUEST 6: HOST PAYLOAD PREPARATION ---
+        // Host da bir "oyuncu" olduğu için kendi kimlik kartını hazırlamalı
+        UserData userData = new UserData
+        {
+            username = PlayerPrefs.GetString("player name", "missing name"),
+            userAuthId = Unity.Services.Authentication.AuthenticationService.Instance.PlayerId
+        };
+        byte[] payloadBytes = Encoding.UTF8.GetBytes(JsonUtility.ToJson(userData));
+        
+        // Host'un kendi verisini de NetworkConfig'e koyuyoruz
+        NetworkManager.Singleton.NetworkConfig.ConnectionData = payloadBytes;
+        // ------------------------------------------
+
         // 4️⃣ Transport setup (Kendi ayarların)
         var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
         transport.SetHostRelayData(
@@ -52,9 +67,17 @@ public class HostGameManager
             isSecure: false // şu anda udp'de, sonra dtls'e al
         );
 
-        // 5️⃣ Host başlat + sahne yükle
-        NetworkManager.Singleton.StartHost();
-        NetworkManager.Singleton.SceneManager.LoadScene(GameSceneName, LoadSceneMode.Single);
+        // --- NETWORK SERVER BAŞLATMA ---
+        NetworkServer = new NetworkServer(NetworkManager.Singleton);
+
+        // Host'u başlat
+        bool success = NetworkManager.Singleton.StartHost();
+        
+        // Eğer host başarıyla başladıysa sahneyi yükle
+        if (success)
+        {
+            NetworkManager.Singleton.SceneManager.LoadScene(GameSceneName, LoadSceneMode.Single);
+        }
     }
 
     private async Task CreateLobby(string relayJoinCode)

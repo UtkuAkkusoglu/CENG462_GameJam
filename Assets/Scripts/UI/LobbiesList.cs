@@ -19,6 +19,14 @@ public class LobbiesList : MonoBehaviour
 
         try
         {
+            // --- QUEST 6.4.2.0: CLEANUP ---
+            // Yeni lobileri eklemeden önce içerideki eski prefabları yok et
+            foreach (Transform child in container)
+            {
+                Destroy(child.gameObject);
+            }
+            // ------------------------------
+            
             // Quest 4.2: Sadece boş yer olan lobileri filtrele
             QueryLobbiesOptions options = new QueryLobbiesOptions
             {
