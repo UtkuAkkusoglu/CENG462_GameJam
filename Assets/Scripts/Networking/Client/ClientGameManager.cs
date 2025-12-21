@@ -7,6 +7,7 @@ using Unity.Services.Relay.Models; // Allocation modeli için
 using UnityEngine;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP; // UnityTransport için
+// using Unity.Networking.Transport.Relay; // RelayServerData için
 
 public class ClientGameManager
 {
@@ -44,8 +45,8 @@ public class ClientGameManager
             Debug.LogError(e);
             return;
         }
-
-        var transport = NetworkManager.Singleton.GetComponent<UnityTransport>(); // UnityTransport’u RelayServerData ile ayarla
+        
+        var transport = NetworkManager.Singleton.GetComponent<UnityTransport>(); // UnityTransport’u RelayServerData ile ayarla      
         transport.SetClientRelayData(
             _allocation.RelayServer.IpV4,
             (ushort)_allocation.RelayServer.Port,
