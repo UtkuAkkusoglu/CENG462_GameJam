@@ -119,6 +119,52 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &128441103
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 128441105}
+  - component: {fileID: 128441104}
+  m_Layer: 0
+  m_Name: Lobbies List Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &128441104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 128441103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69cbab00aff980d4e94a800b947bcdb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LobbiesList
+  lobbyItemPrefab: {fileID: 6273845248178528733, guid: 517c28d03f44ac64cab83f2fa7a300ba, type: 3}
+  container: {fileID: 3886916529511068014}
+--- !u!4 &128441105
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 128441103}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 440.2, y: 188.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &380502614
 GameObject:
   m_ObjectHideFlags: 0
@@ -408,53 +454,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &686226839
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 686226841}
-  - component: {fileID: 686226842}
-  m_Layer: 0
-  m_Name: Main Menu Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &686226841
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 686226839}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.7776601, y: 1.1527892, z: 0.33308914}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &686226842
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 686226839}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b858ce3e70b15d46bcba20e45ebcbf3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MainMenu
-  joinByCodeField: {fileID: 3886916529511068013}
-  mainButtonsLayout: {fileID: 3886916529511068012}
-  lobbiesBackground: {fileID: 3886916529511068011}
 --- !u!1 &1140520692
 GameObject:
   m_ObjectHideFlags: 0
@@ -545,6 +544,54 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1607958171
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1607958173}
+  - component: {fileID: 1607958172}
+  m_Layer: 0
+  m_Name: Main Menu Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1607958172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1607958171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b858ce3e70b15d46bcba20e45ebcbf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MainMenu
+  joinByCodeField: {fileID: 3886916529511068013}
+  mainButtonsLayout: {fileID: 3886916529511068012}
+  lobbiesBackground: {fileID: 3886916529511068011}
+  lobbiesListManager: {fileID: 128441104}
+--- !u!4 &1607958173
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1607958171}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 440.2, y: 188.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &3886916529511068010
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -560,19 +607,35 @@ PrefabInstance:
     - target: {fileID: 1731266233273003416, guid: e1c76745320159a4bb4cc11c5e08a312, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 686226842}
+      objectReference: {fileID: 1607958172}
+    - target: {fileID: 1731266233273003416, guid: e1c76745320159a4bb4cc11c5e08a312, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: StartHost
+      objectReference: {fileID: 0}
     - target: {fileID: 2033053107581321998, guid: e1c76745320159a4bb4cc11c5e08a312, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 686226842}
+      objectReference: {fileID: 1607958172}
+    - target: {fileID: 2033053107581321998, guid: e1c76745320159a4bb4cc11c5e08a312, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OpenLobbiesLayout
+      objectReference: {fileID: 0}
     - target: {fileID: 2282751772648010530, guid: e1c76745320159a4bb4cc11c5e08a312, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 686226842}
+      objectReference: {fileID: 1607958172}
+    - target: {fileID: 2282751772648010530, guid: e1c76745320159a4bb4cc11c5e08a312, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: QuitGame
+      objectReference: {fileID: 0}
     - target: {fileID: 2916609983240126984, guid: e1c76745320159a4bb4cc11c5e08a312, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 686226842}
+      objectReference: {fileID: 1607958172}
+    - target: {fileID: 2916609983240126984, guid: e1c76745320159a4bb4cc11c5e08a312, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RefreshLobbiesList
+      objectReference: {fileID: 0}
     - target: {fileID: 3163765745983148696, guid: e1c76745320159a4bb4cc11c5e08a312, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -656,11 +719,31 @@ PrefabInstance:
     - target: {fileID: 4241743679324439117, guid: e1c76745320159a4bb4cc11c5e08a312, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 686226842}
+      objectReference: {fileID: 1607958172}
+    - target: {fileID: 4241743679324439117, guid: e1c76745320159a4bb4cc11c5e08a312, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: StartClient
+      objectReference: {fileID: 0}
     - target: {fileID: 4363875417869331275, guid: e1c76745320159a4bb4cc11c5e08a312, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 686226842}
+      objectReference: {fileID: 1607958172}
+    - target: {fileID: 4363875417869331275, guid: e1c76745320159a4bb4cc11c5e08a312, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CloseLobbiesLayout
+      objectReference: {fileID: 0}
+    - target: {fileID: 7654604055725178391, guid: e1c76745320159a4bb4cc11c5e08a312, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7654604055725178391, guid: e1c76745320159a4bb4cc11c5e08a312, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7654604055725178391, guid: e1c76745320159a4bb4cc11c5e08a312, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -687,6 +770,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &3886916529511068014 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4347405704480432831, guid: e1c76745320159a4bb4cc11c5e08a312, type: 3}
+  m_PrefabInstance: {fileID: 3886916529511068010}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -696,4 +784,5 @@ SceneRoots:
   - {fileID: 3886916529511068010}
   - {fileID: 380502617}
   - {fileID: 1140520694}
-  - {fileID: 686226841}
+  - {fileID: 1607958173}
+  - {fileID: 128441105}

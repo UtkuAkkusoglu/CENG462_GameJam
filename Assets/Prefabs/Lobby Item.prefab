@@ -624,7 +624,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6273845248178528733}
         m_TargetAssemblyTypeName: LobbyItem, Assembly-CSharp
-        m_MethodName: Join
+        m_MethodName: OnJoinButtonClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

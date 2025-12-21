@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private TMP_InputField joinByCodeField;
     [SerializeField] private GameObject mainButtonsLayout; // Ana Menü İlk Sekmesi
     [SerializeField] private GameObject lobbiesBackground; // Lobbies Background Paneli 
+    [SerializeField] private LobbiesList lobbiesListManager;
 
     // Host başlatma metodu
     public async void StartHost()
@@ -38,7 +39,14 @@ public class MainMenu : MonoBehaviour
 
     public void RefreshLobbiesList()
     {
-        // TODO: Lobi listesini yenileme fonksiyonunu buraya ekle
+        if (lobbiesListManager != null)
+        {
+            lobbiesListManager.RefreshList();
+        }
+        else
+        {
+            Debug.LogWarning("LobbiesList referansı MainMenu'ye atanmamış!");
+        }
     }
 
     public void QuitGame()
