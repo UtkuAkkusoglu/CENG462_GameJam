@@ -102,6 +102,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ClientProjectile
       objectReference: {fileID: 0}
+    - target: {fileID: 7812744222046020508, guid: 313af028a715a09489371097051719a3, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9011934784864451545, guid: 313af028a715a09489371097051719a3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
