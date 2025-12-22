@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: 208c1a1aea5f5554091b03042d97ae8b
+guid: eb7131f1c5da0b641bf43cf4dbe5db52
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5707999706741499373
-    second: "Ekran g\xF6r\xFCnt\xFCs\xFC 2025-12-22 212425(1)_0"
+      213: -7722468808026810248
+    second: "g\xF6rsel_2025-12-22_222641636_0"
   - first:
-      213: 7192030670577839619
-    second: "Ekran g\xF6r\xFCnt\xFCs\xFC 2025-12-22 212425(1)_1"
+      213: 1644249753224701134
+    second: "g\xF6rsel_2025-12-22_222641636_1"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -116,45 +116,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "Ekran g\xF6r\xFCnt\xFCs\xFC 2025-12-22 212425(1)_0"
+      name: "g\xF6rsel_2025-12-22_222641636_0"
       rect:
         serializedVersion: 2
-        x: 6
-        y: 8
-        width: 135
-        height: 801
+        x: 1
+        y: 2
+        width: 386
+        height: 798
       alignment: 0
       pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 5, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 31a93ad428c19c0b0800000000000000
-      internalID: -5707999706741499373
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "Ekran g\xF6r\xFCnt\xFCs\xFC 2025-12-22 212425(1)_1"
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 8
-        width: 141
-        height: 801
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 30ea1853ac93fc360800000000000000
-      internalID: 7192030670577839619
+      spriteID: 8781784d88744d490800000000000000
+      internalID: -7722468808026810248
       vertices: []
       indices: 
       edges: []
@@ -163,7 +141,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 7f803a977e6626746a6f7cb23d518c6c
     internalID: 0
     vertices: []
     indices: 
@@ -173,8 +151,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "Ekran g\xF6r\xFCnt\xFCs\xFC 2025-12-22 212425(1)_0": -5707999706741499373
-      "Ekran g\xF6r\xFCnt\xFCs\xFC 2025-12-22 212425(1)_1": 7192030670577839619
+      "g\xF6rsel_2025-12-22_222641636_0": -7722468808026810248
+      "g\xF6rsel_2025-12-22_222641636_1": 1644249753224701134
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
