@@ -70,4 +70,16 @@ public class NetworkServer : IDisposable
         _networkManager.OnServerStarted -= OnServerStarted;
         _networkManager.OnClientDisconnectCallback -= OnClientDisconnect;
     }
+
+    public UserData GetUserDataByClientId(ulong clientId)
+    {
+        if (_clientIdToAuthId.TryGetValue(clientId, out string authId))
+        {
+            if (_authIdToUserData.TryGetValue(authId, out UserData userData))
+            {
+                return userData;
+            }
+        }
+        return null;
+    }
 }
