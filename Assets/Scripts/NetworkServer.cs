@@ -53,6 +53,8 @@ public class NetworkServer : IDisposable
             _clientIdToAuthId.Remove(clientId);
             _authIdToUserData.Remove(authId);
             Debug.Log($"[NetworkServer] Client {clientId} (AuthID: {authId}) disconnected.");
+
+            // TODO: Liderlik tablosunu burada güncelle (Quest 12)
         }
     }
 

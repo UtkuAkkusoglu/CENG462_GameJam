@@ -36,5 +36,9 @@ public class HostSingleton : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-    
+    private void OnDestroy()
+    {
+        // Oyun durduğunda veya bu obje silindiğinde temizlik yap
+        GameManager?.Shutdown();
+    }
 }

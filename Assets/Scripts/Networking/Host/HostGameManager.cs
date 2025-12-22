@@ -80,6 +80,28 @@ public class HostGameManager
         }
     }
 
+    // QUEST 6.7 & 6.8: Temiz Shutdown
+    public async void Shutdown()
+    {
+        // 1. Lobi silme (Quest 6.8.3)
+        if (_hostLobby != null)
+        {
+            try {
+                await LobbyService.Instance.DeleteLobbyAsync(_hostLobby.Id);
+                _hostLobby = null;
+            } catch (Exception e) { Debug.Log(e); }
+        }
+
+        // 2. NetworkServer temizliği
+        NetworkServer?.Dispose();
+
+        // 3. Netcode kapatma
+        if (NetworkManager.Singleton != null)
+        {
+            NetworkManager.Singleton.Shutdown();
+        }
+    }
+
     private async Task CreateLobby(string relayJoinCode)
     {
         try

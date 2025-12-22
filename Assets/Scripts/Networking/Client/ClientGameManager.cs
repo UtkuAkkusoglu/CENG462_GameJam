@@ -69,8 +69,32 @@ public class ClientGameManager
             isSecure: false  // dtls'i kapatıp udp'ye geçtim çünkü clientlar bağlanamıyordu
         );
 
+        // QUEST 6.7: İstemci tarafında kopma olayını dinle
+        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnect;
+
         // Client’ı başlat
         NetworkManager.Singleton.StartClient();
+    }
+
+    private void OnClientDisconnect(ulong clientId)
+    {
+        // Eğer kopan kişi bizsek (clientId 0 veya LocalClientId)
+        if (clientId == NetworkManager.Singleton.LocalClientId || clientId == 0)
+        {
+            Disconnect();
+        }
+    }
+
+    public void Disconnect()
+    {
+        // QUEST 6.7: Ağ iletişimini temiz kapat ve menüye dön
+        if (NetworkManager.Singleton != null)
+        {
+            NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnect;
+            NetworkManager.Singleton.Shutdown();
+        }
+        
+        GoToMenu(); // MainMenu sahnesine uçur
     }
 
     public void GoToMenu()
