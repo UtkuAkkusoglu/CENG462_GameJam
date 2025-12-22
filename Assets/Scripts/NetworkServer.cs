@@ -14,9 +14,14 @@ public class NetworkServer : IDisposable
     {
         _networkManager = networkManager;
 
-        // Hocanın istediği Event abonelikleri (Quest 6.5 & 7.2)
+        // ÖNCE TEMİZLE, SONRA ABONE OL (Double-check stratejisi)
+        _networkManager.ConnectionApprovalCallback -= ApprovalCheck; 
         _networkManager.ConnectionApprovalCallback += ApprovalCheck;
+        
+        _networkManager.OnServerStarted -= OnServerStarted;
         _networkManager.OnServerStarted += OnServerStarted;
+        
+        _networkManager.OnClientDisconnectCallback -= OnClientDisconnect;
         _networkManager.OnClientDisconnectCallback += OnClientDisconnect;
     }
 

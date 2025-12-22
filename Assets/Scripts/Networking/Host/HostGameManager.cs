@@ -12,7 +12,7 @@ using Unity.Services.Relay.Models;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class HostGameManager
+public class HostGameManager : IDisposable
 {
     private const int MaxConnections = 20;
     private const string GameSceneName = "Game";
@@ -80,6 +80,11 @@ public class HostGameManager
         }
     }
 
+    public void Dispose()
+    {
+        Shutdown();
+    }
+
     // QUEST 6.7 & 6.8: Temiz Shutdown
     public async void Shutdown()
     {
@@ -89,7 +94,11 @@ public class HostGameManager
             try {
                 await LobbyService.Instance.DeleteLobbyAsync(_hostLobby.Id);
                 _hostLobby = null;
-            } catch (Exception e) { Debug.Log(e); }
+            } catch (Exception e)
+            {
+                Debug.LogError($"Lobby deletion failed: {e.Message}"); 
+            }
+            _hostLobby = null;
         }
 
         // 2. NetworkServer temizliği
