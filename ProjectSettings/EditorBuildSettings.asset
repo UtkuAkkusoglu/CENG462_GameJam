@@ -13,6 +13,9 @@ EditorBuildSettings:
     guid: e4da9ac063e05f04b971d56bbf16d80c
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
+    guid: 69711a10af505714b8b7f5800d5ff6be
+  - enabled: 0
+    path: Assets/Scenes/MainMenu - eski.unity
     guid: a8704fd1654c7fb45b232ebfd7543a09
   - enabled: 1
     path: Assets/Scenes/Game.unity

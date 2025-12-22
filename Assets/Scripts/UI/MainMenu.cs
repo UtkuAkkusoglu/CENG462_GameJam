@@ -7,8 +7,26 @@ public class MainMenu : MonoBehaviour
     [Header("References")]
     [SerializeField] private TMP_InputField joinByCodeField;
     [SerializeField] private GameObject mainButtonsLayout; // Ana Menü İlk Sekmesi
+
+    [SerializeField] private GameObject mainMenuPanel; // Start Host, Lobbies, Join butonlarının olduğu kutu
+    [SerializeField] private GameObject joinMenuPanel; // Input Field ve Join butonunun olduğu kutu
+
     [SerializeField] private GameObject lobbiesBackground; // Lobbies Background Paneli 
     [SerializeField] private LobbiesList lobbiesListManager;
+
+    // Ana menüdeki "Join" butonuna basınca çalışacak
+    public void OpenJoinMenu()
+    {
+        mainMenuPanel.SetActive(false); // Butonları gizle
+        joinMenuPanel.SetActive(true);  // Kod girme ekranını aç
+    }
+
+    // Join ekranındaki "Geri" butonuna basınca çalışacak
+    public void BackToMainMenu()
+    {
+        joinMenuPanel.SetActive(false); // Kod ekranını gizle
+        mainMenuPanel.SetActive(true);  // Ana butonları geri getir
+    }
 
     // Host başlatma metodu
     public async void StartHost()
