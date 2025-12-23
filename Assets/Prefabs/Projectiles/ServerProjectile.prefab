@@ -12,29 +12,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: ServerProjectile
       objectReference: {fileID: 0}
-    - target: {fileID: 7812744222046020508, guid: 313af028a715a09489371097051719a3, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9011934784864451545, guid: 313af028a715a09489371097051719a3, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.39896
-      objectReference: {fileID: 0}
-    - target: {fileID: 9011934784864451545, guid: 313af028a715a09489371097051719a3, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.39896
-      objectReference: {fileID: 0}
-    - target: {fileID: 9011934784864451545, guid: 313af028a715a09489371097051719a3, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.39896
-      objectReference: {fileID: 0}
     - target: {fileID: 9011934784864451545, guid: 313af028a715a09489371097051719a3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.0013643
       objectReference: {fileID: 0}
     - target: {fileID: 9011934784864451545, guid: 313af028a715a09489371097051719a3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.049837
       objectReference: {fileID: 0}
     - target: {fileID: 9011934784864451545, guid: 313af028a715a09489371097051719a3, type: 3}
       propertyPath: m_LocalPosition.z
