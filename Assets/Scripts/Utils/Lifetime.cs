@@ -1,13 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class Lifetime : MonoBehaviour
+public class Lifetime : NetworkBehaviour
 {
-    [SerializeField] private float lifetime = 1f;
+    [SerializeField] private float lifeTime = 3f; // Kaç saniye yaþasýn?
 
-    private void Start()
+    // Start yerine OnNetworkSpawn kullanmak Netcode için daha güvenlidir
+    public override void OnNetworkSpawn()
     {
-        Destroy(gameObject, lifetime);
+        // Sadece SUNUCU bu sayacý çalýþtýrsýn
+        if (IsServer)
+        {
+            // Unity'nin Destroy fonksiyonu yerine özel bir Coroutine (zamanlayýcý) baþlatýyoruz
+            Invoke(nameof(YokEt), lifeTime);
+        }
+    }
+
+    private void YokEt()
+    {
+        // Eðer obje hala hayattaysa
+        if (IsSpawned)
+        {
+            // NetworkObject'i DESPAWN ediyoruz (Bu, tüm clientlardan siler)
+            GetComponent<NetworkObject>().Despawn();
+        }
     }
 }

@@ -36,9 +36,21 @@ public class HostSingleton : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-    private void OnDestroy()
+    // Uygulama kapanırken lobiyi temizle
+    private async void OnApplicationQuit()
     {
-        // Oyun durduğunda veya bu obje silindiğinde temizlik yap
-        GameManager?.Shutdown();
+        if (GameManager != null)
+        {
+            await GameManager.ShutdownAsync();
+        }
+    }
+
+    private async void OnDestroy()
+    {
+        // GameManager'ın Dispose/Shutdown metodunu bekleterek çağırıyoruz
+        if (GameManager != null)
+        {
+            await GameManager.ShutdownAsync();
+        }
     }
 }

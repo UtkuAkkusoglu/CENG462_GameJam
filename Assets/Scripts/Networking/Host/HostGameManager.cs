@@ -82,29 +82,34 @@ public class HostGameManager : IDisposable
 
     public void Dispose()
     {
-        Shutdown();
+        // Dispose standart olarak Task döndüremez, bu yüzden asenkron metodu beklemeden tetikliyoruz. Asıl temizliği Singleton üzerinden bekletiyoruz.
+        _ = ShutdownAsync(); 
     }
 
     // QUEST 6.7 & 6.8: Temiz Shutdown
-    public async void Shutdown()
+    public async Task ShutdownAsync() // void yerine Task döndürerek bekleme sağlayalım
     {
-        // 1. Lobi silme (Quest 6.8.3)
+        // 1. Kalp atışını durdurmak için lobi referansını hemen koparalım
         if (_hostLobby != null)
         {
-            try {
-                await LobbyService.Instance.DeleteLobbyAsync(_hostLobby.Id);
-                _hostLobby = null;
-            } catch (Exception e)
+            try 
+            {
+                // Heartbeat coroutine'ini durdurmak için referansı temizle
+                string lobbyId = _hostLobby.Id;
+                _hostLobby = null; 
+
+                // Lobiyi sunucudan sil (DİĞERLERİ LİSTEDE GÖRMESİN)
+                await LobbyService.Instance.DeleteLobbyAsync(lobbyId);
+                Debug.Log("Lobby deleted successfully.");
+            } 
+            catch (Exception e)
             {
                 Debug.LogError($"Lobby deletion failed: {e.Message}"); 
             }
-            _hostLobby = null;
         }
 
-        // 2. NetworkServer temizliği
         NetworkServer?.Dispose();
 
-        // 3. Netcode kapatma
         if (NetworkManager.Singleton != null)
         {
             NetworkManager.Singleton.Shutdown();

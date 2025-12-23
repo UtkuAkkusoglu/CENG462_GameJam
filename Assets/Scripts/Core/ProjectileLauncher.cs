@@ -67,33 +67,52 @@ public class ProjectileLauncher : NetworkBehaviour
     {
         GameObject projectileInstance = Instantiate(clientProjectilePrefab, spawnPos, Quaternion.identity);
         projectileInstance.transform.up = direction;
-        Physics2D.IgnoreCollision(playerCollider, projectileInstance.GetComponent<Collider2D>()); // Unity’de collision detection (çarpışma kontrolü) bir frame öncesinde veya FixedUpdate sırasında olur. Yani aynı frame içinde Instantiate → IgnoreCollision yazarsan çoğu durumda merminin sahneye gelmesi ve çarpışmayı hesaplamadan önce IgnoreCollision çalışır.
-        if (projectileInstance.TryGetComponent<Rigidbody2D>(out var rb))
+
+        // --- GÜVENLİ ÇARPIŞMA İPTALİ ---
+        // Önce mermide Collider var mı diye bakıyoruz. Yoksa hata vermeden geçiyoruz.
+        Collider2D mermiCollider = projectileInstance.GetComponent<Collider2D>();
+        if (mermiCollider != null && playerCollider != null)
         {
-            rb.linearVelocity = projectileInstance.transform.up * projectileSpeed;
+            Physics2D.IgnoreCollision(playerCollider, mermiCollider);
         }
-        muzzleFlash.SetActive(true);
-        muzzleFlashTimer = muzzleFlashDuration;
-    }
-    
-    // Owner client çağırıyor, ama metodun gövdesi sunucuda çalışıyor çünkü [ServerRpc] o yüzden içindeki metot tüm clientlar için çağırılır.
-    [ServerRpc]
-    private void PrimaryFireServerRpc(Vector3 spawnPos, Vector3 direction)
-    {
-        GameObject projectileInstance = Instantiate(serverProjectilePrefab, spawnPos, Quaternion.identity);
-        projectileInstance.transform.up = direction;
-        Physics2D.IgnoreCollision(playerCollider, projectileInstance.GetComponent<Collider2D>());
+
+        // --- HIZ VERME ---
         if (projectileInstance.TryGetComponent<Rigidbody2D>(out var rb))
         {
             rb.linearVelocity = projectileInstance.transform.up * projectileSpeed;
         }
 
-        // Diğer client’lara dummy projectile spawnlamalarını bildir
-        SpawnDummyProjectileClientRpc(spawnPos, direction);
-        // Sunucu, client’in gönderdiği spawnPos ve direction’a güvenir.
-        // Bu, mermiler için client-authoritative movement (client’in hareketi belirlediği) biçiminde bir yaklaşımdır.
+        // Efektleri aç
+        muzzleFlash.SetActive(true);
+        muzzleFlashTimer = muzzleFlashDuration;
     }
-    
+
+    // Owner client çağırıyor, ama metodun gövdesi sunucuda çalışıyor çünkü [ServerRpc] o yüzden içindeki metot tüm clientlar için çağırılır.
+    [ServerRpc]
+    private void PrimaryFireServerRpc(Vector3 spawnPos, Vector3 direction, ServerRpcParams serverRpcParams = default)
+    {
+        // 1. Mermiyi Yarat
+        GameObject projectileInstance = Instantiate(serverProjectilePrefab, spawnPos, Quaternion.identity);
+        projectileInstance.transform.up = direction;
+
+        // 2. Fiziksel Çarpışmayı Yoksay (Tank kendine çarpmasın)
+        Physics2D.IgnoreCollision(playerCollider, projectileInstance.GetComponent<Collider2D>());
+
+        // 3. Hız Ver
+        if (projectileInstance.TryGetComponent<Rigidbody2D>(out var rb))
+        {
+            rb.linearVelocity = projectileInstance.transform.up * projectileSpeed;
+        }
+
+        // 4. KRİTİK NOKTA: Mermiyi Ağa Tanıt ve SAHİBİNİ BELİRLE
+        // serverRpcParams.Receive.SenderClientId -> Bu fonksiyonu çağıran (ateş eden) kişinin ID'sidir.
+        var netObj = projectileInstance.GetComponent<NetworkObject>();
+        netObj.SpawnWithOwnership(serverRpcParams.Receive.SenderClientId);
+
+        // 5. Diğerlerine de dummy mermi yaratmasını söyle
+        SpawnDummyProjectileClientRpc(spawnPos, direction);
+    }
+
     // Bu attribute([ClientRpc]), methodun sunucudan tüm client’lara çağrılacağını belirtiyor.
     [ClientRpc]
     private void SpawnDummyProjectileClientRpc(Vector3 spawnPos, Vector3 direction)

@@ -1,46 +1,43 @@
 using System.Threading.Tasks;
 using Unity.Services.Core;
 using UnityEngine.SceneManagement;
-using System; // Exception için
-using System.Text; // Encoding için
-using Unity.Services.Relay; // RelayService ve Allocation için
-using Unity.Services.Relay.Models; // Allocation modeli için
+using System;
+using System.Text;
+using Unity.Services.Relay;
+using Unity.Services.Relay.Models;
 using UnityEngine;
 using Unity.Netcode;
-using Unity.Netcode.Transports.UTP; // UnityTransport için
-using Unity.Services.Authentication; // AuthId için
-// using Unity.Networking.Transport.Relay; // RelayServerData için
+using Unity.Netcode.Transports.UTP;
+using Unity.Services.Authentication;
+using Unity.Services.Lobbies; // Lobi servisi için ekledik
 
 public class ClientGameManager
 {
     private const string MenuSceneName = "MainMenu";
-
     private JoinAllocation _allocation;
-
+    private string _joinedLobbyId; // Katıldığın lobinin ID'si burada saklanacak
 
     public async Task<bool> InitAsync()
     {
-        // 1. Initialise Unity Services
         await UnityServices.InitializeAsync();
-
-        // 2. Try to authenticate the player
         var authState = await AuthenticationWrapper.DoAuth();
-
-        if(authState == AuthenticationWrapper.AuthState.Authenticated)
-        {
-            return true;  // Successfully authenticated
-        }
-        else
-        {
-            return false;  // Authentication failed
-        }
+        return authState == AuthenticationWrapper.AuthState.Authenticated;
     }
 
-    public async Task StartClientAsync(string joinCode)
+    // Parametre olarak lobbyId ekledik ki ayrılırken kullanabilelim
+    public async Task StartClientAsync(string joinCode, string lobbyId = null)
     {
+        if (string.IsNullOrEmpty(joinCode) || joinCode == "Enter Join Code")
+        {
+            Debug.LogWarning("Lütfen geçerli bir Join Code girin!");
+            return;
+        }
+
+        _joinedLobbyId = lobbyId; // Lobby ID'yi kaydet
+
         try
         {
-            _allocation = await RelayService.Instance.JoinAllocationAsync(joinCode);  // Relay’e katıl
+            _allocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
         }
         catch (Exception e)
         {
@@ -48,17 +45,15 @@ public class ClientGameManager
             return;
         }
 
-        // --- QUEST 6: PAYLOAD PREPARATION (Hocanın İstediği) ---
         UserData userData = new UserData
         {
             username = PlayerPrefs.GetString("player name", "missing name"),
-            userAuthId = Unity.Services.Authentication.AuthenticationService.Instance.PlayerId
+            userAuthId = AuthenticationService.Instance.PlayerId
         };
 
         NetworkManager.Singleton.NetworkConfig.ConnectionData = Encoding.UTF8.GetBytes(JsonUtility.ToJson(userData));
-        // ------------------------------------
         
-        var transport = NetworkManager.Singleton.GetComponent<UnityTransport>(); // UnityTransport’u RelayServerData ile ayarla      
+        var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();     
         transport.SetClientRelayData(
             _allocation.RelayServer.IpV4,
             (ushort)_allocation.RelayServer.Port,
@@ -66,35 +61,50 @@ public class ClientGameManager
             _allocation.Key,
             _allocation.ConnectionData,
             _allocation.HostConnectionData,
-            isSecure: false  // dtls'i kapatıp udp'ye geçtim çünkü clientlar bağlanamıyordu
+            isSecure: false 
         );
 
-        // QUEST 6.7: İstemci tarafında kopma olayını dinle
         NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnect;
-
-        // Client’ı başlat
         NetworkManager.Singleton.StartClient();
+    }
+
+    // QUEST 6.8: Lobiden ayrılma fonksiyonu
+    public async Task LeaveLobbyAsync()
+    {
+        if (string.IsNullOrEmpty(_joinedLobbyId)) return;
+
+        try
+        {
+            // Servise "ben bu lobiden çıkıyorum" diyoruz
+            await LobbyService.Instance.RemovePlayerAsync(_joinedLobbyId, AuthenticationService.Instance.PlayerId);
+            _joinedLobbyId = null;
+            Debug.Log("Lobiden başarıyla ayrıldık.");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Lobiden ayrılırken hata: {e.Message}");
+        }
     }
 
     private void OnClientDisconnect(ulong clientId)
     {
-        // Eğer kopan kişi bizsek (clientId 0 veya LocalClientId)
         if (clientId == NetworkManager.Singleton.LocalClientId || clientId == 0)
         {
             Disconnect();
         }
     }
 
-    public void Disconnect()
+    public async void Disconnect()
     {
-        // QUEST 6.7: Ağ iletişimini temiz kapat ve menüye dön
         if (NetworkManager.Singleton != null)
         {
             NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnect;
             NetworkManager.Singleton.Shutdown();
         }
         
-        GoToMenu(); // MainMenu sahnesine uçur
+        // Önce lobiden ayrılmayı bekle, sonra menüye dön
+        await LeaveLobbyAsync(); 
+        GoToMenu();
     }
 
     public void GoToMenu()
