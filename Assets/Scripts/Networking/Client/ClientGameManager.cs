@@ -61,7 +61,7 @@ public class ClientGameManager
             _allocation.Key,
             _allocation.ConnectionData,
             _allocation.HostConnectionData,
-            isSecure: false 
+            isSecure: false
         );
 
         NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnect;
