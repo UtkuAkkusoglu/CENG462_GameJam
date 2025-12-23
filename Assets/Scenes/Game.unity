@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 32157737}
   - component: {fileID: 32157738}
   m_Layer: 0
-  m_Name: "G\xF6l_0"
+  m_Name: Lake
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
