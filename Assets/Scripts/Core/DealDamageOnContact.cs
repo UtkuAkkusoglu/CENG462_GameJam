@@ -5,50 +5,53 @@ public class DealDamageOnContact : MonoBehaviour
 {
     [SerializeField] private int damageAmount = 40;
 
-    // KORUMA: Merminin ayný anda birden fazla parçaya çarpýp 
-    // çift hasar vermesini engelleyen kilit.
+    // KORUMA: Merminin aynÄ± anda birden fazla parÃ§aya Ã§arpÄ±p
+    // Ã§ift hasar vermesini engelleyen kilit
     private bool hasHit = false;
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D otherCollider)
     {
-        // 1. KÝLÝT KONTROLÜ
-        // Eðer bu mermi zaten bir þeye hasar verdiyse, iþlemi durdur.
+        // 1. KÄ°LÄ°T KONTROLÃœ
+        // EÄŸer bu mermi zaten bir ÅŸeye hasar verdiyse, iÅŸlemi durdur
         if (hasHit) return;
 
-        // Hasar iþlemini SADECE Sunucu yapar
+        // Hasar iÅŸlemini SADECE Sunucu yapar
         if (!NetworkManager.Singleton.IsServer) return;
 
-        // 2. TankHealth Scriptini Bulma
-        TankHealth targetHealth = other.GetComponent<TankHealth>();
+        // 2. TankHealth scriptini bulma
+        TankHealth targetHealth = otherCollider.GetComponent<TankHealth>();
         if (targetHealth == null)
         {
-            targetHealth = other.GetComponentInParent<TankHealth>();
+            targetHealth = otherCollider.GetComponentInParent<TankHealth>();
         }
 
         if (targetHealth != null)
         {
-            // Kendi kendimizi vurmayalým
-            ulong myOwnerId = GetComponent<NetworkObject>().OwnerClientId;
-            NetworkObject targetNetObj = other.GetComponent<NetworkObject>();
-            if (targetNetObj == null) targetNetObj = other.GetComponentInParent<NetworkObject>();
+            // Kendi kendimizi vurmayalÄ±m
+            ulong myOwnerClientId = GetComponent<NetworkObject>().OwnerClientId;
 
-            if (targetNetObj != null && myOwnerId != targetNetObj.OwnerClientId)
+            NetworkObject targetNetworkObject =
+                otherCollider.GetComponent<NetworkObject>() ??
+                otherCollider.GetComponentInParent<NetworkObject>();
+
+            if (targetNetworkObject != null &&
+                myOwnerClientId != targetNetworkObject.OwnerClientId)
             {
-                // --- ÝÞTE BURASI KRÝTÝK NOKTA ---
-                // Hasar vermeden hemen önce kilidi kapatýyoruz.
+                // --- Ä°ÅžTE BURASI KRÄ°TÄ°K NOKTA ---
+                // Hasar vermeden hemen Ã¶nce kilidi kapatÄ±yoruz
                 hasHit = true;
 
                 targetHealth.TakeDamage(damageAmount);
-                Debug.Log($"[Mermi] Düþman vuruldu! Hasar: {damageAmount}");
+                Debug.Log($"[Projectile] Enemy hit! Damage: {damageAmount}");
 
                 Destroy(gameObject);
             }
         }
         else
         {
-            // Duvar vb. çarpýnca da yok olsun ama hasHit'i açmaya gerek yok
-            // çünkü duvara çift çarpmasý sorun yaratmaz.
-            Debug.Log($"[Mermi] Engele çarptý: {other.name}");
+            // Duvar vb. Ã§arpÄ±nca da yok olsun ama hasHit'i aÃ§maya gerek yok
+            // Ã‡Ã¼nkÃ¼ duvara Ã§ift Ã§arpmasÄ± sorun yaratmaz
+            Debug.Log($"[Projectile] Hit obstacle: {otherCollider.name}");
             Destroy(gameObject);
         }
     }

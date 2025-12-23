@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class TankSpawner : NetworkBehaviour
 {
-    [Header("Ayarlar")]
+    [Header("Settings")]
     [SerializeField] private GameObject tankPrefab;
     [SerializeField] private List<Transform> spawnPoints;
 
     public override void OnNetworkSpawn()
     {
-        // Bu kod Game Scene yüklendiðinde çalýþýr
+        // Bu kod Game Scene yÃ¼klendiÄŸinde Ã§alÄ±ÅŸÄ±r
         if (IsServer)
         {
-            // 1. Sonradan baðlananlar için kapýyý açýk tut
-            NetworkManager.Singleton.OnClientConnectedCallback += PlayerBaglandi;
+            // 1. Sonradan baÄŸlananlar iÃ§in kapÄ±yÄ± aÃ§Ä±k tut
+            NetworkManager.Singleton.OnClientConnectedCallback += HandleClientConnected;
 
-            // 2. Sahne yüklendiðinde HALÝHAZIRDA baðlý olan herkesi (Host dahil) spawn et
-            // Bu kýsým çok önemli, yoksa Host kendini yaratamaz.
+            // 2. Sahne yÃ¼klendiÄŸinde HALÄ°HAZIRDA baÄŸlÄ± olan herkesi (Host dahil) spawn et
+            // Bu kÄ±sÄ±m Ã§ok Ã¶nemli, yoksa Host kendini yaratamaz
             foreach (ulong clientId in NetworkManager.Singleton.ConnectedClientsIds)
             {
                 SpawnPlayer(clientId);
@@ -25,29 +25,35 @@ public class TankSpawner : NetworkBehaviour
         }
     }
 
-    private void PlayerBaglandi(ulong clientId)
+    private void HandleClientConnected(ulong clientId)
     {
         SpawnPlayer(clientId);
     }
 
     private void SpawnPlayer(ulong clientId)
     {
-        // Spawn noktasýný seç
-        int index = (int)(clientId % (ulong)spawnPoints.Count);
-        Transform secilenNokta = spawnPoints[index];
+        // Spawn noktasÄ±nÄ± seÃ§
+        int spawnIndex = (int)(clientId % (ulong)spawnPoints.Count);
+        Transform selectedSpawnPoint = spawnPoints[spawnIndex];
 
-        // Tanký yarat
-        GameObject yeniTank = Instantiate(tankPrefab, secilenNokta.position, Quaternion.identity);
+        // TankÄ± yarat
+        GameObject newTank = Instantiate(
+            tankPrefab,
+            selectedSpawnPoint.position,
+            Quaternion.identity
+        );
 
-        // Aða bildir: "Bu tank þu ID'li oyuncunundur"
-        yeniTank.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId, true);
+        // AÄŸa bildir: "Bu tank ÅŸu ID'li oyuncunundur"
+        newTank.GetComponent<NetworkObject>()
+               .SpawnAsPlayerObject(clientId, true);
     }
 
     public override void OnNetworkDespawn()
     {
+        // Server kapanÄ±rken event aboneliÄŸini temizle
         if (IsServer && NetworkManager.Singleton != null)
         {
-            NetworkManager.Singleton.OnClientConnectedCallback -= PlayerBaglandi;
+            NetworkManager.Singleton.OnClientConnectedCallback -= HandleClientConnected;
         }
     }
 }

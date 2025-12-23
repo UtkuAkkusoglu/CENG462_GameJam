@@ -2,17 +2,17 @@ using UnityEngine;
 
 public class ClientProjectileVisuals : MonoBehaviour
 {
-    // Mermi bir þeye çarptýðýnda (Trigger)
-    private void OnTriggerEnter2D(Collider2D other)
+    // Mermi bir ÅŸeye Ã§arptÄ±ÄŸÄ±nda (Trigger)
+    private void OnTriggerEnter2D(Collider2D otherCollider)
     {
-        // 1. Trigger olan görünmez alanlara (mesela suyun sýnýrlarý, spawn noktalarý) çarpýnca yok olmasýn.
-        // Sadece fiziksel objelere (Tank, Duvar) çarpýnca yok olsun.
-        if (other.isTrigger) return;
+        // 1. Trigger olan gÃ¶rÃ¼nmez alanlara (mesela suyun sÄ±nÄ±rlarÄ±, spawn noktalarÄ±) Ã§arpÄ±nca yok olmasÄ±n
+        // Sadece fiziksel objelere (Tank, Duvar) Ã§arpÄ±nca yok olsun
+        if (otherCollider.isTrigger) return;
 
-        // 2. Kendini Yok Et
+        // 2. Kendini yok et
         Destroy(gameObject);
 
-        // ÝPUCU: Ýleride buraya patlama efekti (Particle System) de ekleyebiliriz.
-        // Instantiate(patlamaEfekti, transform.position, ...);
+        // Ä°PUCU: Ä°leride buraya patlama efekti (Particle System) eklenebilir
+        // Instantiate(explosionEffect, transform.position, Quaternion.identity);
     }
 }

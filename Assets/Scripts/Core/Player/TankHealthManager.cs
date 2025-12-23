@@ -4,14 +4,14 @@ using TMPro;
 
 public class TankHealth : NetworkBehaviour
 {
-    [Header("Ayarlar")]
+    [Header("Settings")]
     [SerializeField] private int maxHealth = 100;
 
-    // Hasar bekleme süresi (Invulnerability)
+    // Hasar bekleme sÃ¼resi (Invulnerability)
     private float damageCooldown = 0.1f;
     private float lastDamageTime;
 
-    // Tankýn birden fazla kez ölmesini engelleyen kilit
+    // TankÄ±n birden fazla kez Ã¶lmesini engelleyen kilit
     private bool isDead = false;
 
     public NetworkVariable<int> currentHealth = new NetworkVariable<int>(100);
@@ -19,12 +19,12 @@ public class TankHealth : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        currentHealth.OnValueChanged += CanDegisti;
+        currentHealth.OnValueChanged += OnHealthChanged;
 
         if (IsServer)
         {
             currentHealth.Value = maxHealth;
-            isDead = false; // Doðduðunda yaþýyor
+            isDead = false; // DoÄŸduÄŸunda yaÅŸÄ±yor
         }
 
         if (IsOwner)
@@ -33,64 +33,63 @@ public class TankHealth : NetworkBehaviour
         }
     }
 
-    // --- GARANTÝ ÇÖZÜM: TANK SÝLÝNÝRKEN ÇALIÞIR ---
+    // --- GARANTÄ° Ã‡Ã–ZÃœM: TANK SÄ°LÄ°NÄ°RKEN Ã‡ALIÅžIR ---
     public override void OnNetworkDespawn()
     {
-        // Tank oyundan çýkarken (yok olurken) eðer bu benim tankýmsa
+        // Tank oyundan Ã§Ä±karken (yok olurken) eÄŸer bu benim tankÄ±msa
         if (IsOwner && healthText != null)
         {
-            // Son nefesinde ekrana 0 yazdýr
+            // Son nefesinde ekrana 0 yazdÄ±r
             healthText.text = "0";
             healthText.color = Color.red;
         }
 
-        // Event aboneliðini iptal et (Hafýza temizliði)
-        currentHealth.OnValueChanged -= CanDegisti;
+        // Event aboneliÄŸini iptal et (HafÄ±za temizliÄŸi)
+        currentHealth.OnValueChanged -= OnHealthChanged;
     }
 
     private void InitializeHealthUI()
     {
-        // "HealthTag" etiketini arýyoruz (Senin Inspector ayarýnla uyumlu)
-        GameObject textObj = GameObject.FindGameObjectWithTag("HealthText");
-        if (textObj != null)
+        // "HealthText" etiketini arÄ±yoruz (Inspector ayarÄ±nla uyumlu)
+        GameObject textObject = GameObject.FindGameObjectWithTag("HealthText");
+        if (textObject != null)
         {
-            healthText = textObj.GetComponent<TMP_Text>();
-            UpdateText(currentHealth.Value);
+            healthText = textObject.GetComponent<TMP_Text>();
+            UpdateHealthText(currentHealth.Value);
             healthText.gameObject.SetActive(true);
         }
     }
 
     public void TakeDamage(int damage)
     {
-        if (IsServer)
+        if (!IsServer) return;
+
+        // Ã–lÃ¼ tanka vurulmaz
+        if (isDead) return;
+
+        // Bekleme sÃ¼resi kontrolÃ¼
+        if (Time.time < lastDamageTime + damageCooldown) return;
+
+        lastDamageTime = Time.time;
+
+        int newHealth = currentHealth.Value - damage;
+        if (newHealth < 0) newHealth = 0;
+
+        currentHealth.Value = newHealth;
+
+        if (currentHealth.Value <= 0)
         {
-            // Ölü tanka vurulmaz
-            if (isDead) return;
+            isDead = true; // TankÄ± Ã¶lÃ¼ olarak iÅŸaretle
 
-            // Bekleme süresi kontrolü
-            if (Time.time < lastDamageTime + damageCooldown) return;
-
-            lastDamageTime = Time.time;
-
-            int yeniCan = currentHealth.Value - damage;
-            if (yeniCan < 0) yeniCan = 0;
-
-            currentHealth.Value = yeniCan;
-
-            if (currentHealth.Value <= 0)
-            {
-                isDead = true; // Tanký ölü olarak iþaretle
-
-                // --- PÜF NOKTASI BURADA ---
-                // Hemen yok etme! 0.1 saniye bekle ki "0" mesajý client'a gitsin.
-                Invoke(nameof(TankiYokEt), 0.1f);
-            }
+            // --- PÃœF NOKTASI ---
+            // Hemen yok etme! 0.1 saniye bekle ki "0" bilgisi client'a gitsin
+            Invoke(nameof(DespawnTank), 0.1f);
         }
     }
 
-    private void TankiYokEt()
+    private void DespawnTank()
     {
-        // Eðer obje hala duruyorsa yok et
+        // EÄŸer obje hala duruyorsa yok et
         if (IsSpawned)
         {
             GetComponent<NetworkObject>().Despawn();
@@ -98,22 +97,23 @@ public class TankHealth : NetworkBehaviour
         }
     }
 
-    private void CanDegisti(int eskiDeger, int yeniDeger)
+    private void OnHealthChanged(int oldValue, int newValue)
     {
         if (IsOwner)
         {
-            UpdateText(yeniDeger);
+            UpdateHealthText(newValue);
         }
     }
 
-    private void UpdateText(int value)
+    private void UpdateHealthText(int value)
     {
-        if (healthText != null)
-        {
-            healthText.text = value.ToString();
+        if (healthText == null) return;
 
-            if (value <= 40) healthText.color = Color.red;
-            else healthText.color = Color.white;
-        }
+        healthText.text = value.ToString();
+
+        if (value <= 40)
+            healthText.color = Color.red;
+        else
+            healthText.color = Color.white;
     }
 }
