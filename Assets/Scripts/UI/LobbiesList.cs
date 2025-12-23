@@ -6,12 +6,11 @@ using UnityEngine;
 public class LobbiesList : MonoBehaviour
 {
     [Header("Settings")]
-    [SerializeField] private LobbyItem lobbyItemPrefab; // Hazırladığın prefab
-    [SerializeField] private Transform container; // Scroll View -> Content
+    [SerializeField] private LobbyItem lobbyItemPrefab; 
+    [SerializeField] private Transform container; 
 
     private bool _isRefreshing;
 
-    // Panel açıldığında veya Refresh butonuna basıldığında çağrılır 
     public async void RefreshList()
     {
         if (_isRefreshing) return;
@@ -19,15 +18,12 @@ public class LobbiesList : MonoBehaviour
 
         try
         {
-            // --- QUEST 6.4.2.0: CLEANUP ---
-            // Yeni lobileri eklemeden önce içerideki eski prefabları yok et
+            // Eski prefabları temizle
             foreach (Transform child in container)
             {
                 Destroy(child.gameObject);
             }
-            // ------------------------------
             
-            // Quest 4.2: Sadece boş yer olan lobileri filtrele
             QueryLobbiesOptions options = new QueryLobbiesOptions
             {
                 Filters = new List<QueryFilter>
@@ -38,13 +34,7 @@ public class LobbiesList : MonoBehaviour
 
             QueryResponse response = await LobbyService.Instance.QueryLobbiesAsync(options);
 
-            // Önceki listeyi temizle
-            foreach (Transform child in container)
-            {
-                Destroy(child.gameObject);
-            }
-
-            // Yeni listeyi oluştur
+            // Listeyi oluştur
             foreach (Lobby lobby in response.Results)
             {
                 LobbyItem item = Instantiate(lobbyItemPrefab, container); 
@@ -57,11 +47,17 @@ public class LobbiesList : MonoBehaviour
         }
         finally
         {
-            _isRefreshing = false;
+            // 429 hatasını önlemek için yenileme bittikten sonra kısa bir süre bekle
+            Invoke(nameof(ResetRefresh), 1.5f); 
         }
     }
 
-    //  Join Flow
+    private void ResetRefresh()
+    {
+        _isRefreshing = false;
+    }
+
+    // Join Flow - Güncellendi
     public async void JoinAsync(Lobby lobby)
     {
         try
@@ -75,8 +71,9 @@ public class LobbiesList : MonoBehaviour
                 string joinCode = joinCodeData.Value;
                 Debug.Log($"Lobiye girildi! Join Code: {joinCode}");
 
-                // 3. ClientGameManager üzerinden bağlantıyı başlat
-                await ClientSingleton.Instance.GameManager.StartClientAsync(joinCode);
+                // --- KRİTİK NOKTA ---
+                // Bu sayede çıkarken hangi lobiden ayrılacağımızı bileceğiz.
+                await ClientSingleton.Instance.GameManager.StartClientAsync(joinCode, joinedLobby.Id);
             }
         }
         catch (LobbyServiceException e)
