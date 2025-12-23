@@ -12,6 +12,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: ServerProjectile
       objectReference: {fileID: 0}
+    - target: {fileID: 4095289907331265748, guid: 313af028a715a09489371097051719a3, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8707178244028229175, guid: 313af028a715a09489371097051719a3, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1791151908
+      objectReference: {fileID: 0}
     - target: {fileID: 9011934784864451545, guid: 313af028a715a09489371097051719a3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.0013643

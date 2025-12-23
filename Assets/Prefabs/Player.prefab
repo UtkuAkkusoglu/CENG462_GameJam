@@ -107,6 +107,7 @@ GameObject:
   - component: {fileID: -8551266759747420240}
   - component: {fileID: 380779706634608806}
   - component: {fileID: 8121205541423561431}
+  - component: {fileID: 7417909086612451899}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -145,7 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 941950997
+  GlobalObjectIdHash: 1525730834
   InScenePlacedSourceGlobalObjectIdHash: 2595851170
   DeferredDespawnTick: 0
   Ownership: 1
@@ -307,6 +308,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerServerManager
   ShowTopMostFoldoutHeaderGroup: 1
   nameDisplay: {fileID: 380779706634608806}
+--- !u!114 &7417909086612451899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1581756959222653059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26b04008195617f4bbe75ad4968087d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TankHealth
+  ShowTopMostFoldoutHeaderGroup: 1
+  maxHealth: 100
+  currentHealth:
+    m_InternalValue: 100
 --- !u!1 &1805858465510780879
 GameObject:
   m_ObjectHideFlags: 0
