@@ -38,6 +38,13 @@ public class ClientGameManager
 
     public async Task StartClientAsync(string joinCode)
     {
+        // Eğer kullanıcı kodu girmemişse veya varsayılan yazı duruyorsa işlemi durdur
+        if (string.IsNullOrEmpty(joinCode) || joinCode == "Enter Join Code")
+        {
+            Debug.LogWarning("Lütfen geçerli bir Join Code girin!");
+            return;
+        }
+        
         try
         {
             _allocation = await RelayService.Instance.JoinAllocationAsync(joinCode);  // Relay’e katıl
