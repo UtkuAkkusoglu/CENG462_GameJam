@@ -44,7 +44,7 @@ public class ClientGameManager
             Debug.LogWarning("Lütfen geçerli bir Join Code girin!");
             return;
         }
-        
+
         try
         {
             _allocation = await RelayService.Instance.JoinAllocationAsync(joinCode);  // Relay’e katıl
