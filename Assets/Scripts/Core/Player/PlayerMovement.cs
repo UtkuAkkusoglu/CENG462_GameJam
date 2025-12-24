@@ -21,6 +21,9 @@ public class PlayerMovement : NetworkBehaviour
 
     private void Update()
     {
+
+        if (PauseController.IsMenuOpen) return;
+
         if (!IsOwner) return;
 
         // Her frame property üzerinden hareket inputunu alıyoruz
@@ -33,6 +36,9 @@ public class PlayerMovement : NetworkBehaviour
     
     private void FixedUpdate()
     {
+
+        if (PauseController.IsMenuOpen) return;
+
         if (!IsOwner) return;
 
         Vector2 movementInput = inputReader.Move; 

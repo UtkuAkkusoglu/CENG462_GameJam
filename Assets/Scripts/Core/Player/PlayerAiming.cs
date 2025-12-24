@@ -8,6 +8,9 @@ public class PlayerAiming : NetworkBehaviour
 
     private void LateUpdate()
     {
+
+        if (PauseController.IsMenuOpen) return;
+
         if (!IsOwner) return; // Only owner aims locally
 
         // 1) Screen-space cursor
