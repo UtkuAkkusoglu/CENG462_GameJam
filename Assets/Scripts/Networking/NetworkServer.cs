@@ -14,7 +14,6 @@ public class NetworkServer : IDisposable
     {
         _networkManager = networkManager;
 
-        // ÖNCE TEMİZLE, SONRA ABONE OL (Double-check stratejisi)
         _networkManager.ConnectionApprovalCallback -= ApprovalCheck; 
         _networkManager.ConnectionApprovalCallback += ApprovalCheck;
         
@@ -27,23 +26,30 @@ public class NetworkServer : IDisposable
 
     private void ApprovalCheck(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
     {
-        // 1. Gelen veriyi çöz (Decode -> JSON -> UserData)
+        // 1. Gelen veriyi çöz
         string payloadJson = Encoding.UTF8.GetString(request.Payload);
         UserData userData = JsonUtility.FromJson<UserData>(payloadJson);
 
-        // 2. Sunucu Logları (Hocanın kriteri)
+        // 2. Sunucu Logları 
         Debug.Log($"[NetworkServer] Approved: {userData.username} (AuthID: {userData.userAuthId})");
 
-        // 3. Veriyi sakla (Presence - Quest 7.1)
+         // 3. Veriyi sakla
         _clientIdToAuthId[request.ClientNetworkId] = userData.userAuthId;
         _authIdToUserData[userData.userAuthId] = userData;
 
-        // 4. Onay ve Spawn (Quest 6.5.2)
+        // Quest 11.2 & 11.3: Statik metot üzerinden rastgele konum alıyoruz
+        // Bu sayede oyuncular (0,0,0) noktasında doğmaz.
+        Vector3 spawnPos = SpawnPoint.GetRandomSpawnPos();
+        Debug.Log($"[Spawn Test] {userData.username} için seçilen konum: {spawnPos}");
+
+        // 4. Onay ve Spawn
         response.Approved = true;
-        response.CreatePlayerObject = true; // Oyuncu nesnesi oluşturulsun
+        response.CreatePlayerObject = true; 
+        response.Position = spawnPos;
+        response.Rotation = Quaternion.identity;
+        // --------------------------------------------------
+
         response.Pending = false;
-        
-        // (İsteğe bağlı) Başlangıç konumu ayarı burada yapılabilir
     }
 
     private void OnServerStarted()
@@ -57,9 +63,9 @@ public class NetworkServer : IDisposable
         {
             _clientIdToAuthId.Remove(clientId);
             _authIdToUserData.Remove(authId);
-            Debug.Log($"[NetworkServer] Client {clientId} (AuthID: {authId}) disconnected.");
+            Debug.Log($"[NetworkServer] Client {clientId} disconnected.");
 
-            // TODO: Liderlik tablosunu burada güncelle (Quest 12)
+            // TODO: Liderlik tablosunu burada güncelle
         }
     }
 
