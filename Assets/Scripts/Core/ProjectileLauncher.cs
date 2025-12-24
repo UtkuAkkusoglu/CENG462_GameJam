@@ -21,7 +21,7 @@ public class ProjectileLauncher : NetworkBehaviour
     private float muzzleFlashTimer;
 
     private void Update()
-    {
+    {   
         if (muzzleFlashTimer > 0)     // herhalde dummy projectile aksine server onayı beklemez, herkes aynı anda görür
         {
             muzzleFlashTimer -= Time.deltaTime;
@@ -35,8 +35,7 @@ public class ProjectileLauncher : NetworkBehaviour
         if (!shouldFire) return;
 
         float timeBetweenShots = 1f / fireRate;
-        if (Time.time < previousFireTime + timeBetweenShots)
-            return; // yeterli süre geçmedi, henüz ateş edemez
+        if (Time.time < previousFireTime + timeBetweenShots) return; // yeterli süre geçmedi, henüz ateş edemez
         
         Vector3 spawnPos = projectileSpawnPoint.position;
         Vector3 direction = projectileSpawnPoint.up;

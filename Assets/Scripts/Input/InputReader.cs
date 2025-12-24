@@ -8,6 +8,7 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
     private Controls _controls;
 
     public event Action<bool> PrimaryFireEvent;
+    public event Action PauseEvent;
 
     public Vector2 Move { get; private set; }
     public Vector2 AimPosition { get; private set; }
@@ -42,5 +43,13 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
     public void OnAim(InputAction.CallbackContext context) // Screen-space (pixel) position
     {
         AimPosition = context.ReadValue<Vector2>();
+    }
+
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            PauseEvent?.Invoke(); // ESC'ye basıldığında haber ver
+        }
     }
 }
