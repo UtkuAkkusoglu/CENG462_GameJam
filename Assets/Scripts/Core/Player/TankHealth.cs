@@ -1,111 +1,108 @@
 using Unity.Netcode;
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI; // <--- Slider kullanmak için bu ŞART!
 
 public class TankHealth : NetworkBehaviour
 {
-    [Header("Settings")]
-    [SerializeField] private int maxHealth = 100;
+    [Header("References")]
+    [SerializeField] private PlayerStats stats;
+    [SerializeField] private Slider healthSlider; // <--- Slider'ı buraya sürükleyeceksin
 
-    // Hasar bekleme süresi (Invulnerability)
+    [Header("Efektler")]
+    [SerializeField] private GameObject explosionPrefab;
+
     private float damageCooldown = 0.1f;
     private float lastDamageTime;
-
-    // Tankın birden fazla kez ölmesini engelleyen kilit
     private bool isDead = false;
-
-    public NetworkVariable<int> currentHealth = new NetworkVariable<int>(100);
-    private TMP_Text healthText;
 
     public override void OnNetworkSpawn()
     {
-        currentHealth.OnValueChanged += OnHealthChanged;
-
-        if (IsServer)
+        if (stats != null)
         {
-            currentHealth.Value = maxHealth;
-            isDead = false; // Doğduğunda yaşıyor
+            // Can değişince OnHealthChanged çalışsın
+            stats.Health.OnValueChanged += OnHealthChanged;
+
+            // Oyun başladığında barı mevcut cana eşitle
+            UpdateHealthUI(stats.Health.Value);
         }
 
-        if (IsOwner)
-        {
-            InitializeHealthUI();
-        }
+        if (IsServer) isDead = false;
+
+        // DİKKAT: Artık "InitializeHealthUI" çağırmıyoruz çünkü
+        // Slider zaten prefabın içinde, aramaya gerek yok.
     }
 
-    // --- GARANTİ ÇÖZÜM: TANK SİLİNİRKEN ÇALIŞIR ---
     public override void OnNetworkDespawn()
     {
-        // Tank oyundan çıkarken (yok olurken) eğer bu benim tankımsa
-        if (IsOwner && healthText != null)
+        if (stats != null)
         {
-            // Son nefesinde ekrana 0 yazdır
-            healthText.text = "0";
-            healthText.color = Color.red;
-        }
-
-        // Event aboneliğini iptal et (Hafıza temizliği)
-        currentHealth.OnValueChanged -= OnHealthChanged;
-    }
-
-    private void InitializeHealthUI()
-    {
-        // "HealthText" etiketini arıyoruz (Inspector ayarınla uyumlu)
-        GameObject textObject = GameObject.FindGameObjectWithTag("HealthText");
-        if (textObject != null)
-        {
-            healthText = textObject.GetComponent<TMP_Text>();
-            UpdateHealthText(currentHealth.Value);
-            healthText.gameObject.SetActive(true);
+            stats.Health.OnValueChanged -= OnHealthChanged;
         }
     }
 
     public void TakeDamage(int damage)
     {
+        // Sadece sunucu yönetir
         if (!IsServer || isDead) return;
+
+        // Bekleme süresi ve Kalkan kontrolü
         if (Time.time < lastDamageTime + damageCooldown) return;
+        if (stats.IsShielded) return;
 
         lastDamageTime = Time.time;
-        currentHealth.Value = Mathf.Max(currentHealth.Value - damage, 0);
 
-        if (currentHealth.Value <= 0)
+        // Canı azalt
+        stats.Health.Value = Mathf.Max(stats.Health.Value - damage, 0);
+
+        if (stats.Health.Value <= 0)
         {
             isDead = true;
-            // KABUL KRİTERİ: Önce yeniden doğma sürecini başlatıyoruz
-            RespawnManager.Instance.RespawnPlayer(OwnerClientId);
-            
-            // Sonra tankı yok ediyoruz
+
+            // Patlama efektini tüm oyunculara gönder
+            SpawnExplosionClientRpc(transform.position);
+
+            if (RespawnManager.Instance != null)
+            {
+                RespawnManager.Instance.RespawnPlayer(OwnerClientId);
+            }
+
             Invoke(nameof(DespawnTank), 0.1f);
+        }
+    }
+
+    [ClientRpc]
+    private void SpawnExplosionClientRpc(Vector3 position)
+    {
+        // Patlamayı oluştur (Hata kontrolüyle birlikte)
+        if (explosionPrefab != null)
+        {
+            Instantiate(explosionPrefab, position, Quaternion.identity);
+        }
+        else
+        {
+            Debug.LogWarning("Patlama Prefabı atanmamış!");
         }
     }
 
     private void DespawnTank()
     {
-        // Eğer obje hala duruyorsa yok et
-        if (IsSpawned)
-        {
-            GetComponent<NetworkObject>().Despawn();
-            Debug.Log("Tank tamamen yok edildi.");
-        }
+        if (IsSpawned) GetComponent<NetworkObject>().Despawn();
     }
 
-    private void OnHealthChanged(int oldValue, int newValue)
+    // Can değiştiğinde çalışır
+    private void OnHealthChanged(int oldV, int newV)
     {
-        if (IsOwner)
-        {
-            UpdateHealthText(newValue);
-        }
+        // IsOwner kontrolünü kaldırdık!
+        // Böylece düşmanlar da senin canının azaldığını görebilir.
+        UpdateHealthUI(newV);
     }
 
-    private void UpdateHealthText(int value)
+    private void UpdateHealthUI(int value)
     {
-        if (healthText == null) return;
-
-        healthText.text = value.ToString();
-
-        if (value <= 40)
-            healthText.color = Color.red;
-        else
-            healthText.color = Color.white;
+        if (healthSlider != null)
+        {
+            // Sadece değeri değiştiriyoruz, renk senin Inspector'da yaptığın kırmızı kalacak.
+            healthSlider.value = value;
+        }
     }
 }

@@ -36,7 +36,7 @@ public class RespawnManager : NetworkBehaviour
         yield return new WaitForSeconds(respawnDelay);
 
         // Görev 11'deki güvenli spawn noktasını al
-        Vector3 spawnPos = SpawnPoint.GetRandomSpawnPos();
+        Vector3 spawnPos = SpawnPoint.GetRandomPlayerPos();
 
         // KABUL KRİTERİ: Prefab'ı Instantiate et
         GameObject newPlayerTank = Instantiate(playerPrefab, spawnPos, Quaternion.identity);

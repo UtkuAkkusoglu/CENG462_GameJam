@@ -14,13 +14,13 @@ public class PlayerSpawnHandler : NetworkBehaviour
     {
         // Liste dolana kadar bekle (Maksimum 5 saniye boyunca dene)
         float timer = 0;
-        while (SpawnPoint.GetRandomSpawnPos() == Vector3.zero && timer < 5f)
+        while (SpawnPoint.GetRandomPlayerPos() == Vector3.zero && timer < 5f)
         {
             timer += Time.deltaTime;
             yield return null; // Bir sonraki frame'e kadar bekle
         }
 
-        Vector3 finalPos = SpawnPoint.GetRandomSpawnPos();
+        Vector3 finalPos = SpawnPoint.GetRandomPlayerPos();
 
         if (finalPos != Vector3.zero)
         {

@@ -3,41 +3,57 @@ using UnityEngine;
 
 public class SpawnPoint : MonoBehaviour
 {
-    // Hocanın istediği statik liste kaydı
-    private static List<SpawnPoint> spawnPoints = new List<SpawnPoint>();
+    public enum SpawnType { Player, Collectible }
+    public SpawnType type;
 
-    // Awake, OnNetworkSpawn'dan daha önce çalıştığı için kaydı buraya aldık
+    private static List<SpawnPoint> playerPoints = new List<SpawnPoint>();
+    private static List<SpawnPoint> itemPoints = new List<SpawnPoint>();
+
     private void Awake()
     {
-        if (!spawnPoints.Contains(this))
+        // Temiz bir başlangıç için listeye eklemeden önce varsa eskisini temizleyelim
+        if (type == SpawnType.Player)
         {
-            spawnPoints.Add(this);
+            if (!playerPoints.Contains(this)) playerPoints.Add(this);
+        }
+        else
+        {
+            if (!itemPoints.Contains(this)) itemPoints.Add(this);
         }
     }
 
     private void OnDestroy()
     {
-        spawnPoints.Remove(this);
+        // Obje yok edildiğinde listeden ÇIKARMAK ÇOK KRİTİK!
+        if (type == SpawnType.Player) playerPoints.Remove(this);
+        else itemPoints.Remove(this);
     }
 
-    public static Vector3 GetRandomSpawnPos()
+    public static Vector3 GetRandomPlayerPos()
     {
-        if (spawnPoints.Count == 0)
-        {
-            Debug.LogWarning("Hiç SpawnPoint bulunamadı! Liste boş.");
-            return Vector3.zero; 
-        }
-        
-        int randomIndex = UnityEngine.Random.Range(0, spawnPoints.Count);
-        return spawnPoints[randomIndex].transform.position;
+        // Önce listedeki "yok edilmiş" (null) objeleri temizle
+        playerPoints.RemoveAll(p => p == null);
+
+        if (playerPoints.Count == 0) return Vector3.zero;
+
+        int randomIndex = Random.Range(0, playerPoints.Count);
+        return playerPoints[randomIndex].transform.position;
     }
 
-    // KABUL KRİTERİ: Editor'de mavi küreler görünmeli
+    public static Vector3 GetRandomItemPos()
+    {
+        // Önce listedeki "yok edilmiş" (null) objeleri temizle
+        itemPoints.RemoveAll(p => p == null);
+
+        if (itemPoints.Count == 0) return Vector3.zero;
+
+        int randomIndex = Random.Range(0, itemPoints.Count);
+        return itemPoints[randomIndex].transform.position;
+    }
+
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawSphere(transform.position, 1.5f); // Daha belirgin olması için büyüttük
-        Gizmos.color = Color.green;
-        Gizmos.DrawLine(transform.position, transform.position + transform.up * 2f);
+        Gizmos.color = (type == SpawnType.Player) ? Color.blue : Color.yellow;
+        Gizmos.DrawSphere(transform.position, 1.0f);
     }
 }
