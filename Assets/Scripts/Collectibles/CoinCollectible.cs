@@ -7,21 +7,21 @@ public class CoinCollectible : NetworkBehaviour, ICollectible
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // 1. Sadece sunucu (Server) bu işlemi yönetir, yorum satırını kapatınca oyun başlar başlamaz collision çalışıyor
-        // if (!IsServer) return; 
+        // Çarpışmanın gerçekleştiği konumu alalım
+        Vector3 hitPos = transform.position;
 
-        // 2. Çarpan nesnenin Player olup olmadığını kontrol et
-        if (other.CompareTag("Player"))
+        // 1. Şartlara bakmadan her teması loglayalım (Debugging için)
+        Debug.Log($"[Fizik] Temas Algılandı! Yer: {hitPos}, Çarpan: {other.name}, Tag: {other.tag}");
+
+        if (!IsServer) return;
+
+        var networkObject = other.GetComponentInParent<NetworkObject>();
+
+        if (networkObject != null && networkObject.IsPlayerObject && other.CompareTag("Player"))
         {
-            Debug.Log($"[Coin] Altın toplandı! Toplayan: {other.name}");
-            
-            Collect(other.gameObject);
-
-            // 3. Objeyi ağ üzerinden yok et (Herkesin ekranından silinir)
-            if (NetworkObject.IsSpawned)
-            {
-                GetComponent<NetworkObject>().Despawn(true); 
-            }
+            Debug.Log($"[Coin] {hitPos} konumunda {networkObject.gameObject.name} tarafından toplandı.");
+            Collect(networkObject.gameObject);
+            GetComponent<NetworkObject>().Despawn(true);
         }
     }
 

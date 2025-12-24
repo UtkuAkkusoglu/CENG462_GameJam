@@ -39,7 +39,7 @@ public class NetworkServer : IDisposable
 
         // Quest 11.2 & 11.3: Statik metot üzerinden rastgele konum alıyoruz
         // Bu sayede oyuncular (0,0,0) noktasında doğmaz.
-        Vector3 spawnPos = SpawnPoint.GetRandomSpawnPos();
+        Vector3 spawnPos = SpawnPoint.GetRandomPlayerPos();
         Debug.Log($"[Spawn Test] {userData.username} için seçilen konum: {spawnPos}");
 
         // 4. Onay ve Spawn
