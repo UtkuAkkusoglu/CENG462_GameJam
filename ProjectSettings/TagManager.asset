@@ -12,31 +12,31 @@ TagManager:
   - 
   - Water
   - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - WaterWall
+  - 
   - Player
   - 
+  - 
+  - EnemyShip
+  - 
+  - 
+  - 
+  - 
+  - 
   - Collectible
+  - 
   - Island
+  - 
   - Bridge
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
   - Projectile
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
   - 
   m_SortingLayers:
   - name: Background
