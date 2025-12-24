@@ -38,9 +38,22 @@ public class PauseController : NetworkBehaviour
         IsMenuOpen = !IsMenuOpen;
         pauseCanvas.SetActive(IsMenuOpen);
 
-        // Fareyi menü için serbest bırak, oyun için kilitle
-        Cursor.lockState = IsMenuOpen ? CursorLockMode.None : CursorLockMode.Locked;
-        Cursor.visible = IsMenuOpen;
+        // --- DÜZELTİLEN KISIM ---
+
+        // Menü açılınca fare "Serbest" olsun (None).
+        // Menü kapanınca fare "Pencereye Hapsolsun" (Confined). 
+        // KESİNLİKLE "Locked" YAPMA!
+
+        if (IsMenuOpen)
+        {
+            Cursor.lockState = CursorLockMode.None; // İstersen pencere dışına çıkabilirsin
+            Cursor.visible = true; // İmleci gör
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Confined; // Fare oyun penceresinden dışarı çıkamaz ama hareket eder
+            Cursor.visible = true; // Nişan almak için imleci görmeye devam etmeliyiz
+        }
     }
 
     public async void BackToMenu()
