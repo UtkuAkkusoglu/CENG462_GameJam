@@ -15,10 +15,23 @@ public class HealthBoosterCollectible : NetworkBehaviour, ICollectible
         if (Time.time < spawnTime + 1.0f) return; // Başlangıçtaki (0,0) bug'ı önlemi
 
         var netObj = other.GetComponentInParent<NetworkObject>();
+        
         if (netObj != null && netObj.IsPlayerObject && other.CompareTag("Player"))
         {
-            Collect(netObj.gameObject);
-            GetComponent<NetworkObject>().Despawn(true); // Artık hata vermez
+            // PLAYERSTATS BİLEŞENİNİ AL VE CANI KONTROL ET
+            if (netObj.TryGetComponent(out PlayerStats stats))
+            {
+                // EĞER CANI ZATEN 100 İSE TOPLAMA (return yap)
+                if (stats.Health.Value >= 100) 
+                {
+                    Debug.Log($"[HealthBooster] {netObj.name} canı zaten full, paket bırakıldı.");
+                    return; 
+                }
+
+                // CANI 100'DEN AZ İSE TOPLA
+                Collect(netObj.gameObject);
+                GetComponent<NetworkObject>().Despawn(true);
+            }
         }
     }
 
