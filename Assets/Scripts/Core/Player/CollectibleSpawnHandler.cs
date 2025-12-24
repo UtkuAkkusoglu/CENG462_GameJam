@@ -5,16 +5,19 @@ using System.Collections.Generic;
 
 public class CollectibleSpawnHandler : NetworkBehaviour
 {
-    [Header("Ayarlar")]
-    [SerializeField] private GameObject[] collectiblePrefabs; // Collectible item prefabları
-    [SerializeField] private float spawnInterval = 10f; // 10 saniyede bir doğacaklar
-    [SerializeField] private int maxItemsOnMap = 15; // Haritada aynı anda kaç item olabilir
+    [Header("Doğma Ayarları")]
+    [SerializeField] private GameObject[] collectiblePrefabs;
+    [SerializeField] private float spawnInterval = 10f; 
+    [SerializeField] private int maxItemsOnMap = 15;
+
+    [Header("Yaşam Süresi Ayarları")]
+    [SerializeField] private bool useLifeTime = true; // Bu özelliği açıp kapatabilmen için
+    [SerializeField] private float itemLifeTime = 15f; // Senin istediğin 15 saniye
 
     private List<GameObject> activeItems = new List<GameObject>();
 
     public override void OnNetworkSpawn()
     {
-        // Sadece Sunucu (Server/Host) eşya doğurma yetkisine sahiptir
         if (IsServer)
         {
             StartCoroutine(SpawnRoutine());
@@ -23,12 +26,10 @@ public class CollectibleSpawnHandler : NetworkBehaviour
 
     private IEnumerator SpawnRoutine()
     {
-        // Oyuncuların yerleşmesi için ilk başta biraz bekle
         yield return new WaitForSeconds(2f);
 
         while (true)
         {
-            // Önce listedeki silinmiş (toplanmış) objeleri temizle
             activeItems.RemoveAll(item => item == null);
 
             if (activeItems.Count < maxItemsOnMap)
@@ -42,20 +43,34 @@ public class CollectibleSpawnHandler : NetworkBehaviour
 
     private void SpawnEachType()
     {
-        // Her türden (Coin, Speed, Shield) birer tane doğurur
         foreach (var prefab in collectiblePrefabs)
         {
-            // SpawnPoint scriptindeki static metodu çağırıyoruz
-            Vector3 spawnPos = SpawnPoint.GetRandomItemPos();
+            Vector3 spawnPos = SpawnPoint.GetAvailableItemPos();
 
             if (spawnPos != Vector3.zero)
             {
                 GameObject item = Instantiate(prefab, spawnPos, Quaternion.identity);
-                item.GetComponent<NetworkObject>().Spawn(); // Ağda aktifleştir
+                item.GetComponent<NetworkObject>().Spawn();
                 activeItems.Add(item);
-                
-                Debug.Log($"[Spawner] {prefab.name} doğuruldu: {spawnPos}");
+
+                // EĞER ÖZELLİK AÇIKSA: Belirlenen süre sonra silinmesi için Coroutine başlat
+                if (useLifeTime)
+                {
+                    StartCoroutine(DestroyAfterTime(item, itemLifeTime));
+                }
             }
+        }
+    }
+
+    private IEnumerator DestroyAfterTime(GameObject item, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        // Obje hala sahnede mi (toplanmadı mı?) ve biz Server mıyız kontrol et
+        if (item != null && item.GetComponent<NetworkObject>().IsSpawned)
+        {
+            Debug.Log($"[Spawner] {item.name} süresi dolduğu için imha edildi.");
+            item.GetComponent<NetworkObject>().Despawn(true); // Ağdan ve sahneden sil
         }
     }
 }
