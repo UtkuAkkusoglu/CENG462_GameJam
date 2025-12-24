@@ -7,7 +7,7 @@ public class HealthBoosterCollectible : NetworkBehaviour, ICollectible
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!IsServer) return; // Sadece sunucu onaylar
+        // if (!IsServer) return; // Sadece sunucu onaylar
 
         if (other.CompareTag("Player"))
         {

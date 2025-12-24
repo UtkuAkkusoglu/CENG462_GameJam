@@ -8,11 +8,13 @@ public class SpeedBoosterCollectible : NetworkBehaviour, ICollectible
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!IsServer) return; 
+        // if (!IsServer) return; 
+        
         if (other.CompareTag("Player"))
         {
+            Debug.Log($"[SpeedBooster] Hız artırıcı toplandı! Toplayan: {other.name}");
             Collect(other.gameObject);
-            GetComponent<NetworkObject>().Despawn(); 
+            GetComponent<NetworkObject>().Despawn(true); 
         }
     }
 
