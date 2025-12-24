@@ -56,4 +56,29 @@ public class SpawnPoint : MonoBehaviour
         Gizmos.color = (type == SpawnType.Player) ? Color.blue : Color.yellow;
         Gizmos.DrawSphere(transform.position, 1.0f);
     }
+
+    public static Vector3 GetAvailableItemPos()
+    {
+        itemPoints.RemoveAll(p => p == null);
+        
+        // Dolu olmayan (boş) noktaları bulalım
+        List<SpawnPoint> availablePoints = new List<SpawnPoint>();
+        
+        foreach (var point in itemPoints)
+        {
+            // Noktanın etrafında 1 birimlik alanda başka bir "Collectible" var mı bak
+            // Not: Collectible objelerinin Layer'ını "Collectible" yaparsan çok daha performanslı olur
+            Collider2D hit = Physics2D.OverlapCircle(point.transform.position, 1.0f);
+            
+            if (hit == null) // Eğer hiçbir şeye çarpmadıysa burası boştur
+            {
+                availablePoints.Add(point);
+            }
+        }
+
+        if (availablePoints.Count == 0) return Vector3.zero;
+
+        int randomIndex = Random.Range(0, availablePoints.Count);
+        return availablePoints[randomIndex].transform.position;
+    }
 }

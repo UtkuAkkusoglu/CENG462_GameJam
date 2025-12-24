@@ -13,8 +13,10 @@ TagManager:
   - Water
   - UI
   - Player
-  - Projectile
+  - 
   - Collectible
+  - Island
+  - Bridge
   - 
   - 
   - 
@@ -24,9 +26,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
+  - Projectile
   - 
   - 
   - 

@@ -3,17 +3,34 @@ using UnityEngine;
 
 public class SpeedBoosterCollectible : NetworkBehaviour, ICollectible
 {
-    [SerializeField] private float multiplier = 1.5f;
+    [SerializeField] private float multiplier = 15f;
     [SerializeField] private float duration = 5f;
+    private float spawnTime;
+
+    private void Start() 
+    {
+        // Doğma zamanını kaydet
+        spawnTime = Time.time;
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // if (!IsServer) return; 
-        
-        if (other.CompareTag("Player"))
+        // 1. Sadece sunucu objeyi ağdan silebilir
+        if (!IsServer) return; 
+
+        // 2. İlk 1 saniye içinde (ışınlanma sırasında) toplamayı engelle
+        if (Time.time < spawnTime + 1.0f) return;
+
+        // 3. Palet mi yoksa gövde mi bakmadan ana NetworkObject'i bul
+        var networkObject = other.GetComponentInParent<NetworkObject>();
+
+        // 4. Eğer bir oyuncuysa ve tag'i doğruysa işle
+        if (networkObject != null && networkObject.IsPlayerObject && other.CompareTag("Player"))
         {
-            Debug.Log($"[SpeedBooster] Hız artırıcı toplandı! Toplayan: {other.name}");
-            Collect(other.gameObject);
+            Debug.Log($"[SpeedBooster] {networkObject.gameObject.name} tarafından toplandı!");
+            Collect(networkObject.gameObject);
+            
+            // Sahne objesi uyarısı almamak için 'true' (destroy) kullanıyoruz
             GetComponent<NetworkObject>().Despawn(true); 
         }
     }

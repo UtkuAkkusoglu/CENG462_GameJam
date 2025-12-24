@@ -846,7 +846,7 @@ MonoBehaviour:
     m_InternalValue: 0
   Health:
     m_InternalValue: 100
-  shieldVisual: {fileID: 0}
+  shieldVisual: {fileID: 713858474387694338}
 --- !u!1 &1607445112791971120
 GameObject:
   m_ObjectHideFlags: 0
