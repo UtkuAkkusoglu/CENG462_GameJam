@@ -1,0 +1,2054 @@
+fileFormatVersion: 2
+guid: 142eb5d0557cc2f41922288ab7043739
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2526944591491767180
+    second: DeathExplosion_0
+  - first:
+      213: 5843542087280102338
+    second: DeathExplosion_1
+  - first:
+      213: 7319908109080213636
+    second: DeathExplosion_2
+  - first:
+      213: 4529136177182534694
+    second: DeathExplosion_3
+  - first:
+      213: 1761346774558567161
+    second: DeathExplosion_4
+  - first:
+      213: -6115472355117449568
+    second: DeathExplosion_5
+  - first:
+      213: 3857942915691309172
+    second: DeathExplosion_6
+  - first:
+      213: -630332765661226251
+    second: DeathExplosion_7
+  - first:
+      213: 2306239958142204562
+    second: DeathExplosion_8
+  - first:
+      213: -1619813931851088730
+    second: DeathExplosion_9
+  - first:
+      213: -7927655343153460768
+    second: DeathExplosion_10
+  - first:
+      213: -2140544202425401063
+    second: DeathExplosion_11
+  - first:
+      213: 2411016207766638419
+    second: DeathExplosion_12
+  - first:
+      213: 4259312994028938587
+    second: DeathExplosion_13
+  - first:
+      213: -6407635530428449743
+    second: DeathExplosion_14
+  - first:
+      213: 796022871661881459
+    second: DeathExplosion_15
+  - first:
+      213: -630798812108587960
+    second: DeathExplosion_16
+  - first:
+      213: -4923283567247913419
+    second: DeathExplosion_17
+  - first:
+      213: -1233839741203716813
+    second: DeathExplosion_18
+  - first:
+      213: -6001254083996632442
+    second: DeathExplosion_19
+  - first:
+      213: -368254851260411628
+    second: DeathExplosion_20
+  - first:
+      213: -2849922810860253712
+    second: DeathExplosion_21
+  - first:
+      213: -5967615278164244896
+    second: DeathExplosion_22
+  - first:
+      213: 6658750805031301371
+    second: DeathExplosion_23
+  - first:
+      213: -6364271963293172665
+    second: DeathExplosion_24
+  - first:
+      213: -5499673182933943618
+    second: DeathExplosion_25
+  - first:
+      213: -8628842868793859777
+    second: DeathExplosion_26
+  - first:
+      213: -1018546519499041894
+    second: DeathExplosion_27
+  - first:
+      213: -4664833325633917501
+    second: DeathExplosion_28
+  - first:
+      213: -1552287126283726640
+    second: DeathExplosion_29
+  - first:
+      213: -6100657072349332539
+    second: DeathExplosion_30
+  - first:
+      213: -4795504309050888517
+    second: DeathExplosion_31
+  - first:
+      213: -8015805069913318310
+    second: DeathExplosion_32
+  - first:
+      213: -7421672169669745039
+    second: DeathExplosion_33
+  - first:
+      213: 2463817898581805015
+    second: DeathExplosion_34
+  - first:
+      213: -1252117733654993836
+    second: DeathExplosion_35
+  - first:
+      213: 4280409772489166829
+    second: DeathExplosion_36
+  - first:
+      213: 1901164140817679587
+    second: DeathExplosion_37
+  - first:
+      213: -7066286966047260144
+    second: DeathExplosion_38
+  - first:
+      213: 1309559883544857921
+    second: DeathExplosion_39
+  - first:
+      213: -1559417152014918793
+    second: DeathExplosion_40
+  - first:
+      213: -4963264715264278822
+    second: DeathExplosion_41
+  - first:
+      213: 4252999946663565279
+    second: DeathExplosion_42
+  - first:
+      213: -3823342600701811211
+    second: DeathExplosion_43
+  - first:
+      213: 7641904894890153460
+    second: DeathExplosion_44
+  - first:
+      213: -7030883268566432894
+    second: DeathExplosion_45
+  - first:
+      213: -1224269734758649562
+    second: DeathExplosion_46
+  - first:
+      213: -3692015062571335667
+    second: DeathExplosion_47
+  - first:
+      213: -1852159433841449673
+    second: DeathExplosion_48
+  - first:
+      213: -7628085563297487432
+    second: DeathExplosion_49
+  - first:
+      213: -1591131496745171624
+    second: DeathExplosion_50
+  - first:
+      213: 191170259231122999
+    second: DeathExplosion_51
+  - first:
+      213: 2588774945212844333
+    second: DeathExplosion_52
+  - first:
+      213: 4811870113096259704
+    second: DeathExplosion_53
+  - first:
+      213: 356641469733074589
+    second: DeathExplosion_54
+  - first:
+      213: -5326626702576395889
+    second: DeathExplosion_55
+  - first:
+      213: -7891589664829546594
+    second: DeathExplosion_56
+  - first:
+      213: 8338216379984372448
+    second: DeathExplosion_57
+  - first:
+      213: -1055255598844547046
+    second: DeathExplosion_58
+  - first:
+      213: -7573600378934369940
+    second: DeathExplosion_59
+  - first:
+      213: -8188417177004357731
+    second: DeathExplosion_60
+  - first:
+      213: 519976974011227502
+    second: DeathExplosion_61
+  - first:
+      213: 2331370142880120656
+    second: DeathExplosion_62
+  - first:
+      213: -5669689098884861461
+    second: DeathExplosion_63
+  - first:
+      213: -3375260724422495379
+    second: DeathExplosion_64
+  - first:
+      213: 2037528489534359180
+    second: DeathExplosion_65
+  - first:
+      213: 1204825057363892286
+    second: DeathExplosion_66
+  - first:
+      213: -5595429845760085295
+    second: DeathExplosion_67
+  - first:
+      213: 2371236582380399310
+    second: DeathExplosion_68
+  - first:
+      213: -6497220034153161056
+    second: DeathExplosion_69
+  - first:
+      213: 8668554015521709972
+    second: DeathExplosion_70
+  - first:
+      213: -2483591423250424704
+    second: DeathExplosion_71
+  - first:
+      213: 5681627054667021428
+    second: DeathExplosion_72
+  - first:
+      213: -3383727290718323441
+    second: DeathExplosion_73
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: DeathExplosion_0
+      rect:
+        serializedVersion: 2
+        x: 1018
+        y: 2321
+        width: 20
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c8b16f6b7b2811320800000000000000
+      internalID: 2526944591491767180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_1
+      rect:
+        serializedVersion: 2
+        x: 1154
+        y: 2326
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2cb0066619e681150800000000000000
+      internalID: 5843542087280102338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_2
+      rect:
+        serializedVersion: 2
+        x: 1853
+        y: 2326
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4883a3684a9859560800000000000000
+      internalID: 7319908109080213636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_3
+      rect:
+        serializedVersion: 2
+        x: 929
+        y: 2300
+        width: 20
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62ce5545b59bade30800000000000000
+      internalID: 4529136177182534694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_4
+      rect:
+        serializedVersion: 2
+        x: 1198
+        y: 2294
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9fae7d73f8f817810800000000000000
+      internalID: 1761346774558567161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_5
+      rect:
+        serializedVersion: 2
+        x: 1499
+        y: 2302
+        width: 25
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0aeb08f4b4a712ba0800000000000000
+      internalID: -6115472355117449568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_6
+      rect:
+        serializedVersion: 2
+        x: 1774
+        y: 2282
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 478e38d34aa2a8530800000000000000
+      internalID: 3857942915691309172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_7
+      rect:
+        serializedVersion: 2
+        x: 1856
+        y: 2306
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5fa197470bb9047f0800000000000000
+      internalID: -630332765661226251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_8
+      rect:
+        serializedVersion: 2
+        x: 1868
+        y: 2294
+        width: 15
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29ab0efd509610020800000000000000
+      internalID: 2306239958142204562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_9
+      rect:
+        serializedVersion: 2
+        x: 898
+        y: 2272
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ac79c5afc34589e0800000000000000
+      internalID: -1619813931851088730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_10
+      rect:
+        serializedVersion: 2
+        x: 935
+        y: 2258
+        width: 23
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e94c99c77f4bf190800000000000000
+      internalID: -7927655343153460768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_11
+      rect:
+        serializedVersion: 2
+        x: 1014
+        y: 2259
+        width: 27
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 911896493624b42e0800000000000000
+      internalID: -2140544202425401063
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_12
+      rect:
+        serializedVersion: 2
+        x: 1089
+        y: 2246
+        width: 99
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35fc3a38776a57120800000000000000
+      internalID: 2411016207766638419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_13
+      rect:
+        serializedVersion: 2
+        x: 1521
+        y: 2279
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b55ec4ce99e1c1b30800000000000000
+      internalID: 4259312994028938587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_14
+      rect:
+        serializedVersion: 2
+        x: 1563
+        y: 2275
+        width: 23
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13cf3a62f618317a0800000000000000
+      internalID: -6407635530428449743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_15
+      rect:
+        serializedVersion: 2
+        x: 1033
+        y: 2240
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3782e72959a0c0b00800000000000000
+      internalID: 796022871661881459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_16
+      rect:
+        serializedVersion: 2
+        x: 1204
+        y: 2233
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84c778f82d3fe37f0800000000000000
+      internalID: -630798812108587960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_17
+      rect:
+        serializedVersion: 2
+        x: 1231
+        y: 2224
+        width: 36
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53e8ba52eabfcabb0800000000000000
+      internalID: -4923283567247913419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_18
+      rect:
+        serializedVersion: 2
+        x: 1292
+        y: 2239
+        width: 42
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 335eac3ea4580eee0800000000000000
+      internalID: -1233839741203716813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_19
+      rect:
+        serializedVersion: 2
+        x: 1480
+        y: 2243
+        width: 19
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68ab484e43347bca0800000000000000
+      internalID: -6001254083996632442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_20
+      rect:
+        serializedVersion: 2
+        x: 1806
+        y: 2241
+        width: 21
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4111fc3f922b3eaf0800000000000000
+      internalID: -368254851260411628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_21
+      rect:
+        serializedVersion: 2
+        x: 1974
+        y: 2245
+        width: 19
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0fd44659d4a0378d0800000000000000
+      internalID: -2849922810860253712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_22
+      rect:
+        serializedVersion: 2
+        x: 874
+        y: 2199
+        width: 25
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06683d4b585ce2da0800000000000000
+      internalID: -5967615278164244896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_23
+      rect:
+        serializedVersion: 2
+        x: 935
+        y: 2226
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf0bcbdd392a86c50800000000000000
+      internalID: 6658750805031301371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_24
+      rect:
+        serializedVersion: 2
+        x: 1020
+        y: 2217
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74cbee56e509da7a0800000000000000
+      internalID: -6364271963293172665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_25
+      rect:
+        serializedVersion: 2
+        x: 1036
+        y: 2214
+        width: 26
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebafa7ee06c3da3b0800000000000000
+      internalID: -5499673182933943618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_26
+      rect:
+        serializedVersion: 2
+        x: 1190
+        y: 2221
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3121eed021304880800000000000000
+      internalID: -8628842868793859777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_27
+      rect:
+        serializedVersion: 2
+        x: 1348
+        y: 2217
+        width: 31
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a939c0646556dd1f0800000000000000
+      internalID: -1018546519499041894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_28
+      rect:
+        serializedVersion: 2
+        x: 1068
+        y: 2207
+        width: 14
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3cdaf214ece234fb0800000000000000
+      internalID: -4664833325633917501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_29
+      rect:
+        serializedVersion: 2
+        x: 1105
+        y: 2195
+        width: 20
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d05270451b257ae0800000000000000
+      internalID: -1552287126283726640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_30
+      rect:
+        serializedVersion: 2
+        x: 1117
+        y: 2179
+        width: 52
+        height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5cbb42227bc165ba0800000000000000
+      internalID: -6100657072349332539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_31
+      rect:
+        serializedVersion: 2
+        x: 1963
+        y: 2213
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bbeaa241d32f27db0800000000000000
+      internalID: -4795504309050888517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_32
+      rect:
+        serializedVersion: 2
+        x: 578
+        y: 2152
+        width: 49
+        height: 37
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5c9a0b22c322c090800000000000000
+      internalID: -8015805069913318310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_33
+      rect:
+        serializedVersion: 2
+        x: 944
+        y: 2188
+        width: 18
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 176ae6fbb7ce00990800000000000000
+      internalID: -7421672169669745039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_34
+      rect:
+        serializedVersion: 2
+        x: 957
+        y: 2164
+        width: 21
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d7c73c235d313220800000000000000
+      internalID: 2463817898581805015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_35
+      rect:
+        serializedVersion: 2
+        x: 1462
+        y: 2164
+        width: 32
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 454e6842e859f9ee0800000000000000
+      internalID: -1252117733654993836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_36
+      rect:
+        serializedVersion: 2
+        x: 1730
+        y: 2146
+        width: 39
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: defc35e6202176b30800000000000000
+      internalID: 4280409772489166829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_37
+      rect:
+        serializedVersion: 2
+        x: 1914
+        y: 2143
+        width: 54
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e4062996ba426a10800000000000000
+      internalID: 1901164140817679587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_38
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 85
+        width: 2094
+        height: 2280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 012c7c371718fed90800000000000000
+      internalID: -7066286966047260144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_39
+      rect:
+        serializedVersion: 2
+        x: 893
+        y: 2172
+        width: 19
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14d0bc696cd7c2210800000000000000
+      internalID: 1309559883544857921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_40
+      rect:
+        serializedVersion: 2
+        x: 921
+        y: 2153
+        width: 21
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77bdf75cc56db5ae0800000000000000
+      internalID: -1559417152014918793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_41
+      rect:
+        serializedVersion: 2
+        x: 1146
+        y: 2159
+        width: 24
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ade3178b901fe1bb0800000000000000
+      internalID: -4963264715264278822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_42
+      rect:
+        serializedVersion: 2
+        x: 1415
+        y: 2154
+        width: 34
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd713aa0be0b50b30800000000000000
+      internalID: 4252999946663565279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_43
+      rect:
+        serializedVersion: 2
+        x: 2230
+        y: 1634
+        width: 69
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f5ec8e5922c0fac0800000000000000
+      internalID: -3823342600701811211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_44
+      rect:
+        serializedVersion: 2
+        x: 2249
+        y: 1379
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f51f3b63008d0a60800000000000000
+      internalID: 7641904894890153460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_45
+      rect:
+        serializedVersion: 2
+        x: 2280
+        y: 1235
+        width: 40
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2834cdf1be84d6e90800000000000000
+      internalID: -7030883268566432894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_46
+      rect:
+        serializedVersion: 2
+        x: 2274
+        y: 1042
+        width: 27
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 621f276a925820fe0800000000000000
+      internalID: -1224269734758649562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_47
+      rect:
+        serializedVersion: 2
+        x: 2339
+        y: 1025
+        width: 52
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d004b0a9cd353ccc0800000000000000
+      internalID: -3692015062571335667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_48
+      rect:
+        serializedVersion: 2
+        x: 2282
+        y: 929
+        width: 22
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 735ed7edececb46e0800000000000000
+      internalID: -1852159433841449673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_49
+      rect:
+        serializedVersion: 2
+        x: 910
+        y: 324
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b52e537898932690800000000000000
+      internalID: -7628085563297487432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_50
+      rect:
+        serializedVersion: 2
+        x: 1003
+        y: 330
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8558199755a2be9e0800000000000000
+      internalID: -1591131496745171624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_51
+      rect:
+        serializedVersion: 2
+        x: 1072
+        y: 336
+        width: 13
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7362711865c27a200800000000000000
+      internalID: 191170259231122999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_52
+      rect:
+        serializedVersion: 2
+        x: 1089
+        y: 322
+        width: 21
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d29c7d4c81d2de320800000000000000
+      internalID: 2588774945212844333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_53
+      rect:
+        serializedVersion: 2
+        x: 1298
+        y: 327
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 878db6c9f5237c240800000000000000
+      internalID: 4811870113096259704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_54
+      rect:
+        serializedVersion: 2
+        x: 1456
+        y: 240
+        width: 67
+        height: 105
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d96fc93f68b03f400800000000000000
+      internalID: 356641469733074589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_55
+      rect:
+        serializedVersion: 2
+        x: 609
+        y: 306
+        width: 25
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f89d2d55c350416b0800000000000000
+      internalID: -5326626702576395889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_56
+      rect:
+        serializedVersion: 2
+        x: 1009
+        y: 323
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9fd0b2e2017b7290800000000000000
+      internalID: -7891589664829546594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_57
+      rect:
+        serializedVersion: 2
+        x: 1023
+        y: 317
+        width: 17
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e2ef4dae9b47b370800000000000000
+      internalID: 8338216379984372448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_58
+      rect:
+        serializedVersion: 2
+        x: 1047
+        y: 309
+        width: 23
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a10f0a3bf9afa51f0800000000000000
+      internalID: -1055255598844547046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_59
+      rect:
+        serializedVersion: 2
+        x: 1199
+        y: 280
+        width: 58
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c616adef49a25e690800000000000000
+      internalID: -7573600378934369940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_60
+      rect:
+        serializedVersion: 2
+        x: 1387
+        y: 307
+        width: 28
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d97c2fb26f5ec5e80800000000000000
+      internalID: -8188417177004357731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_61
+      rect:
+        serializedVersion: 2
+        x: 905
+        y: 296
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6d525b8d44573700800000000000000
+      internalID: 519976974011227502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_62
+      rect:
+        serializedVersion: 2
+        x: 1058
+        y: 297
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05f3256fac0ba5020800000000000000
+      internalID: 2331370142880120656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_63
+      rect:
+        serializedVersion: 2
+        x: 1258
+        y: 304
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be1301acdc73151b0800000000000000
+      internalID: -5669689098884861461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_64
+      rect:
+        serializedVersion: 2
+        x: 1159
+        y: 273
+        width: 16
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d633878014aa821d0800000000000000
+      internalID: -3375260724422495379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_65
+      rect:
+        serializedVersion: 2
+        x: 1242
+        y: 187
+        width: 92
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c860f6ead51c64c10800000000000000
+      internalID: 2037528489534359180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_66
+      rect:
+        serializedVersion: 2
+        x: 564
+        y: 233
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e381aa8910668b010800000000000000
+      internalID: 1204825057363892286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_67
+      rect:
+        serializedVersion: 2
+        x: 954
+        y: 236
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d2f9dd733a0952b0800000000000000
+      internalID: -5595429845760085295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_68
+      rect:
+        serializedVersion: 2
+        x: 1155
+        y: 242
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ecae13bbb1358e020800000000000000
+      internalID: 2371236582380399310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_69
+      rect:
+        serializedVersion: 2
+        x: 629
+        y: 209
+        width: 32
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0aedfbc7dcc35d5a0800000000000000
+      internalID: -6497220034153161056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_70
+      rect:
+        serializedVersion: 2
+        x: 1017
+        y: 194
+        width: 19
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49f157bf2f3ec4870800000000000000
+      internalID: 8668554015521709972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_71
+      rect:
+        serializedVersion: 2
+        x: 1090
+        y: 210
+        width: 30
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08c93f952c2888dd0800000000000000
+      internalID: -2483591423250424704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_72
+      rect:
+        serializedVersion: 2
+        x: 1090
+        y: 201
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47c3da324b139de40800000000000000
+      internalID: 5681627054667021428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathExplosion_73
+      rect:
+        serializedVersion: 2
+        x: 1045
+        y: 168
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0d70f3f4f59a01d0800000000000000
+      internalID: -3383727290718323441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 3de17bc88ecd6034b8122b91f06da784
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      DeathExplosion_0: 2526944591491767180
+      DeathExplosion_1: 5843542087280102338
+      DeathExplosion_10: -7927655343153460768
+      DeathExplosion_11: -2140544202425401063
+      DeathExplosion_12: 2411016207766638419
+      DeathExplosion_13: 4259312994028938587
+      DeathExplosion_14: -6407635530428449743
+      DeathExplosion_15: 796022871661881459
+      DeathExplosion_16: -630798812108587960
+      DeathExplosion_17: -4923283567247913419
+      DeathExplosion_18: -1233839741203716813
+      DeathExplosion_19: -6001254083996632442
+      DeathExplosion_2: 7319908109080213636
+      DeathExplosion_20: -368254851260411628
+      DeathExplosion_21: -2849922810860253712
+      DeathExplosion_22: -5967615278164244896
+      DeathExplosion_23: 6658750805031301371
+      DeathExplosion_24: -6364271963293172665
+      DeathExplosion_25: -5499673182933943618
+      DeathExplosion_26: -8628842868793859777
+      DeathExplosion_27: -1018546519499041894
+      DeathExplosion_28: -4664833325633917501
+      DeathExplosion_29: -1552287126283726640
+      DeathExplosion_3: 4529136177182534694
+      DeathExplosion_30: -6100657072349332539
+      DeathExplosion_31: -4795504309050888517
+      DeathExplosion_32: -8015805069913318310
+      DeathExplosion_33: -7421672169669745039
+      DeathExplosion_34: 2463817898581805015
+      DeathExplosion_35: -1252117733654993836
+      DeathExplosion_36: 4280409772489166829
+      DeathExplosion_37: 1901164140817679587
+      DeathExplosion_38: -7066286966047260144
+      DeathExplosion_39: 1309559883544857921
+      DeathExplosion_4: 1761346774558567161
+      DeathExplosion_40: -1559417152014918793
+      DeathExplosion_41: -4963264715264278822
+      DeathExplosion_42: 4252999946663565279
+      DeathExplosion_43: -3823342600701811211
+      DeathExplosion_44: 7641904894890153460
+      DeathExplosion_45: -7030883268566432894
+      DeathExplosion_46: -1224269734758649562
+      DeathExplosion_47: -3692015062571335667
+      DeathExplosion_48: -1852159433841449673
+      DeathExplosion_49: -7628085563297487432
+      DeathExplosion_5: -6115472355117449568
+      DeathExplosion_50: -1591131496745171624
+      DeathExplosion_51: 191170259231122999
+      DeathExplosion_52: 2588774945212844333
+      DeathExplosion_53: 4811870113096259704
+      DeathExplosion_54: 356641469733074589
+      DeathExplosion_55: -5326626702576395889
+      DeathExplosion_56: -7891589664829546594
+      DeathExplosion_57: 8338216379984372448
+      DeathExplosion_58: -1055255598844547046
+      DeathExplosion_59: -7573600378934369940
+      DeathExplosion_6: 3857942915691309172
+      DeathExplosion_60: -8188417177004357731
+      DeathExplosion_61: 519976974011227502
+      DeathExplosion_62: 2331370142880120656
+      DeathExplosion_63: -5669689098884861461
+      DeathExplosion_64: -3375260724422495379
+      DeathExplosion_65: 2037528489534359180
+      DeathExplosion_66: 1204825057363892286
+      DeathExplosion_67: -5595429845760085295
+      DeathExplosion_68: 2371236582380399310
+      DeathExplosion_69: -6497220034153161056
+      DeathExplosion_7: -630332765661226251
+      DeathExplosion_70: 8668554015521709972
+      DeathExplosion_71: -2483591423250424704
+      DeathExplosion_72: 5681627054667021428
+      DeathExplosion_73: -3383727290718323441
+      DeathExplosion_8: 2306239958142204562
+      DeathExplosion_9: -1619813931851088730
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

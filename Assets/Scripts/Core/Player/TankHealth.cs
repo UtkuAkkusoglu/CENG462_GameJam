@@ -7,6 +7,9 @@ public class TankHealth : NetworkBehaviour
     [Header("References")]
     [SerializeField] private PlayerStats stats; // Merkezi depo
 
+    [Header("Efektler")]
+    [SerializeField] private GameObject explosionPrefab; // <--- YENİ: Patlama Prefabını buraya sürükleyeceksin
+
     private float damageCooldown = 0.1f;
     private float lastDamageTime;
     private bool isDead = false;
@@ -58,8 +61,28 @@ public class TankHealth : NetworkBehaviour
         if (stats.Health.Value <= 0)
         {
             isDead = true;
+
+            SpawnExplosionClientRpc(transform.position);
+
             RespawnManager.Instance.RespawnPlayer(OwnerClientId);
             Invoke(nameof(DespawnTank), 0.1f);
+        }
+    }
+
+    [ClientRpc]
+    private void SpawnExplosionClientRpc(Vector3 position)
+    {
+        // 1. Konsola mesaj yazdır (Çalışıp çalışmadığını görelim)
+        Debug.Log($"[PATLAMA] Efekt oluşturuluyor: {position}");
+
+        if (explosionPrefab != null)
+        {
+            Instantiate(explosionPrefab, position, Quaternion.identity);
+        }
+        else
+        {
+            // 2. Eğer prefab yoksa hata versin
+            Debug.LogError("[PATLAMA HATASI] Explosion Prefab atanmamış! Inspector'ı kontrol et.");
         }
     }
 

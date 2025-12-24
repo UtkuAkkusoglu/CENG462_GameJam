@@ -510,7 +510,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1525730834
+  GlobalObjectIdHash: 941950997
   InScenePlacedSourceGlobalObjectIdHash: 941950997
   DeferredDespawnTick: 0
   Ownership: 0
@@ -700,6 +700,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TankHealth
   ShowTopMostFoldoutHeaderGroup: 1
   stats: {fileID: -9190479645841826460}
+  explosionPrefab: {fileID: 8365956622083538456, guid: 4f31798152d1a8b4db751395e15809db, type: 3}
 --- !u!114 &-7138412206781663422
 MonoBehaviour:
   m_ObjectHideFlags: 0
