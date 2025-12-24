@@ -379,9 +379,10 @@ GameObject:
   - component: {fileID: -3691267572807119789}
   - component: {fileID: 7800171005271247880}
   - component: {fileID: -7138412206781663422}
+  - component: {fileID: -9190479645841826460}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -520,6 +521,7 @@ MonoBehaviour:
   inputReader: {fileID: 11400000, guid: dd4577b59f756e14f8e248ca3ecaadac, type: 2}
   bodyTransform: {fileID: 9068572861741891342}
   rb: {fileID: 7285206071442692308}
+  stats: {fileID: -9190479645841826460}
   movementSpeed: 5
   turningRate: 120
 --- !u!114 &6491140186009421824
@@ -606,9 +608,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TankHealth
   ShowTopMostFoldoutHeaderGroup: 1
-  maxHealth: 100
-  currentHealth:
-    m_InternalValue: 100
+  stats: {fileID: -9190479645841826460}
 --- !u!114 &-7138412206781663422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -625,6 +625,24 @@ MonoBehaviour:
   inputReader: {fileID: 11400000, guid: dd4577b59f756e14f8e248ca3ecaadac, type: 2}
   pauseCanvas: {fileID: 3247825385127334927}
   backToMenuButton: {fileID: 989799193421829119}
+--- !u!114 &-9190479645841826460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1581756959222653059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 487b91b828e9eba448a29654fb156a56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
+  ShowTopMostFoldoutHeaderGroup: 1
+  Score:
+    m_InternalValue: 0
+  Health:
+    m_InternalValue: 100
+  shieldVisual: {fileID: 0}
 --- !u!1 &1805858465510780879
 GameObject:
   m_ObjectHideFlags: 0
@@ -809,7 +827,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -386955045
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 100
   m_Sprite: {fileID: -222631388811546178, guid: 3b87150d9e7a3cd4d9f66655c3f645ff, type: 3}
   m_Color: {r: 0.14514053, g: 0.5698112, b: 0.22468933, a: 1}
@@ -902,7 +920,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -386955045
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 200
   m_Sprite: {fileID: 8172728924379629268, guid: 60ece59a46487014baac111b94cdc52a, type: 3}
   m_Color: {r: 0.14509805, g: 0.5686275, b: 0.22352941, a: 1}
@@ -934,6 +952,7 @@ MonoBehaviour:
   inputReader: {fileID: 11400000, guid: dd4577b59f756e14f8e248ca3ecaadac, type: 2}
   muzzleFlash: {fileID: 1180609966845074604}
   playerCollider: {fileID: 3807491560225417432}
+  stats: {fileID: -9190479645841826460}
   projectileSpeed: 30
   fireRate: 0.75
   muzzleFlashDuration: 0.075
@@ -1467,7 +1486,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -386955045
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: -7722468808026810248, guid: eb7131f1c5da0b641bf43cf4dbe5db52, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

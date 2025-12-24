@@ -10,6 +10,7 @@ public class ProjectileLauncher : NetworkBehaviour
     [SerializeField] InputReader inputReader; // for reading the fire input event
     [SerializeField] private GameObject muzzleFlash;
     [SerializeField] private Collider2D playerCollider; // to ignore self-collisions
+    [SerializeField] private PlayerStats stats;
 
     [Header("Settings")]
     [SerializeField] float projectileSpeed;
@@ -34,7 +35,7 @@ public class ProjectileLauncher : NetworkBehaviour
         if (!IsOwner) return;
         if (!shouldFire) return;
 
-        float timeBetweenShots = 1f / fireRate;
+        float timeBetweenShots = 1f / (fireRate * stats.FireRateBoostMultiplier);
         if (Time.time < previousFireTime + timeBetweenShots) return; // yeterli süre geçmedi, henüz ateş edemez
         
         Vector3 spawnPos = projectileSpawnPoint.position;
@@ -47,6 +48,7 @@ public class ProjectileLauncher : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
+        if (stats == null) stats = GetComponent<PlayerStats>(); // Otomatik bulma garantisi
         if (!IsOwner) return;
         inputReader.PrimaryFireEvent += HandlePrimaryFire;
     }

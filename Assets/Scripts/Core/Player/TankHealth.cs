@@ -4,59 +4,37 @@ using TMPro;
 
 public class TankHealth : NetworkBehaviour
 {
-    [Header("Settings")]
-    [SerializeField] private int maxHealth = 100;
+    [Header("References")]
+    [SerializeField] private PlayerStats stats; // Merkezi depo
 
-    // Hasar bekleme süresi (Invulnerability)
     private float damageCooldown = 0.1f;
     private float lastDamageTime;
-
-    // Tankın birden fazla kez ölmesini engelleyen kilit
     private bool isDead = false;
-
-    public NetworkVariable<int> currentHealth = new NetworkVariable<int>(100);
     private TMP_Text healthText;
 
     public override void OnNetworkSpawn()
     {
-        currentHealth.OnValueChanged += OnHealthChanged;
+        // Can değiştiğinde UI'ı güncellemek için PlayerStats'taki değişkene abone ol
+        stats.Health.OnValueChanged += OnHealthChanged;
 
-        if (IsServer)
-        {
-            currentHealth.Value = maxHealth;
-            isDead = false; // Doğduğunda yaşıyor
-        }
+        if (IsServer) isDead = false;
 
-        if (IsOwner)
-        {
-            InitializeHealthUI();
-        }
+        if (IsOwner) InitializeHealthUI();
     }
 
-    // --- GARANTİ ÇÖZÜM: TANK SİLİNİRKEN ÇALIŞIR ---
     public override void OnNetworkDespawn()
     {
-        // Tank oyundan çıkarken (yok olurken) eğer bu benim tankımsa
-        if (IsOwner && healthText != null)
-        {
-            // Son nefesinde ekrana 0 yazdır
-            healthText.text = "0";
-            healthText.color = Color.red;
-        }
-
-        // Event aboneliğini iptal et (Hafıza temizliği)
-        currentHealth.OnValueChanged -= OnHealthChanged;
+        if (IsOwner && healthText != null) healthText.text = "0";
+        stats.Health.OnValueChanged -= OnHealthChanged;
     }
 
     private void InitializeHealthUI()
     {
-        // "HealthText" etiketini arıyoruz (Inspector ayarınla uyumlu)
         GameObject textObject = GameObject.FindGameObjectWithTag("HealthText");
         if (textObject != null)
         {
             healthText = textObject.GetComponent<TMP_Text>();
-            UpdateHealthText(currentHealth.Value);
-            healthText.gameObject.SetActive(true);
+            UpdateHealthUI(stats.Health.Value); // İlk değeri merkezden al
         }
     }
 
@@ -65,47 +43,37 @@ public class TankHealth : NetworkBehaviour
         if (!IsServer || isDead) return;
         if (Time.time < lastDamageTime + damageCooldown) return;
 
-        lastDamageTime = Time.time;
-        currentHealth.Value = Mathf.Max(currentHealth.Value - damage, 0);
+        // --- KRİTİK DÜZELTME: KALKAN KONTROLÜ ---
+        if (stats.IsShielded) 
+        {
+            Debug.Log("Kalkan hasarı engelledi!");
+            return;
+        }
 
-        if (currentHealth.Value <= 0)
+        lastDamageTime = Time.time;
+        
+        // Hasarı PlayerStats üzerinden düşür
+        stats.Health.Value = Mathf.Max(stats.Health.Value - damage, 0);
+
+        if (stats.Health.Value <= 0)
         {
             isDead = true;
-            // KABUL KRİTERİ: Önce yeniden doğma sürecini başlatıyoruz
             RespawnManager.Instance.RespawnPlayer(OwnerClientId);
-            
-            // Sonra tankı yok ediyoruz
             Invoke(nameof(DespawnTank), 0.1f);
         }
     }
 
     private void DespawnTank()
     {
-        // Eğer obje hala duruyorsa yok et
-        if (IsSpawned)
-        {
-            GetComponent<NetworkObject>().Despawn();
-            Debug.Log("Tank tamamen yok edildi.");
-        }
+        if (IsSpawned) GetComponent<NetworkObject>().Despawn();
     }
 
-    private void OnHealthChanged(int oldValue, int newValue)
-    {
-        if (IsOwner)
-        {
-            UpdateHealthText(newValue);
-        }
-    }
+    private void OnHealthChanged(int oldV, int newV) { if (IsOwner) UpdateHealthUI(newV); }
 
-    private void UpdateHealthText(int value)
+    private void UpdateHealthUI(int value)
     {
         if (healthText == null) return;
-
         healthText.text = value.ToString();
-
-        if (value <= 40)
-            healthText.color = Color.red;
-        else
-            healthText.color = Color.white;
+        healthText.color = value <= 40 ? Color.red : Color.white;
     }
 }
