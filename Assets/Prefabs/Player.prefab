@@ -613,7 +613,7 @@ MonoBehaviour:
   bodyTransform: {fileID: 9068572861741891342}
   rb: {fileID: 7285206071442692308}
   stats: {fileID: -9190479645841826460}
-  movementSpeed: 5
+  movementSpeed: 12
   turningRate: 120
 --- !u!114 &6491140186009421824
 MonoBehaviour:
@@ -792,7 +792,7 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 34
-    OrthographicSize: 20
+    OrthographicSize: 30
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
