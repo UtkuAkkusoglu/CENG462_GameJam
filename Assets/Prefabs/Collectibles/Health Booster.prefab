@@ -177,4 +177,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthBoosterCollectible
   ShowTopMostFoldoutHeaderGroup: 1
-  healthAmount: 25
+  healthAmount: 30

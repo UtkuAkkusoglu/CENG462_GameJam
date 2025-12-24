@@ -167,4 +167,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShieldCollectible
   ShowTopMostFoldoutHeaderGroup: 1
-  duration: 7
+  duration: 5
