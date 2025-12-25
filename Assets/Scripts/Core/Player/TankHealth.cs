@@ -36,7 +36,7 @@ public class TankHealth : NetworkBehaviour
     {
         if (!IsServer || isDead) return;
         if (Time.time < lastDamageTime + damageCooldown) return;
-        if (stats.IsShielded) return;
+        if (stats.IsShielded.Value) return;
 
         lastDamageTime = Time.time;
         stats.Health.Value = Mathf.Max(stats.Health.Value - damage, 0);

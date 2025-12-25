@@ -44,6 +44,6 @@ public class PlayerMovement : NetworkBehaviour
         Vector2 movementInput = inputReader.Move; 
 
         // Move forward/back along the tank's facing (bodyTransform.up)
-        rb.linearVelocity = (Vector2)bodyTransform.up * movementInput.y * (movementSpeed * stats.SpeedBoostMultiplier); 
+        rb.linearVelocity = (Vector2)bodyTransform.up * movementInput.y * (movementSpeed * stats.SpeedBoostMultiplier.Value); 
     }
 }
