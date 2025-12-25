@@ -40,40 +40,32 @@ public class ServerProjectile : NetworkBehaviour
         if (!hasHit) DestroyProjectile();
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D otherCollider)
     {
-        // Sadece sunucu yetkilidir
         if (hasHit || !IsServer) return;
 
-        bool hitSomething = false;
-
-        // 1. OYUNCU (TANK) KONTROLÜ
-        if (canHitPlayers)
-        {
-            TankHealth tank = other.GetComponent<TankHealth>() ?? other.GetComponentInParent<TankHealth>();
-            if (tank != null)
-            {
-                tank.TakeDamage(damageAmount);
-                hitSomething = true;
-            }
-        }
-
-        // 2. GEMİ (DÜŞMAN) KONTROLÜ
-        // Eğer mermi gemiden çıkıyorsa 'canHitEnemies' müfettişte (Inspector) KAPALI olmalı!
-        if (canHitEnemies && !hitSomething)
-        {
-            ShipHealth ship = other.GetComponent<ShipHealth>() ?? other.GetComponentInParent<ShipHealth>();
-            if (ship != null)
-            {
-                ship.TakeDamage(damageAmount);
-                hitSomething = true;
-            }
-        }
-
-        if (hitSomething)
+        // 1. GEMİ VURMA KONTROLÜ (Hata CS7036'nın çözümü)
+        ShipHealth shipTarget = otherCollider.GetComponent<ShipHealth>() ?? otherCollider.GetComponentInParent<ShipHealth>();
+        if (shipTarget != null)
         {
             hasHit = true;
-            StopAllCoroutines(); // Zamanlayıcıyı durdur
+            // HATA BURADAYDI: Artık merminin sahibi olan 'OwnerClientId'yi gönderiyoruz
+            shipTarget.TakeDamage(damageAmount, OwnerClientId); 
+            DestroyProjectile();
+            return;
+        }
+
+        // 2. TANK VURMA KONTROLÜ (Hata CS7036'nın çözümü)
+        TankHealth targetHealth = otherCollider.GetComponent<TankHealth>() ?? otherCollider.GetComponentInParent<TankHealth>();
+        if (targetHealth != null)
+        {
+            // Kendi kendini vurma koruması
+            var targetNetObj = targetHealth.GetComponent<NetworkObject>();
+            if (targetNetObj != null && targetNetObj.OwnerClientId == OwnerClientId) return;
+
+            hasHit = true;
+            // HATA BURADAYDI: Buraya da OwnerClientId ekledik
+            targetHealth.TakeDamage(damageAmount, OwnerClientId);
             DestroyProjectile();
         }
     }
