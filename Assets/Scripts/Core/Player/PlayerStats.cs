@@ -33,6 +33,10 @@ public class PlayerStats : NetworkBehaviour
     {
         if (!IsServer) return; 
         Score.Value += amount;
+
+        // HAKEME SOR: Birisi kazandı mı?
+        MatchManager.Instance?.CheckWinCondition(OwnerClientId, Score.Value);
+        
         Debug.Log($"[Stats] Yeni Skor: {Score.Value}");
     }
 
