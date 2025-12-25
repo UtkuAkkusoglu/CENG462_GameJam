@@ -32,7 +32,7 @@ public class ProjectileLauncher : NetworkBehaviour
             muzzleFlash.SetActive(false);
         }
 
-        if (PauseController.IsMenuOpen) return;
+        if (PauseController.IsMenuOpen || MatchManager.IsMatchOver) return;
 
         if (!IsOwner) return;
         if (!shouldFire) return;

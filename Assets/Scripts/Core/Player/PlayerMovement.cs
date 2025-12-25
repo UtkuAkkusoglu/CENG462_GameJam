@@ -22,7 +22,7 @@ public class PlayerMovement : NetworkBehaviour
     private void Update()
     {
 
-        if (PauseController.IsMenuOpen) return;
+        if (PauseController.IsMenuOpen || MatchManager.IsMatchOver) return;
 
         if (!IsOwner) return;
 

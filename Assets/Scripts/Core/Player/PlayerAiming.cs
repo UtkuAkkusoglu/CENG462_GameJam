@@ -9,7 +9,7 @@ public class PlayerAiming : NetworkBehaviour
     private void LateUpdate()
     {
 
-        if (PauseController.IsMenuOpen) return;
+        if (PauseController.IsMenuOpen || MatchManager.IsMatchOver) return;
 
         if (!IsOwner) return; // Only owner aims locally
 
