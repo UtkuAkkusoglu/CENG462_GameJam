@@ -4,17 +4,19 @@ using UnityEngine;
 public class JeepAI : NetworkBehaviour
 {
     [Header("Hareket Ayarlarý")]
-    [SerializeField] private float moveSpeed = 6f;      // Jeep gemiden hýzlý olsun
-    [SerializeField] private float turningRate = 150f;  // Daha kývrak dönsün
-    [SerializeField] private float stopDistance = 6f;   // Tanka daha çok yaklaþsýn
+    [SerializeField] private float moveSpeed = 6f;
+    [SerializeField] private float turningRate = 180f; // Jeep daha kývrak olsun
+    [SerializeField] private float stopDistance = 6f;
 
-    [Header("Sudan Kaçýþ (Radar)")]
+    [Header("Akýllý Radar (Sudan Kaçýþ)")]
     [SerializeField] private float obstacleCheckDistance = 3f;
-    [SerializeField] private LayerMask avoidLayers;     // Neye çarpýnca dursun? (SU)
+    [SerializeField] private int rayCount = 5; // Önünü tarayan ýþýn sayýsý
+    [SerializeField] private float fovAngle = 120f; // Tarama açýsý
+    [SerializeField] private LayerMask avoidLayers; // SU KATMANI BURAYA SEÇÝLECEK
 
     [Header("Saldýrý Ayarlarý")]
     [SerializeField] private float attackRange = 12f;
-    [SerializeField] private float fireRate = 1.5f;     // Daha seri ateþ etsin
+    [SerializeField] private float fireRate = 1.5f;
 
     [Header("Referanslar")]
     [SerializeField] private Transform firePoint;
@@ -25,10 +27,7 @@ public class JeepAI : NetworkBehaviour
     private float lastFireTime;
     private Rigidbody2D rb;
 
-    public override void OnNetworkSpawn()
-    {
-        rb = GetComponent<Rigidbody2D>();
-    }
+    public override void OnNetworkSpawn() => rb = GetComponent<Rigidbody2D>();
 
     private void Update()
     {
@@ -39,20 +38,28 @@ public class JeepAI : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        // Temel kontroller
         if (rb == null || !IsServer) return;
 
-        // SORUNUN ÇÖZÜMÜ BURADA:
-        // Eðer hedef yoksa (menzilden çýktýysa)
+        // Hedef yoksa dur (Sonsuza gitmesin)
         if (currentTarget == null)
         {
-            // Motorlarý kapat ve dur
             rb.linearVelocity = Vector2.zero;
             rb.angularVelocity = 0f;
-            return; // Þimdi çýkabilirsin
+            return;
         }
 
-        // Hedef varsa kovalamaya devam et
+        // --- SUYA GÝRDÝM MÝ KONTROLÜ (FAIL-SAFE) ---
+        // Eðer yanlýþlýkla suya girerse (OverlapCircle)
+        Collider2D inWater = Physics2D.OverlapCircle(transform.position, 0.5f, avoidLayers);
+        if (inWater != null)
+        {
+            rb.linearVelocity = Vector2.zero; // Dur!
+            // Geriye doðru hafif itme
+            Vector2 pushBack = (Vector2.zero - (Vector2)transform.position).normalized;
+            rb.AddForce(pushBack * 5f, ForceMode2D.Impulse);
+            return;
+        }
+
         HandleMovement();
     }
 
@@ -65,23 +72,13 @@ public class JeepAI : NetworkBehaviour
         float targetAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
         transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, targetAngle), turningRate * Time.fixedDeltaTime);
 
-        // 2. RADAR (Önümde SU var mý?)
-        bool dangerAhead = false;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, obstacleCheckDistance, avoidLayers);
-
-        if (hit.collider != null)
-        {
-            // Tanka veya baþka Jeep'e deðil, sadece belirlediðimiz engele çarpýyorsa
-            if (hit.collider.GetComponent<TankHealth>() == null && hit.collider.GetComponent<JeepAI>() == null)
-            {
-                dangerAhead = true;
-            }
-        }
+        // 2. RADAR KONTROLÜ (Önümde Su Var mý?)
+        bool dangerAhead = CheckFrontalObstacles();
 
         // 3. HAREKET
         if (dangerAhead)
         {
-            rb.linearVelocity = Vector2.zero; // Su var! Fren yap.
+            rb.linearVelocity = Vector2.zero; // Su var, dur.
         }
         else if (distance > stopDistance)
         {
@@ -94,14 +91,45 @@ public class JeepAI : NetworkBehaviour
         rb.angularVelocity = 0f;
     }
 
-    // Gizmos: Kýrmýzý çizgiyi gör
-    private void OnDrawGizmos()
+    // --- YELPAZE RADAR SÝSTEMÝ ---
+    private bool CheckFrontalObstacles()
     {
-        Gizmos.color = Color.yellow; // Jeep'in radarý sarý olsun
-        Gizmos.DrawRay(transform.position, transform.up * obstacleCheckDistance);
+        float angleStep = fovAngle / (rayCount - 1);
+        float startAngle = -fovAngle / 2f;
+
+        for (int i = 0; i < rayCount; i++)
+        {
+            float currentAngle = startAngle + (i * angleStep);
+            Vector3 direction = Quaternion.Euler(0, 0, currentAngle) * transform.up;
+
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, obstacleCheckDistance, avoidLayers);
+
+            if (hit.collider != null)
+            {
+                // Tanka veya baþka Jeep'e çarpmadýðýmýz sürece dur
+                if (hit.collider.GetComponent<TankHealth>() == null && hit.collider.GetComponent<JeepAI>() == null)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
-    // --- BURADAN AÞAÐISI GEMÝ ÝLE AYNI (Kopyala/Yapýþtýr) ---
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        float angleStep = fovAngle / (rayCount - 1);
+        float startAngle = -fovAngle / 2f;
+        for (int i = 0; i < rayCount; i++)
+        {
+            float currentAngle = startAngle + (i * angleStep);
+            Vector3 direction = Quaternion.Euler(0, 0, currentAngle) * transform.up;
+            Gizmos.DrawRay(transform.position, direction * obstacleCheckDistance);
+        }
+    }
+
+    // ... (Ateþ etme kodlarý ayný) ...
     private void FindNearestPlayer()
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
@@ -124,7 +152,7 @@ public class JeepAI : NetworkBehaviour
     {
         if (serverProjectilePrefab == null || firePoint == null) return;
         GameObject serverProj = Instantiate(serverProjectilePrefab, firePoint.position, firePoint.rotation);
-        IgnoreCollisionWithJeep(serverProj.GetComponent<Collider2D>()); // Ýsim deðiþti
+        IgnoreCollisionWithJeep(serverProj.GetComponent<Collider2D>());
         serverProj.GetComponent<NetworkObject>().Spawn();
         SpawnDummyProjectileClientRpc(firePoint.position, firePoint.rotation);
     }
