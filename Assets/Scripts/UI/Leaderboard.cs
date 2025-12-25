@@ -77,28 +77,38 @@ public class Leaderboard : NetworkBehaviour
     {
         if (!IsServer) return;
 
-        // --- KRİTİK KONTROL: Oyuncu listede zaten var mı? ---
-        foreach (var entity in leaderboardEntities)
+        // --- 1. KONTROL: Oyuncu zaten listede var mı? (Respawn Durumu) ---
+        for (int i = 0; i < leaderboardEntities.Count; i++)
         {
-            if (entity.ClientId == player.OwnerClientId)
+            if (leaderboardEntities[i].ClientId == player.OwnerClientId)
             {
-                // Eğer oyuncu zaten varsa tekrar ekleme, metoddan çık.
-                return; 
+                // Oyuncu zaten listede var (Öldü ve geri geldi)
+                // Sadece yeni tankın puan değişimlerini dinlemeye başlıyoruz.
+                player.Score.OnValueChanged += (oldVal, newVal) => UpdateScore(player.OwnerClientId, newVal);
+                
+                // ÖNEMLİ: Tablodaki skoru, yeni tanka aktarılan (savedScore) güncel değerle eşitle
+                UpdateScore(player.OwnerClientId, player.Score.Value); 
+                
+                Debug.Log($"[Leaderboard] {player.OwnerClientId} ID'li oyuncu tabloya yeniden bağlandı.");
+                return; // İşlem tamam, metoddan çık.
             }
         }
 
+        // --- 2. YENİ KAYIT: Oyuncu ilk defa bağlanıyorsa ---
         var nameDisplay = player.GetComponent<PlayerNameDisplay>();
         string pName = nameDisplay != null ? nameDisplay.playerName.Value.ToString() : "Player " + player.OwnerClientId;
 
+        // Yeni struct oluşturup listeye ekle
         leaderboardEntities.Add(new LeaderboardEntityState {
             ClientId = player.OwnerClientId,
             PlayerName = pName,
             Score = player.Score.Value
         });
 
-        // Event'i bağla (Burada += kullanırken dikkat, her spawn'da tekrar bağlanmasın diye 
-        // PlayerStats tarafında OnDestroy'da -= yapmak en sağlıklısıdır)
+        // Puan değişimlerini dinle
         player.Score.OnValueChanged += (oldVal, newVal) => UpdateScore(player.OwnerClientId, newVal);
+        
+        Debug.Log($"[Leaderboard] {pName} tabloya ilk kez eklendi.");
     }
 
     private void UpdateScore(ulong clientId, int newScore)

@@ -46,13 +46,32 @@ public class RespawnManager : NetworkBehaviour
 
     private IEnumerator RespawnCoroutine(ulong clientId)
     {
+        // 1. Önce mevcut puanı yedekle
+        int savedScore = 0;
+        foreach (var stats in FindObjectsByType<PlayerStats>(FindObjectsSortMode.None))
+        {
+            if (stats.OwnerClientId == clientId)
+            {
+                savedScore = stats.Score.Value; // Ceza düşülmüş halini alıyoruz
+                break;
+            }
+        }
+
         yield return new WaitForSeconds(respawnDelay);
 
         Vector3 spawnPos = SpawnPoint.GetRandomPlayerPos();
         GameObject newPlayerTank = Instantiate(playerPrefab, spawnPos, Quaternion.identity);
 
-        // Tankı ağda doğur ve sahibine ata
-        newPlayerTank.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId, true);
+        // 2. Tankı spawn et
+        var netObj = newPlayerTank.GetComponent<NetworkObject>();
+        netObj.SpawnAsPlayerObject(clientId, true);
+
+        // 3. KRİTİK ADIM: Eski puanı yeni tanka yükle
+        if (newPlayerTank.TryGetComponent<PlayerStats>(out var newStats))
+        {
+            newStats.Score.Value = savedScore; // Puanı geri yükledik!
+            Debug.Log($"[Migration] Client {clientId} puanı geri yüklendi: {savedScore}");
+        }
         
         Debug.Log($"[Second Chance] Client {clientId} başarıyla yeniden doğduruldu!");
     }
