@@ -42,11 +42,11 @@ GameObject:
   - component: {fileID: 2672356997399952496}
   - component: {fileID: 1349386156340564371}
   - component: {fileID: 613654332026729364}
-  - component: {fileID: 2453981047220529100}
   - component: {fileID: 5738844967564001437}
   - component: {fileID: 4339097143114648327}
   - component: {fileID: 9180039397969381248}
   - component: {fileID: 2310051765889563491}
+  - component: {fileID: 1984364022470000671}
   m_Layer: 18
   m_Name: EnemyShip
   m_TagString: EnemyShip
@@ -153,141 +153,8 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
---- !u!68 &2453981047220529100
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6093438605730777243}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: -1.985831, y: 0.0016953945}
-  - {x: -1.9858322, y: 0.0016992092}
-  - {x: -1.9266434, y: 1.618295}
-  - {x: -1.87994, y: 3.1665423}
-  - {x: -1.8594017, y: 3.7824533}
-  - {x: -1.7940903, y: 3.8199642}
-  - {x: -1.7365589, y: 4.4171295}
-  - {x: -1.7056084, y: 5.038745}
-  - {x: -1.6142712, y: 5.47118}
-  - {x: -1.4877472, y: 6.4554462}
-  - {x: -1.2049103, y: 7.861903}
-  - {x: -0.9759731, y: 8.676217}
-  - {x: -0.63614655, y: 9.468475}
-  - {x: -0.31097603, y: 9.9464655}
-  - {x: -0.2941742, y: 9.994903}
-  - {x: -0.27661896, y: 9.999313}
-  - {x: -0.256876, y: 9.996434}
-  - {x: -0.25083542, y: 9.994643}
-  - {x: -0.24622345, y: 9.97818}
-  - {x: -0.24655151, y: 9.964442}
-  - {x: -0.2501583, y: 9.958336}
-  - {x: -0.2556839, y: 9.956644}
-  - {x: -0.25607872, y: 9.928366}
-  - {x: -0.24824524, y: 9.897965}
-  - {x: -0.22246742, y: 9.930541}
-  - {x: -0.19569588, y: 9.97421}
-  - {x: -0.15719032, y: 10.033433}
-  - {x: -0.12287521, y: 10.103669}
-  - {x: -0.04109001, y: 10.269775}
-  - {x: -0.04087639, y: 10.605057}
-  - {x: -0.010400772, y: 10.621756}
-  - {x: 0.02448845, y: 10.587781}
-  - {x: 0.017744064, y: 10.392291}
-  - {x: 0.015909195, y: 10.2556925}
-  - {x: 0.1345787, y: 10.063656}
-  - {x: 0.16466522, y: 9.9992}
-  - {x: 0.2007904, y: 9.954485}
-  - {x: 0.22099876, y: 9.922597}
-  - {x: 0.23989487, y: 9.90411}
-  - {x: 0.24567413, y: 9.937674}
-  - {x: 0.2427845, y: 9.978559}
-  - {x: 0.24773788, y: 9.997171}
-  - {x: 0.27930832, y: 9.997521}
-  - {x: 0.28637695, y: 9.994017}
-  - {x: 0.29009628, y: 9.978039}
-  - {x: 0.56554604, y: 9.586879}
-  - {x: 0.6497803, y: 9.411828}
-  - {x: 0.80548286, y: 9.098169}
-  - {x: 0.95646477, y: 8.728643}
-  - {x: 1.0864716, y: 8.277007}
-  - {x: 1.2021542, y: 7.85404}
-  - {x: 1.284872, y: 7.4269104}
-  - {x: 1.4428959, y: 6.667881}
-  - {x: 1.5838032, y: 5.785022}
-  - {x: 1.6674347, y: 5.180069}
-  - {x: 1.7179604, y: 5.099619}
-  - {x: 1.7072239, y: 4.8501644}
-  - {x: 1.7162399, y: 4.5815535}
-  - {x: 1.7628899, y: 4.186288}
-  - {x: 1.789299, y: 3.8407452}
-  - {x: 1.8581314, y: 3.7879765}
-  - {x: 1.8662663, y: 3.5571878}
-  - {x: 1.8979263, y: 2.5474017}
-  - {x: 1.9405041, y: 1.4497659}
-  - {x: 1.9921265, y: -0.00557971}
-  - {x: 2.0013218, y: -1.3029566}
-  - {x: 1.9984322, y: -2.310131}
-  - {x: 1.985775, y: -3.472853}
-  - {x: 1.9766045, y: -4.597101}
-  - {x: 1.901331, y: -5.770705}
-  - {x: 1.8380241, y: -6.8207526}
-  - {x: 1.7126598, y: -8.011267}
-  - {x: 1.5801907, y: -8.743065}
-  - {x: 1.4021397, y: -9.521957}
-  - {x: 1.2200718, y: -10.1721945}
-  - {x: 1.0412827, y: -10.345649}
-  - {x: 0.7517071, y: -10.477219}
-  - {x: 0.09728432, y: -10.609241}
-  - {x: 0.010593414, y: -10.619291}
-  - {x: -0.7842808, y: -10.427341}
-  - {x: -1.1080914, y: -10.253458}
-  - {x: -1.1861229, y: -10.096916}
-  - {x: -1.451088, y: -9.091154}
-  - {x: -1.6781731, y: -7.8741446}
-  - {x: -1.7075748, y: -7.6698527}
-  - {x: -1.7995052, y: -6.8847413}
-  - {x: -1.8890953, y: -5.87335}
-  - {x: -1.9756832, y: -3.9921386}
-  - {x: -1.9883728, y: -2.0051134}
-  - {x: -2.0147953, y: -1.4005201}
-  - {x: -2.0007706, y: -0.34213448}
-  - {x: -1.9858313, y: 0.0016961098}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
 --- !u!114 &5738844967564001437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3312613000
+  GlobalObjectIdHash: 4040206879
   InScenePlacedSourceGlobalObjectIdHash: 4040206879
   DeferredDespawnTick: 0
   Ownership: 1
@@ -376,6 +243,8 @@ MonoBehaviour:
   turningRate: 120
   stopDistance: 8
   obstacleCheckDistance: 4
+  rayCount: 7
+  fovAngle: 90
   obstacleLayers:
     serializedVersion: 2
     m_Bits: 8192
@@ -400,3 +269,40 @@ MonoBehaviour:
   Health:
     m_InternalValue: 60
   explosionPrefab: {fileID: 8365956622083538456, guid: 4f31798152d1a8b4db751395e15809db, type: 3}
+--- !u!70 &1984364022470000671
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6093438605730777243}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: -0.24906214}
+  m_Size: {x: 4.01, y: 20.75373}
+  m_Direction: 0
