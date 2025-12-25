@@ -10,7 +10,7 @@ public class MatchManager : NetworkBehaviour
     public static MatchManager Instance;
 
     [Header("Match Settings")]
-    [SerializeField] private int scoreToWin = 1000;
+    [SerializeField] private int scoreToWin = 500;
     
     [Header("UI References")]
     [SerializeField] private GameObject victoryPanel;
