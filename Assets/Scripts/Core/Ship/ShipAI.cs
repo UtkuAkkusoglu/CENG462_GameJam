@@ -3,16 +3,16 @@ using UnityEngine;
 
 public class ShipAI : NetworkBehaviour
 {
-    [Header("Hareket Ayarlarý")]
+    [Header("Hareket Ayarlarï¿½")]
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float turningRate = 120f;
     [SerializeField] private float stopDistance = 8f;
 
-    [Header("Engel Algýlama (Raycast)")]
-    [SerializeField] private float obstacleCheckDistance = 2.5f; // Çarpma riski mesafesi
-    [SerializeField] private string obstacleTag = "Island";      // Durmasý gereken engel Tag'i
+    [Header("Engel Algï¿½lama (Raycast)")]
+    [SerializeField] private float obstacleCheckDistance = 2.5f; // ï¿½arpma riski mesafesi
+    [SerializeField] private string obstacleTag = "Island";      // Durmasï¿½ gereken engel Tag'i
 
-    [Header("Saldýrý Ayarlarý")]
+    [Header("Saldï¿½rï¿½ Ayarlarï¿½")]
     [SerializeField] private float attackRange = 15f;
     [SerializeField] private float fireRate = 2f;
     [SerializeField] private float projectileSpeed = 15f;
@@ -25,9 +25,15 @@ public class ShipAI : NetworkBehaviour
     private Transform currentTarget;
     private float lastFireTime;
     private Rigidbody2D rb;
-
+    /*
     public override void OnNetworkSpawn()
     {
+        rb = GetComponent<Rigidbody2D>();
+    }
+    */
+    private void Awake()
+    {
+        // ReferansÄ± burada almak, aÄŸÄ±n hazÄ±r olmasÄ±nÄ± beklemez, hata riskini azaltÄ±r.
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -40,6 +46,9 @@ public class ShipAI : NetworkBehaviour
 
     private void FixedUpdate()
     {
+        // En baÅŸa rb kontrolÃ¼ koyarak koruma kalkanÄ± oluÅŸturuyoruz
+        if (rb == null) return; 
+
         if (!IsServer || currentTarget == null)
         {
             rb.linearVelocity = Vector2.zero;
@@ -55,59 +64,59 @@ public class ShipAI : NetworkBehaviour
         Vector2 directionToTarget = (currentTarget.position - transform.position).normalized;
         float distance = Vector2.Distance(transform.position, currentTarget.position);
 
-        // --- 1. ÖNCE DÖNME ÝÞLEMÝ (Engel olsa bile dön!) ---
-        // Bu kodu 'if'lerin dýþýna aldýk ki gemi her zaman dönmeye devam etsin.
+        // --- 1. ï¿½NCE Dï¿½NME ï¿½ï¿½LEMï¿½ (Engel olsa bile dï¿½n!) ---
+        // Bu kodu 'if'lerin dï¿½ï¿½ï¿½na aldï¿½k ki gemi her zaman dï¿½nmeye devam etsin.
         float targetAngle = Mathf.Atan2(directionToTarget.y, directionToTarget.x) * Mathf.Rad2Deg - 90f;
         Quaternion targetRotation = Quaternion.Euler(0, 0, targetAngle);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turningRate * Time.fixedDeltaTime);
 
 
-        // --- 2. ENGEL KONTROLÜ (Fren Sistemi) ---
-        // Önüme bakýyorum: Duvar var mý?
-        // (Layer maskesi eklemedik, Matrix ayarlarýn doðruysa Raycast zaten WaterWall'a çarpar)
+        // --- 2. ENGEL KONTROLï¿½ (Fren Sistemi) ---
+        // ï¿½nï¿½me bakï¿½yorum: Duvar var mï¿½?
+        // (Layer maskesi eklemedik, Matrix ayarlarï¿½n doï¿½ruysa Raycast zaten WaterWall'a ï¿½arpar)
         RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, obstacleCheckDistance);
 
         bool wallAhead = false;
         if (hit.collider != null)
         {
-            // Eðer çarptýðým þeyin Tag'i "Island" ise VEYA Layer'ý "WaterWall" ise
+            // Eï¿½er ï¿½arptï¿½ï¿½ï¿½m ï¿½eyin Tag'i "Island" ise VEYA Layer'ï¿½ "WaterWall" ise
             if (hit.collider.CompareTag(obstacleTag) || hit.collider.gameObject.layer == LayerMask.NameToLayer("WaterWall"))
             {
                 wallAhead = true;
             }
         }
 
-        // --- 3. ÝLERLEME ---
+        // --- 3. ï¿½LERLEME ---
         if (wallAhead)
         {
-            // Önümde duvar var! Motorlarý durdur ama dönmeye devam et.
+            // ï¿½nï¿½mde duvar var! Motorlarï¿½ durdur ama dï¿½nmeye devam et.
             rb.linearVelocity = Vector2.zero;
         }
         else if (distance > stopDistance)
         {
-            // Önüm boþ ve tank uzakta. Ýlerle.
+            // ï¿½nï¿½m boï¿½ ve tank uzakta. ï¿½lerle.
             rb.linearVelocity = (Vector2)transform.up * moveSpeed;
         }
         else
         {
-            // Tanka çok yaklaþtým. Dur.
+            // Tanka ï¿½ok yaklaï¿½tï¿½m. Dur.
             rb.linearVelocity = Vector2.zero;
         }
 
-        rb.angularVelocity = 0f; // Fiziksel dönmeyi kapat (Biz kodla dönüyoruz)
+        rb.angularVelocity = 0f; // Fiziksel dï¿½nmeyi kapat (Biz kodla dï¿½nï¿½yoruz)
     }
 
-    // Sahne ekranýnda kýrmýzý çizgiyi görmek için
+    // Sahne ekranï¿½nda kï¿½rmï¿½zï¿½ ï¿½izgiyi gï¿½rmek iï¿½in
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawLine(transform.position, transform.position + transform.up * obstacleCheckDistance);
     }
 
-    // ... (Diðer fonksiyonlar ayný: FindNearestPlayer, TryShoot, FireServerSide vs.) ...
+    // ... (Diï¿½er fonksiyonlar aynï¿½: FindNearestPlayer, TryShoot, FireServerSide vs.) ...
 
     private void FindNearestPlayer()
-    { /* Eski kodun aynýsý */
+    { /* Eski kodun aynï¿½sï¿½ */
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         float closestDist = attackRange;
         currentTarget = null;
@@ -118,7 +127,7 @@ public class ShipAI : NetworkBehaviour
         }
     }
     private void TryShoot()
-    { /* Eski kodun aynýsý */
+    { /* Eski kodun aynï¿½sï¿½ */
         Vector2 dir = currentTarget.position - transform.position;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
         Quaternion idealRot = Quaternion.Euler(0, 0, angle);
@@ -128,7 +137,7 @@ public class ShipAI : NetworkBehaviour
         }
     }
     private void FireServerSide()
-    { /* Eski kodun aynýsý */
+    { /* Eski kodun aynï¿½sï¿½ */
         if (serverProjectilePrefab == null || firePoint == null) return;
         GameObject serverProj = Instantiate(serverProjectilePrefab, firePoint.position, transform.rotation);
         var projectileScript = serverProj.GetComponent<ServerProjectile>();
