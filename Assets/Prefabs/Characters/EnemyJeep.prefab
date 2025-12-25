@@ -617,7 +617,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3570880710
+  GlobalObjectIdHash: 2746014894
   InScenePlacedSourceGlobalObjectIdHash: 2746014894
   DeferredDespawnTick: 0
   Ownership: 1
@@ -698,11 +698,11 @@ MonoBehaviour:
   avoidLayers:
     serializedVersion: 2
     m_Bits: 8192
-  attackRange: 40
+  attackRange: 80
   fireRate: 1.5
   firePoint: {fileID: 6108601295432527122}
-  serverProjectilePrefab: {fileID: 1422081444121569900, guid: 1008d8fa3a0ad074cab32e4856b57a64, type: 3}
-  clientProjectilePrefab: {fileID: 3982949196781095914, guid: a389879a70e37a4488917aa407ba4b38, type: 3}
+  serverProjectilePrefab: {fileID: 1422081444121569900, guid: 8cdfa03004aab994a9ec8f0feba35ce1, type: 3}
+  clientProjectilePrefab: {fileID: 3982949196781095914, guid: 65b24ef99fd906d41960ef72e3ebbf4d, type: 3}
 --- !u!114 &7628548665596579583
 MonoBehaviour:
   m_ObjectHideFlags: 0

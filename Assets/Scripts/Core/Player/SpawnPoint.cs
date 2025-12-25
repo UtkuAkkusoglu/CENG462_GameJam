@@ -3,25 +3,28 @@ using UnityEngine;
 
 public class SpawnPoint : MonoBehaviour
 {
-    public enum SpawnType { Player, Collectible, Ship }
+    public enum SpawnType { Player, Collectible, Ship, Jeep }
     public SpawnType type;
 
     private static List<SpawnPoint> playerPoints = new List<SpawnPoint>();
     private static List<SpawnPoint> itemPoints = new List<SpawnPoint>();
     private static List<SpawnPoint> shipPoints = new List<SpawnPoint>();
+    private static List<SpawnPoint> jeepPoints = new List<SpawnPoint>(); 
 
     private void Awake()
     {
         if (type == SpawnType.Player) { if (!playerPoints.Contains(this)) playerPoints.Add(this); }
         else if (type == SpawnType.Collectible) { if (!itemPoints.Contains(this)) itemPoints.Add(this); }
-        else { if (!shipPoints.Contains(this)) shipPoints.Add(this); } // Gemi noktası ekle
+        else if (type == SpawnType.Ship) { if (!shipPoints.Contains(this)) shipPoints.Add(this); }
+        else if (type == SpawnType.Jeep) { if (!jeepPoints.Contains(this)) jeepPoints.Add(this); }
     }
 
     private void OnDestroy()
     {
         if (type == SpawnType.Player) playerPoints.Remove(this);
         else if (type == SpawnType.Collectible) itemPoints.Remove(this);
-        else shipPoints.Remove(this); // Temizle
+        else if (type == SpawnType.Ship) shipPoints.Remove(this);
+        else if (type == SpawnType.Jeep) jeepPoints.Remove(this);
     }
 
     public static Vector3 GetRandomPlayerPos()
@@ -88,11 +91,30 @@ public class SpawnPoint : MonoBehaviour
         return availablePoints[Random.Range(0, availablePoints.Count)].transform.position;
     }
 
+    // --- Jeep için boş nokta bulan metod ---
+    public static Vector3 GetAvailableJeepPos()
+    {
+        jeepPoints.RemoveAll(p => p == null);
+        List<SpawnPoint> availablePoints = new List<SpawnPoint>();
+        
+        foreach (var point in jeepPoints)
+        {
+            // Jeepler için 2-3 birimlik alan genellikle yeterlidir
+            // LayerMask ekleyerek sadece engellere çarparsa 'dolu' say diyebilirsin
+            Collider2D hit = Physics2D.OverlapCircle(point.transform.position, 2.5f);
+            if (hit == null) availablePoints.Add(point);
+        }
+
+        if (availablePoints.Count == 0) return Vector3.zero;
+        return availablePoints[Random.Range(0, availablePoints.Count)].transform.position;
+    }
+
     private void OnDrawGizmos()
     {
         if (type == SpawnType.Player) Gizmos.color = Color.blue;
         else if (type == SpawnType.Collectible) Gizmos.color = Color.yellow;
-        else Gizmos.color = Color.red; // Gemiler için kırmızı
+        else if (type == SpawnType.Ship) Gizmos.color = Color.red;
+        else if (type == SpawnType.Jeep) Gizmos.color = Color.green;
 
         Gizmos.DrawSphere(transform.position, 1.0f);
     }
