@@ -9,29 +9,14 @@ public class ServerProjectile : NetworkBehaviour
     [SerializeField] private float speed = 15f;
     [SerializeField] private float lifeTime = 3f;
 
-    [Header("Hedef Filtresi")]
-    [Tooltip("Gemi mermisi ise bunu true yap")]
-    public bool canHitPlayers = true;
-    [Tooltip("Gemi mermisi ise bunu false yap ki gemi kendini vurmasın")]
-    public bool canHitEnemies = true;
-
     private bool hasHit = false;
     private Rigidbody2D rb;
 
     public override void OnNetworkSpawn()
     {
         rb = GetComponent<Rigidbody2D>();
-
-        if (rb != null)
-        {
-            rb.linearVelocity = transform.up * speed;
-        }
-
-        if (IsServer)
-        {
-            // Invoke bazen sapıtabilir, Coroutine her zaman daha sağlamdır
-            StartCoroutine(LifeTimeRoutine());
-        }
+        if (rb != null) rb.linearVelocity = transform.up * speed;
+        if (IsServer) StartCoroutine(LifeTimeRoutine());
     }
 
     private IEnumerator LifeTimeRoutine()
@@ -40,32 +25,66 @@ public class ServerProjectile : NetworkBehaviour
         if (!hasHit) DestroyProjectile();
     }
 
-    private void OnTriggerEnter2D(Collider2D otherCollider)
-    {
-        if (hasHit || !IsServer) return;
+    // --- CASUS KODLAR BURADA ---
 
-        // 1. GEMİ VURMA KONTROLÜ (Hata CS7036'nın çözümü)
-        ShipHealth shipTarget = otherCollider.GetComponent<ShipHealth>() ?? otherCollider.GetComponentInParent<ShipHealth>();
-        if (shipTarget != null)
+    // 1. İçinden Geçme Durumu (Trigger)
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!IsServer) return;
+        Debug.Log($"[CASUS MERMİ] Trigger Çarpışması Algılandı! Çarpılan: {other.gameObject.name}");
+        HandleCollision(other);
+    }
+
+    // 2. Küt Diye Çarpma Durumu (Collision)
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!IsServer) return;
+        Debug.Log($"[CASUS MERMİ] Fiziksel Çarpışma (Collision) Algılandı! Çarpılan: {collision.gameObject.name}");
+        HandleCollision(collision.collider);
+    }
+
+    private void HandleCollision(Collider2D otherCollider)
+    {
+        if (hasHit) return;
+
+        // JEEP KONTROLÜ
+        JeepHealth jeep = otherCollider.GetComponent<JeepHealth>() ?? otherCollider.GetComponentInParent<JeepHealth>();
+        if (jeep != null)
         {
+            Debug.Log("[CASUS MERMİ] JEEP BULUNDU! Hasar Veriliyor...");
             hasHit = true;
-            // HATA BURADAYDI: Artık merminin sahibi olan 'OwnerClientId'yi gönderiyoruz
-            shipTarget.TakeDamage(damageAmount, OwnerClientId); 
+            jeep.TakeDamage(damageAmount, OwnerClientId);
+            DestroyProjectile();
+            return;
+        }
+        else
+        {
+            // JeepHealth bulunamazsa bunu yazar
+            if (otherCollider.name.Contains("Jeep"))
+                Debug.Log("[CASUS MERMİ] DİKKAT: Jeep'e çarptım ama 'JeepHealth' scriptini bulamadım!");
+        }
+
+        // GEMİ KONTROLÜ
+        ShipHealth ship = otherCollider.GetComponent<ShipHealth>() ?? otherCollider.GetComponentInParent<ShipHealth>();
+        if (ship != null)
+        {
+            Debug.Log("[CASUS MERMİ] Gemi Vuruldu.");
+            hasHit = true;
+            ship.TakeDamage(damageAmount, OwnerClientId);
             DestroyProjectile();
             return;
         }
 
-        // 2. TANK VURMA KONTROLÜ (Hata CS7036'nın çözümü)
-        TankHealth targetHealth = otherCollider.GetComponent<TankHealth>() ?? otherCollider.GetComponentInParent<TankHealth>();
-        if (targetHealth != null)
+        // TANK KONTROLÜ
+        TankHealth tank = otherCollider.GetComponent<TankHealth>() ?? otherCollider.GetComponentInParent<TankHealth>();
+        if (tank != null)
         {
-            // Kendi kendini vurma koruması
-            var targetNetObj = targetHealth.GetComponent<NetworkObject>();
-            if (targetNetObj != null && targetNetObj.OwnerClientId == OwnerClientId) return;
+            var netObj = tank.GetComponent<NetworkObject>();
+            if (netObj != null && netObj.OwnerClientId == OwnerClientId) return;
 
+            Debug.Log("[CASUS MERMİ] Tank Vuruldu.");
             hasHit = true;
-            // HATA BURADAYDI: Buraya da OwnerClientId ekledik
-            targetHealth.TakeDamage(damageAmount, OwnerClientId);
+            tank.TakeDamage(damageAmount, OwnerClientId);
             DestroyProjectile();
         }
     }
@@ -74,15 +93,9 @@ public class ServerProjectile : NetworkBehaviour
     {
         if (!IsServer) return;
 
-        if (IsSpawned)
-        {
-            // true: Objeyi ağdan siler ve tamamen yok eder
-            GetComponent<NetworkObject>().Despawn(false);
-        }
-        else
-        {
-            // Ağda spawn edilmemiş mermiler için normal yok etme
-            Destroy(gameObject);
-        }
+        if (IsSpawned) GetComponent<NetworkObject>().Despawn(false);
+        else Destroy(gameObject);
     }
 }
+
+
