@@ -2,17 +2,19 @@ using UnityEngine;
 
 public class ClientProjectileVisuals : MonoBehaviour
 {
-    // Mermi bir şeye çarptığında (Trigger)
-    private void OnTriggerEnter2D(Collider2D otherCollider)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        // 1. Trigger olan görünmez alanlara (mesela suyun sınırları, spawn noktaları) çarpınca yok olmasın
-        // Sadece fiziksel objelere (Tank, Duvar) çarpınca yok olsun
-        if (otherCollider.isTrigger) return;
+        // 1. Çarptığım şeyin kendisinde veya babasında TANK veya GEMİ canı var mı?
+        bool hitTank = other.GetComponent<TankHealth>() != null || other.GetComponentInParent<TankHealth>() != null;
+        bool hitShip = other.GetComponent<ShipHealth>() != null || other.GetComponentInParent<ShipHealth>() != null;
 
-        // 2. Kendini yok et
-        Destroy(gameObject);
+        // 2. Eğer geçerli bir hedefe çarptıysam
+        if (hitTank || hitShip)
+        {
+            // Debug.Log($"Hedef vuruldu: {other.name}"); // İstersen konsola yazdır
 
-        // İPUCU: İleride buraya patlama efekti (Particle System) eklenebilir
-        // Instantiate(explosionEffect, transform.position, Quaternion.identity);
+            // Görsel mermiyi yok et
+            Destroy(gameObject);
+        }
     }
 }

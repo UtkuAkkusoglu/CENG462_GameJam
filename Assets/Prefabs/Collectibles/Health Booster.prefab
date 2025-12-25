@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5316819700421946941}
   - component: {fileID: 5088264449021622050}
   - component: {fileID: 4611009222352800433}
-  m_Layer: 8
+  m_Layer: 24
   m_Name: Health Booster
   m_TagString: Untagged
   m_Icon: {fileID: 0}

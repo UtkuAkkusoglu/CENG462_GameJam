@@ -14,7 +14,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1972642515623033103, guid: 313af028a715a09489371097051719a3, type: 3}
       propertyPath: m_Name
-      value: ServerProjectile
+      value: TankServerProjectile
+      objectReference: {fileID: 0}
+    - target: {fileID: 1972642515623033103, guid: 313af028a715a09489371097051719a3, type: 3}
+      propertyPath: m_Layer
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 4095289907331265748, guid: 313af028a715a09489371097051719a3, type: 3}
       propertyPath: m_Enabled
@@ -74,7 +78,7 @@ PrefabInstance:
       addedObject: {fileID: 6621571382234115603}
     - targetCorrespondingSourceObject: {fileID: 1972642515623033103, guid: 313af028a715a09489371097051719a3, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6324666792278421882}
+      addedObject: {fileID: 39083102794479607}
   m_SourcePrefab: {fileID: 100100000, guid: 313af028a715a09489371097051719a3, type: 3}
 --- !u!1 &1422081444121569900 stripped
 GameObject:
@@ -106,7 +110,7 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
---- !u!114 &6324666792278421882
+--- !u!114 &39083102794479607
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

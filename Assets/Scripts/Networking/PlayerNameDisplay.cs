@@ -7,7 +7,7 @@ public class PlayerNameDisplay : NetworkBehaviour
 {
     // 1. NetworkVariable oluşturma
     // WritePermission: Sadece Server yazabilir. ReadPermission: Herkes okuyabilir.
-    private NetworkVariable<FixedString32Bytes> playerName = new NetworkVariable<FixedString32Bytes>(
+    public NetworkVariable<FixedString32Bytes> playerName = new NetworkVariable<FixedString32Bytes>(
         new FixedString32Bytes(""),
         NetworkVariableReadPermission.Everyone,
         NetworkVariableWritePermission.Server
