@@ -311,10 +311,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Ship
       objectReference: {fileID: 0}
-    - target: {fileID: 9180039397969381248, guid: 42076d91fc158c24bad9833c0fc56f8e, type: 3}
-      propertyPath: obstacleLayers.m_Bits
-      value: 8192
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
