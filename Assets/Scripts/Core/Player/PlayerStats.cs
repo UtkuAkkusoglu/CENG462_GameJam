@@ -36,6 +36,13 @@ public class PlayerStats : NetworkBehaviour
         Debug.Log($"[Stats] Yeni Skor: {Score.Value}");
     }
 
+    public void DeductScoreOnDeath(int penalty)
+    {
+        if (!IsServer) return;
+        Score.Value = Mathf.Max(0, Score.Value - penalty); // Puanın eksiye düşmesini engeller
+        Debug.Log($"[Stats] Ceza uygulandı! Yeni Skor: {Score.Value}");
+    }
+
     public void ApplySpeedBoost(float multiplier, float duration)
     {
         if (!IsServer) return; // Etki sunucu tarafında hesaplanır

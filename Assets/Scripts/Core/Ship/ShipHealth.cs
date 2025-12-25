@@ -5,38 +5,47 @@ public class ShipHealth : NetworkBehaviour
 {
     public NetworkVariable<int> Health = new NetworkVariable<int>(60);
     [SerializeField] private GameObject explosionPrefab;
+    [SerializeField] private int shipKillScore = 50; // Gemi puanı
 
-    public void TakeDamage(int damage)
+    // GÜNCELLEDİK: attackerId parametresi eklendi
+    public void TakeDamage(int damage, ulong attackerId) 
     {
         if (!IsServer) return;
         Health.Value -= damage;
-        if (Health.Value <= 0) Die();
+        if (Health.Value <= 0) Die(attackerId);
     }
 
-    private void Die()
+    private void Die(ulong attackerId)
     {
-        // 1. Önce patlama efektini gönder (Nesne yok olmadan hemen önce)
         SpawnExplosionClientRpc(transform.position);
 
-        if (IsServer && NetworkObject != null)
+        if (IsServer)
         {
-            if (NetworkObject.IsSpawned)
+            // PATLATAN KİŞİYE PUAN VER
+            AwardPointsToAttacker(attackerId, shipKillScore);
+
+            if (NetworkObject != null && NetworkObject.IsSpawned)
             {
-                // DEĞİŞİKLİK BURADA: 'true' yapıyoruz!
-                // Despawn(true) şu anlama gelir: "Ağdan düşür VE tüm oyuncularda bu objeyi yok et."
                 NetworkObject.Despawn(true);
             }
+        }
+    }
 
-            // Destroy(gameObject); <-- BU SATIRA GEREK YOK!
-            // Çünkü Despawn(true) zaten objeyi otomatik olarak yok eder.
-            // Eğer hem Despawn(true) hem Destroy kullanırsan Unity hata verebilir.
+    private void AwardPointsToAttacker(ulong attackerId, int amount)
+    {
+        foreach (var player in FindObjectsByType<PlayerStats>(FindObjectsSortMode.None))
+        {
+            if (player.OwnerClientId == attackerId)
+            {
+                player.AddScore(amount);
+                break;
+            }
         }
     }
 
     [ClientRpc]
     private void SpawnExplosionClientRpc(Vector3 pos)
     {
-        if (explosionPrefab != null) 
-            Instantiate(explosionPrefab, pos, Quaternion.identity);
+        if (explosionPrefab != null) Instantiate(explosionPrefab, pos, Quaternion.identity);
     }
 }

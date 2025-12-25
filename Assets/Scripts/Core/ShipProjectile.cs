@@ -32,14 +32,13 @@ public class ShipProjectile : NetworkBehaviour
         // KORUMA: Ateş eden gemiyi vurma
         if (other.gameObject.layer == LayerMask.NameToLayer("EnemyShip")) return;
 
-        // 1. TANK (OYUNCU) KONTROLÜ
         TankHealth tank = other.GetComponent<TankHealth>() ?? other.GetComponentInParent<TankHealth>();
         if (tank != null)
         {
             hasHit = true;
-            tank.TakeDamage(damageAmount);
+            // Gemi vurduğu için saldıran ID'sini 9999 (veya geçersiz bir ID) yapıyoruz
+            tank.TakeDamage(damageAmount, 9999); 
             DestroyProjectile();
-            return;
         }
 
         // 2. ENGEL (DUVAR VB.) KONTROLÜ

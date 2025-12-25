@@ -7,16 +7,13 @@ public class RespawnManager : NetworkBehaviour
     public static RespawnManager Instance;
     
     [Header("Respawn Settings")]
-    [SerializeField] private GameObject playerPrefab; // Tank Prefab'ını buraya sürükle
-    [SerializeField] private float respawnDelay = 2.0f; // 2 saniye beklemek iyidir
+    [SerializeField] private GameObject playerPrefab; 
+    [SerializeField] private float respawnDelay = 2.0f; 
+    [SerializeField] private int deathPenaltyAmount = 100; 
 
     public override void OnNetworkSpawn()
     {
-        // Sunucu başladığında bu manager kendini tanıtsın
-        if (IsServer)
-        {
-            Instance = this;
-        }
+        if (IsServer) Instance = this;
     }
 
     private void Awake()
@@ -27,22 +24,34 @@ public class RespawnManager : NetworkBehaviour
     public void RespawnPlayer(ulong clientId)
     {
         if (!IsServer) return;
+        
+        // 1. Önce cezayı kes (Oyuncu henüz silinmeden puanı düşürür)
+        ApplyPenalty(clientId);
+        
+        // 2. Sonra doğurma sürecini başlat
         StartCoroutine(RespawnCoroutine(clientId));
+    }
+
+    private void ApplyPenalty(ulong clientId)
+    {
+        foreach (var player in FindObjectsByType<PlayerStats>(FindObjectsSortMode.None))
+        {
+            if (player.OwnerClientId == clientId)
+            {
+                player.DeductScoreOnDeath(deathPenaltyAmount);
+                break;
+            }
+        }
     }
 
     private IEnumerator RespawnCoroutine(ulong clientId)
     {
-        // Ölüm mesajının ağda yayılması için bekle
         yield return new WaitForSeconds(respawnDelay);
 
-        // Görev 11'deki güvenli spawn noktasını al
         Vector3 spawnPos = SpawnPoint.GetRandomPlayerPos();
-
-        // KABUL KRİTERİ: Prefab'ı Instantiate et
         GameObject newPlayerTank = Instantiate(playerPrefab, spawnPos, Quaternion.identity);
 
-        // KABUL KRİTERİ: SpawnAsPlayerObject metodunu kullan
-        // Bu metot tankı o clientId'ye tekrar teslim eder
+        // Tankı ağda doğur ve sahibine ata
         newPlayerTank.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId, true);
         
         Debug.Log($"[Second Chance] Client {clientId} başarıyla yeniden doğduruldu!");

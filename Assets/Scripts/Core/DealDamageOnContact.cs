@@ -1,24 +1,22 @@
 using Unity.Netcode;
 using UnityEngine;
 
-public class DealDamageOnContact : MonoBehaviour
+public class DealDamageOnContact : NetworkBehaviour // NetworkBehaviour yaptık ki OwnerClientId alabilelim
 {
     [SerializeField] private int damageAmount = 40;
-
-    // KORUMA: Merminin aynı anda birden fazla parçaya çarpıp
-    // çift hasar vermesini engelleyen kilit
     private bool hasHit = false;
 
     private void OnTriggerEnter2D(Collider2D otherCollider)
     {
-        if (hasHit || !NetworkManager.Singleton.IsServer) return;
+        if (hasHit || !IsServer) return;
 
-        // A. ÖNCE GEMİ KONTROLÜ
+        // A. GEMİ KONTROLÜ
         ShipHealth shipTarget = otherCollider.GetComponent<ShipHealth>() ?? otherCollider.GetComponentInParent<ShipHealth>();
         if (shipTarget != null)
         {
             hasHit = true;
-            shipTarget.TakeDamage(damageAmount);
+            // Sahibi (ateş eden) bilgisini gönderiyoruz
+            shipTarget.TakeDamage(damageAmount, OwnerClientId); 
             Destroy(gameObject);
             return;
         }
@@ -27,9 +25,13 @@ public class DealDamageOnContact : MonoBehaviour
         TankHealth targetHealth = otherCollider.GetComponent<TankHealth>() ?? otherCollider.GetComponentInParent<TankHealth>();
         if (targetHealth != null)
         {
-            // ... (Kendi sahibini vurmama kontrolü aynı kalsın) ...
+            // Kendi kendini vurma koruması
+            var targetNetObj = targetHealth.GetComponent<NetworkObject>();
+            if (targetNetObj != null && targetNetObj.OwnerClientId == OwnerClientId) return;
+
             hasHit = true;
-            targetHealth.TakeDamage(damageAmount);
+            // TankHealth'e de attackerId gönderiyoruz (Sende TankHealth/Health hangisiyse)
+            targetHealth.TakeDamage(damageAmount, OwnerClientId);
             Destroy(gameObject);
         }
     }

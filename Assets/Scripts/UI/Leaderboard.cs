@@ -107,9 +107,10 @@ public class Leaderboard : NetworkBehaviour
         {
             if (leaderboardEntities[i].ClientId == clientId)
             {
+                // Struct olduğu için kopyalayıp güncelliyoruz
                 var state = leaderboardEntities[i];
                 state.Score = newScore;
-                leaderboardEntities[i] = state;
+                leaderboardEntities[i] = state; // NetworkList değişikliği algılar ve RefreshUI tetikler
                 break;
             }
         }
