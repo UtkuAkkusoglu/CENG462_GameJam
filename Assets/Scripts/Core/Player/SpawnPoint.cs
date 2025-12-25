@@ -3,30 +3,25 @@ using UnityEngine;
 
 public class SpawnPoint : MonoBehaviour
 {
-    public enum SpawnType { Player, Collectible }
+    public enum SpawnType { Player, Collectible, Ship }
     public SpawnType type;
 
     private static List<SpawnPoint> playerPoints = new List<SpawnPoint>();
     private static List<SpawnPoint> itemPoints = new List<SpawnPoint>();
+    private static List<SpawnPoint> shipPoints = new List<SpawnPoint>(); // Gemi listesi
 
     private void Awake()
     {
-        // Temiz bir başlangıç için listeye eklemeden önce varsa eskisini temizleyelim
-        if (type == SpawnType.Player)
-        {
-            if (!playerPoints.Contains(this)) playerPoints.Add(this);
-        }
-        else
-        {
-            if (!itemPoints.Contains(this)) itemPoints.Add(this);
-        }
+        if (type == SpawnType.Player) { if (!playerPoints.Contains(this)) playerPoints.Add(this); }
+        else if (type == SpawnType.Collectible) { if (!itemPoints.Contains(this)) itemPoints.Add(this); }
+        else { if (!shipPoints.Contains(this)) shipPoints.Add(this); }
     }
 
     private void OnDestroy()
     {
-        // Obje yok edildiğinde listeden ÇIKARMAK ÇOK KRİTİK!
         if (type == SpawnType.Player) playerPoints.Remove(this);
-        else itemPoints.Remove(this);
+        else if (type == SpawnType.Collectible) itemPoints.Remove(this);
+        else shipPoints.Remove(this); 
     }
 
     public static Vector3 GetRandomPlayerPos()
@@ -51,10 +46,21 @@ public class SpawnPoint : MonoBehaviour
         return itemPoints[randomIndex].transform.position;
     }
 
-    private void OnDrawGizmos()
+    // Gemi için boş nokta bulan metod
+    public static Vector3 GetAvailableShipPos()
     {
-        Gizmos.color = (type == SpawnType.Player) ? Color.blue : Color.yellow;
-        Gizmos.DrawSphere(transform.position, 1.0f);
+        shipPoints.RemoveAll(p => p == null);
+        List<SpawnPoint> availablePoints = new List<SpawnPoint>();
+        
+        foreach (var point in shipPoints)
+        {
+            // Gemiler büyük olduğu için 3 birimlik alana bakıyoruz
+            Collider2D hit = Physics2D.OverlapCircle(point.transform.position, 3.0f);
+            if (hit == null) availablePoints.Add(point);
+        }
+
+        if (availablePoints.Count == 0) return Vector3.zero;
+        return availablePoints[Random.Range(0, availablePoints.Count)].transform.position;
     }
 
     public static Vector3 GetAvailableItemPos()
@@ -80,5 +86,14 @@ public class SpawnPoint : MonoBehaviour
 
         int randomIndex = Random.Range(0, availablePoints.Count);
         return availablePoints[randomIndex].transform.position;
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (type == SpawnType.Player) Gizmos.color = Color.blue;
+        else if (type == SpawnType.Collectible) Gizmos.color = Color.yellow;
+        else Gizmos.color = Color.red; // Gemiler için kırmızı
+
+        Gizmos.DrawSphere(transform.position, 1.0f);
     }
 }
