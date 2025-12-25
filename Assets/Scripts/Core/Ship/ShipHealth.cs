@@ -15,21 +15,21 @@ public class ShipHealth : NetworkBehaviour
 
     private void Die()
     {
-        // Patlama efektini tüm client'larda göster
+        // 1. Önce patlama efektini gönder (Nesne yok olmadan hemen önce)
         SpawnExplosionClientRpc(transform.position);
 
         if (IsServer && NetworkObject != null)
         {
             if (NetworkObject.IsSpawned)
             {
-                // 1. ADIM: Ağdan güvenli bir şekilde çek
-                // false: Netcode'un objeyi yok etmeye çalışmasını engeller, sadece ağ kaydını siler.
-                NetworkObject.Despawn(false);
+                // DEĞİŞİKLİK BURADA: 'true' yapıyoruz!
+                // Despawn(true) şu anlama gelir: "Ağdan düşür VE tüm oyuncularda bu objeyi yok et."
+                NetworkObject.Despawn(true);
             }
 
-            // 2. ADIM: Şimdi objeyi fiziksel olarak sahneden silebiliriz
-            // Sahneye elle konan objeler için en temiz ve uyarısız yöntem budur.
-            Destroy(gameObject);
+            // Destroy(gameObject); <-- BU SATIRA GEREK YOK!
+            // Çünkü Despawn(true) zaten objeyi otomatik olarak yok eder.
+            // Eğer hem Despawn(true) hem Destroy kullanırsan Unity hata verebilir.
         }
     }
 
