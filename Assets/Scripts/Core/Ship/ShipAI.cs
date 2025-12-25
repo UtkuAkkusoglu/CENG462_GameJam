@@ -23,6 +23,12 @@ public class ShipAI : NetworkBehaviour
 
     private void Awake() => rb = GetComponent<Rigidbody2D>();
 
+    public override void OnNetworkSpawn()
+    {
+        // Gemi doğduğunda Rigidbody'yi kesin alalım
+        if (rb == null) rb = GetComponent<Rigidbody2D>();
+    }
+
     private void Update()
     {
         if (!IsServer) return;
@@ -41,38 +47,27 @@ public class ShipAI : NetworkBehaviour
         Vector2 dir = (currentTarget.position - transform.position).normalized;
         float distance = Vector2.Distance(transform.position, currentTarget.position);
 
-        // 1. DÖNME (Her zaman hedefe dönmeye çalış)
+        // 1. DÖNME
         float targetAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
         transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, targetAngle), turningRate * Time.fixedDeltaTime);
 
-        // 2. ENGEL KONTROLÜ (Raycast)
-        // Önümde ada (Island) veya su duvarı (WaterWall) var mı?
-        float obstacleCheckDistance = 3f; 
+        // 2. ENGEL KONTROLÜ
+        float obstacleCheckDistance = 3f;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, obstacleCheckDistance);
-        
+
         bool obstacleAhead = false;
         if (hit.collider != null)
         {
-            // Tag veya Layer kontrolü yapıyoruz
             if (hit.collider.CompareTag("Island") || hit.collider.gameObject.layer == LayerMask.NameToLayer("WaterWall"))
             {
                 obstacleAhead = true;
             }
         }
 
-        // 3. HAREKET KARARI
-        if (obstacleAhead)
-        {
-            rb.linearVelocity = Vector2.zero; // Karaya çıkma, dur!
-        }
-        else if (distance > stopDistance)
-        {
-            rb.linearVelocity = (Vector2)transform.up * moveSpeed;
-        }
-        else
-        {
-            rb.linearVelocity = Vector2.zero;
-        }
+        // 3. HAREKET
+        if (obstacleAhead) rb.linearVelocity = Vector2.zero;
+        else if (distance > stopDistance) rb.linearVelocity = (Vector2)transform.up * moveSpeed;
+        else rb.linearVelocity = Vector2.zero;
 
         rb.angularVelocity = 0f;
     }
@@ -91,8 +86,8 @@ public class ShipAI : NetworkBehaviour
 
     private void TryShoot()
     {
-        // Ateş etme açısını kontrol et (Tank önündeyse ateş et)
         Vector2 dir = currentTarget.position - transform.position;
+        // Açıyı kontrol et: Tanka bakıyorsam ateş et
         if (Vector3.Angle(transform.up, dir) < 20f && Time.time >= lastFireTime + fireRate)
         {
             FireServerSide();
@@ -103,49 +98,51 @@ public class ShipAI : NetworkBehaviour
     private void FireServerSide()
     {
         if (serverProjectilePrefab == null || firePoint == null) return;
-        
-        Vector3 pos = firePoint.position;
-        Vector3 dir = firePoint.up;
 
-        // 1. Sunucu mermisini yarat ve hız ver
-        GameObject serverProj = Instantiate(serverProjectilePrefab, pos, firePoint.rotation);
-        if (serverProj.TryGetComponent<Rigidbody2D>(out var rb))
-        {
-            // Tanktaki gibi hızı buradan veriyoruz
-            rb.linearVelocity = dir * 15f; // Buradaki 15f, ShipProjectile içindeki speed ile aynı olmalı
-        }
-        
-        // 2. Ağa tanıt (Spawn)
+        // 1. Sunucu Mermisini Yarat
+        GameObject serverProj = Instantiate(serverProjectilePrefab, firePoint.position, firePoint.rotation);
+
+        // ÖNEMLİ: Merminin gemiye çarpmasını FİZİKSEL olarak engelle
+        // (Layer hatası olsa bile bu kod kurtarır)
+        IgnoreCollisionWithShip(serverProj.GetComponent<Collider2D>());
+
+        // 2. Ağa Tanıt
         serverProj.GetComponent<NetworkObject>().Spawn();
-        
-        // 3. TÜM clientlara dummy mermi oluşturmasını söyle
-        // Tanktan farkı: Burada 'IsOwner' kontrolü olmadığı için herkes oluşturmalı.
-        SpawnDummyProjectileClientRpc(pos, dir);
+
+        // 3. Clientlara Haber Ver
+        SpawnDummyProjectileClientRpc(firePoint.position, firePoint.rotation);
     }
 
     [ClientRpc]
-    private void SpawnDummyProjectileClientRpc(Vector3 spawnPos, Vector3 direction)
+    private void SpawnDummyProjectileClientRpc(Vector3 spawnPos, Quaternion spawnRot)
     {
-        // Sunucu zaten mermiyi teknik olarak görüyor, görseli sadece clientlara çizelim
-        if (IsServer) return; 
+        // ARTIK SUNUCU DA GÖRSEL MERMİ ÜRETİYOR!
+        // if (IsServer) return;  <-- BU SATIRI SİLDİK VEYA YORUMA ALDIK
 
         if (clientProjectilePrefab != null)
         {
-            // 1. Oluştur
-            GameObject dummyProj = Instantiate(clientProjectilePrefab, spawnPos, Quaternion.identity);
-            
-            // 2. Yönünü ayarla (Up vektörünü direction yap)
-            dummyProj.transform.up = direction;
+            GameObject dummyProj = Instantiate(clientProjectilePrefab, spawnPos, spawnRot);
 
-            // 3. Hız ver (Tank kodundaki gibi Rigidbody kontrolü ile)
-            if (dummyProj.TryGetComponent<Rigidbody2D>(out var rb))
+            if (dummyProj.TryGetComponent(out Rigidbody2D rb))
             {
-                // Buradaki hız, sunucu mermisiyle senkronize olmalı (15f demiştik)
-                rb.linearVelocity = direction * 15f; 
+                rb.linearVelocity = dummyProj.transform.up * 15f;
             }
-            
-            // 4. Mermiyi temizle (Ağ nesnesi olmadığı için Destroy yeterli)
+
+            IgnoreCollisionWithShip(dummyProj.GetComponent<Collider2D>());
+
             Destroy(dummyProj, 3f);
+        }
+    }
+
+    // BU FONKSİYON HAYAT KURTARIR: Gemi kendi mermisine çarpmaz
+    private void IgnoreCollisionWithShip(Collider2D bulletCol)
+    {
+        if (bulletCol == null) return;
+        // Geminin üzerindeki tüm colliderları bul (Gövde, triggerlar vs.)
+        Collider2D[] myColliders = GetComponentsInChildren<Collider2D>();
+        foreach (var col in myColliders)
+        {
+            Physics2D.IgnoreCollision(col, bulletCol);
         }
     }
 }
