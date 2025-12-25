@@ -14,25 +14,29 @@ public class CoinCollectible : NetworkBehaviour, ICollectible
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // 1. Sadece sunucu silme yetkisine sahip (Hata almaman için en kritik satır)
-        if (!IsServer) return;
+        // Sunucu değilsek hiçbir fiziksel/mantıksal işlem yapma
+        if (!IsServer) return; 
 
-        // 2. Işınlanma sırasında (ilk 1 sn) yanlışlıkla toplanmasın
+        // Işınlanma sırasında (ilk 1 sn) yanlışlıkla toplanmasın
         if (Time.time < spawnTime + 1.0f) return;
 
-        // Çarpışmanın gerçekleştiği konumu alalım
-        Vector3 hitPos = transform.position;
-
-        // Ana objenin NetworkObject'ini bul (Paletten çarpsa bile gövdeyi bulur)
-        var networkObject = other.GetComponentInParent<NetworkObject>();
-
-        if (networkObject != null && networkObject.IsPlayerObject && other.CompareTag("Player"))
+        // Sadece Player tag'ine sahip objeleri kontrol et
+        if (other.CompareTag("Player"))
         {
-            Debug.Log($"[Coin] {hitPos} konumunda {networkObject.gameObject.name} tarafından toplandı.");
-            Collect(networkObject.gameObject);
-            
-            // Sahne objesi uyarısını engellemek için Despawn(true)
-            GetComponent<NetworkObject>().Despawn(true);
+            var networkObject = other.GetComponentInParent<NetworkObject>();
+
+            // Eğer çarpan bir Player objesiyse işlemi yap
+            if (networkObject != null && networkObject.IsPlayerObject)
+            {
+                // PlayerStats bileşenini bul ve puanı ekle
+                if (networkObject.TryGetComponent<PlayerStats>(out var stats))
+                {
+                    stats.AddScore(scoreAmount); // Bu metot IsServer kontrolü içeriyor
+                    
+                    // Obje ağdan silindiğinde tüm clientlarda yok olur
+                    GetComponent<NetworkObject>().Despawn(true);
+                }
+            }
         }
     }
 
