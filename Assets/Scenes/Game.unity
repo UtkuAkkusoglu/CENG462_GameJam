@@ -465,6 +465,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   playerPrefab: {fileID: 1581756959222653059, guid: 4567b1b33416c104ea8c31838018ffd1, type: 3}
   respawnDelay: 2
+  deathPenaltyAmount: 100
 --- !u!114 &375978044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1546,7 +1547,7 @@ GameObject:
   - component: {fileID: 1412800824}
   - component: {fileID: 1412800823}
   m_Layer: 13
-  m_Name: GameObject
+  m_Name: Lake Collider
   m_TagString: Island
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
