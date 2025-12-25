@@ -8,10 +8,10 @@ public class LeaderboardEntry : MonoBehaviour
 
     public void Display(string playerName, int score, bool isMe)
     {
-        playerNameText.text = isMe ? $"{playerName}" : playerName;
+        playerNameText.text = isMe ? $"{playerName} (You)" : playerName;
         scoreText.text = score.ToString();
 
-        playerNameText.color = isMe ? Color.yellow : Color.black;
-        scoreText.color = isMe ? Color.yellow : Color.black;
+        playerNameText.color = isMe ? Color.red : Color.black;
+        scoreText.color = isMe ? Color.red : Color.black;
     }
 }

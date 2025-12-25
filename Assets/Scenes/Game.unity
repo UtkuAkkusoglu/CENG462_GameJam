@@ -1070,7 +1070,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   playerPrefab: {fileID: 1581756959222653059, guid: 4567b1b33416c104ea8c31838018ffd1, type: 3}
   respawnDelay: 2
-  deathPenaltyAmount: 100
+  deathPenaltyAmount: 80
 --- !u!114 &375978044
 MonoBehaviour:
   m_ObjectHideFlags: 0
