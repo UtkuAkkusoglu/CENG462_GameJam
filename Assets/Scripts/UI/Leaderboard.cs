@@ -77,6 +77,16 @@ public class Leaderboard : NetworkBehaviour
     {
         if (!IsServer) return;
 
+        // --- KRİTİK KONTROL: Oyuncu listede zaten var mı? ---
+        foreach (var entity in leaderboardEntities)
+        {
+            if (entity.ClientId == player.OwnerClientId)
+            {
+                // Eğer oyuncu zaten varsa tekrar ekleme, metoddan çık.
+                return; 
+            }
+        }
+
         var nameDisplay = player.GetComponent<PlayerNameDisplay>();
         string pName = nameDisplay != null ? nameDisplay.playerName.Value.ToString() : "Player " + player.OwnerClientId;
 
@@ -86,6 +96,8 @@ public class Leaderboard : NetworkBehaviour
             Score = player.Score.Value
         });
 
+        // Event'i bağla (Burada += kullanırken dikkat, her spawn'da tekrar bağlanmasın diye 
+        // PlayerStats tarafında OnDestroy'da -= yapmak en sağlıklısıdır)
         player.Score.OnValueChanged += (oldVal, newVal) => UpdateScore(player.OwnerClientId, newVal);
     }
 
