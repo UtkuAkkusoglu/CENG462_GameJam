@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5668250707821332968}
   - component: {fileID: 902598849533545454}
   - component: {fileID: 1903392591885937814}
-  m_Layer: 8
+  m_Layer: 24
   m_Name: Fire Rate Booster
   m_TagString: Untagged
   m_Icon: {fileID: 0}

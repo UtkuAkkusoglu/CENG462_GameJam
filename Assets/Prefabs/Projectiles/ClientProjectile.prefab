@@ -8,25 +8,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -1372825604430551247, guid: 313af028a715a09489371097051719a3, type: 3}
-      propertyPath: m_CollisionDetection
-      value: 1
+    - target: {fileID: 1596987633760794871, guid: 313af028a715a09489371097051719a3, type: 3}
+      propertyPath: m_Layer
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 1972642515623033103, guid: 313af028a715a09489371097051719a3, type: 3}
       propertyPath: m_Name
       value: ClientProjectile
       objectReference: {fileID: 0}
-    - target: {fileID: 4095289907331265748, guid: 313af028a715a09489371097051719a3, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4095289907331265748, guid: 313af028a715a09489371097051719a3, type: 3}
-      propertyPath: m_SortingOrder
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 8707178244028229175, guid: 313af028a715a09489371097051719a3, type: 3}
-      propertyPath: GlobalObjectIdHash
-      value: 1315892866
+    - target: {fileID: 1972642515623033103, guid: 313af028a715a09489371097051719a3, type: 3}
+      propertyPath: m_Layer
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 9011934784864451545, guid: 313af028a715a09489371097051719a3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -71,25 +63,5 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1972642515623033103, guid: 313af028a715a09489371097051719a3, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4536128698645278279}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 313af028a715a09489371097051719a3, type: 3}
---- !u!1 &3982949196781095914 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1972642515623033103, guid: 313af028a715a09489371097051719a3, type: 3}
-  m_PrefabInstance: {fileID: 3181367469979448037}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &4536128698645278279
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3982949196781095914}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f7b66d3485b20d4c9ff01d5df86006b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ClientProjectileVisuals
