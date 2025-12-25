@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 5286347474079882728}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.007, y: 10.984, z: 0}
+  m_LocalPosition: {x: -0.007, y: 10.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -49,7 +49,7 @@ GameObject:
   - component: {fileID: 2310051765889563491}
   m_Layer: 18
   m_Name: EnemyShip
-  m_TagString: Enemy Ship
+  m_TagString: EnemyShip
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -375,11 +375,15 @@ MonoBehaviour:
   moveSpeed: 3
   turningRate: 120
   stopDistance: 8
+  obstacleCheckDistance: 4
+  obstacleLayers:
+    serializedVersion: 2
+    m_Bits: 0
   attackRange: 50
   fireRate: 2
   firePoint: {fileID: 2348443098775124124}
-  serverProjectilePrefab: {fileID: 1422081444121569900, guid: 2c5def18afd395d458a8d819703dfb96, type: 3}
-  clientProjectilePrefab: {fileID: 3982949196781095914, guid: 4f2e24059292791468f84b24e378b7f5, type: 3}
+  serverProjectilePrefab: {fileID: 1422081444121569900, guid: 1008d8fa3a0ad074cab32e4856b57a64, type: 3}
+  clientProjectilePrefab: {fileID: 3982949196781095914, guid: a389879a70e37a4488917aa407ba4b38, type: 3}
 --- !u!114 &2310051765889563491
 MonoBehaviour:
   m_ObjectHideFlags: 0
