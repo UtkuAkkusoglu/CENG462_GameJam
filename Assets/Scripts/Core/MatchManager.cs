@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
+
 public class MatchManager : NetworkBehaviour
 {
     public static MatchManager Instance;
@@ -15,6 +16,9 @@ public class MatchManager : NetworkBehaviour
     [Header("UI References")]
     [SerializeField] private GameObject victoryPanel;
     [SerializeField] private TMP_Text winnerNameText;
+
+    [Header("Relay Info")]
+    [SerializeField] private TMP_Text joinCodeText;
 
     public static bool IsMatchOver { get; private set; }
 
@@ -27,6 +31,29 @@ public class MatchManager : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         if (victoryPanel != null) victoryPanel.SetActive(false);
+
+        // SADECE HOST (Server) İÇİN ÇALIŞIR
+        if (IsServer)
+        {
+            // Yazıyı aktif et (Eğer kapalıysa)
+            if (joinCodeText != null) joinCodeText.gameObject.SetActive(true);
+            
+            string savedCode = PlayerPrefs.GetString("LastJoinCode", "------");
+            SetJoinCode(savedCode);
+        }
+        else
+        {
+            // Client isen yazıyı komple gizle
+            if (joinCodeText != null) joinCodeText.gameObject.SetActive(false);
+        }
+    }
+
+    public void SetJoinCode(string code)
+    {
+        if (joinCodeText != null)
+        {
+            joinCodeText.text = "Join Code: " + code;
+        }
     }
 
     public void CheckWinCondition(ulong clientId, int currentScore)
