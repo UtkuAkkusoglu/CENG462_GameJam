@@ -1,5 +1,6 @@
 using Unity.Netcode;
 using UnityEngine;
+using System.Collections;
 
 public class ServerProjectile : NetworkBehaviour
 {
@@ -9,10 +10,11 @@ public class ServerProjectile : NetworkBehaviour
     [SerializeField] private float lifeTime = 3f;
 
     [Header("Hedef Filtresi")]
+    [Tooltip("Gemi mermisi ise bunu true yap")]
     public bool canHitPlayers = true;
+    [Tooltip("Gemi mermisi ise bunu false yap ki gemi kendini vurmasÄ±n")]
     public bool canHitEnemies = true;
 
-    // Çift hasarý önlemek için kilit (Eski koddan aldýk)
     private bool hasHit = false;
     private Rigidbody2D rb;
 
@@ -27,54 +29,68 @@ public class ServerProjectile : NetworkBehaviour
 
         if (IsServer)
         {
-            Invoke(nameof(DestroyProjectile), lifeTime);
+            // Invoke bazen sapÄ±tabilir, Coroutine her zaman daha saÄŸlamdÄ±r
+            StartCoroutine(LifeTimeRoutine());
         }
+    }
+
+    private IEnumerator LifeTimeRoutine()
+    {
+        yield return new WaitForSeconds(lifeTime);
+        if (!hasHit) DestroyProjectile();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // 1. Zaten vurduysa veya Sunucu deðilse çýk
+        // Sadece sunucu yetkilidir
         if (hasHit || !IsServer) return;
 
-        // --- TANK KONTROLÜ (Geliþtirilmiþ) ---
+        bool hitSomething = false;
+
+        // 1. OYUNCU (TANK) KONTROLÃœ
         if (canHitPlayers)
         {
-            // Önce çarptýðým parçada ara, yoksa babasýnda (Parent) ara
-            TankHealth tank = other.GetComponent<TankHealth>();
-            if (tank == null) tank = other.GetComponentInParent<TankHealth>();
-
+            TankHealth tank = other.GetComponent<TankHealth>() ?? other.GetComponentInParent<TankHealth>();
             if (tank != null)
             {
-                hasHit = true; // Kilidi kapat
                 tank.TakeDamage(damageAmount);
-                DestroyProjectile();
-                return;
+                hitSomething = true;
             }
         }
 
-        // --- GEMÝ KONTROLÜ (Geliþtirilmiþ) ---
-        if (canHitEnemies)
+        // 2. GEMÄ° (DÃœÅžMAN) KONTROLÃœ
+        // EÄŸer mermi gemiden Ã§Ä±kÄ±yorsa 'canHitEnemies' mÃ¼fettiÅŸte (Inspector) KAPALI olmalÄ±!
+        if (canHitEnemies && !hitSomething)
         {
-            ShipHealth ship = other.GetComponent<ShipHealth>();
-            if (ship == null) ship = other.GetComponentInParent<ShipHealth>();
-
+            ShipHealth ship = other.GetComponent<ShipHealth>() ?? other.GetComponentInParent<ShipHealth>();
             if (ship != null)
             {
-                hasHit = true; // Kilidi kapat
                 ship.TakeDamage(damageAmount);
-                DestroyProjectile();
-                return;
+                hitSomething = true;
             }
         }
 
-        // --- DUVAR KONTROLÜ ---
-        // Burada bir þey yapmýyoruz. 
-        // Mermi tanka veya gemiye çarpmadýysa yoluna devam eder.
-        // (Su duvarýnýn veya adanýn içinden geçer)
+        if (hitSomething)
+        {
+            hasHit = true;
+            StopAllCoroutines(); // ZamanlayÄ±cÄ±yÄ± durdur
+            DestroyProjectile();
+        }
     }
 
     private void DestroyProjectile()
     {
-        if (IsSpawned) GetComponent<NetworkObject>().Despawn();
+        if (!IsServer) return;
+
+        if (IsSpawned)
+        {
+            // true: Objeyi aÄŸdan siler ve tamamen yok eder
+            GetComponent<NetworkObject>().Despawn(false);
+        }
+        else
+        {
+            // AÄŸda spawn edilmemiÅŸ mermiler iÃ§in normal yok etme
+            Destroy(gameObject);
+        }
     }
 }

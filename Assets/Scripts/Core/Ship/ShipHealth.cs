@@ -3,20 +3,14 @@ using UnityEngine;
 
 public class ShipHealth : NetworkBehaviour
 {
-    // Health NetworkVariable'ı varsayılan olarak Everyone Read, Server Write olmalı
     public NetworkVariable<int> Health = new NetworkVariable<int>(60);
     [SerializeField] private GameObject explosionPrefab;
 
     public void TakeDamage(int damage)
     {
-        if (!IsServer) return; // Hasar hesabı sadece sunucuda yapılır
-
+        if (!IsServer) return;
         Health.Value -= damage;
-
-        if (Health.Value <= 0)
-        {
-            Die();
-        }
+        if (Health.Value <= 0) Die();
     }
 
     private void Die()
@@ -24,14 +18,17 @@ public class ShipHealth : NetworkBehaviour
         // Patlama efektini tüm client'larda göster
         SpawnExplosionClientRpc(transform.position);
 
-        if (IsServer && NetworkObject != null && NetworkObject.IsSpawned)
+        if (IsServer && NetworkObject != null)
         {
-            // 1. ADIM: Ağdan güvenli bir şekilde çek (false: Netcode objeyi yok etmeye çalışmaz)
-            // Bu satır uyarının kaynağını (unexpected behavior riskini) ortadan kaldırır.
-            NetworkObject.Despawn(false);
+            if (NetworkObject.IsSpawned)
+            {
+                // 1. ADIM: Ağdan güvenli bir şekilde çek
+                // false: Netcode'un objeyi yok etmeye çalışmasını engeller, sadece ağ kaydını siler.
+                NetworkObject.Despawn(false);
+            }
 
-            // 2. ADIM: Şimdi objeyi fiziksel olarak sahneden silebiliriz.
-            // Sahneye elle konan objeler için en temiz yöntem budur.
+            // 2. ADIM: Şimdi objeyi fiziksel olarak sahneden silebiliriz
+            // Sahneye elle konan objeler için en temiz ve uyarısız yöntem budur.
             Destroy(gameObject);
         }
     }
@@ -39,7 +36,6 @@ public class ShipHealth : NetworkBehaviour
     [ClientRpc]
     private void SpawnExplosionClientRpc(Vector3 pos)
     {
-        // Patlama efekti ağ üzerinde senkronize olmasa da olur, görseldir.
         if (explosionPrefab != null) 
             Instantiate(explosionPrefab, pos, Quaternion.identity);
     }

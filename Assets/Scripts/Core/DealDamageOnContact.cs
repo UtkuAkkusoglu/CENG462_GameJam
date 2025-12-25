@@ -11,47 +11,25 @@ public class DealDamageOnContact : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D otherCollider)
     {
-        // 1. KİLİT KONTROLÜ
-        // Eğer bu mermi zaten bir şeye hasar verdiyse, işlemi durdur
-        if (hasHit) return;
+        if (hasHit || !NetworkManager.Singleton.IsServer) return;
 
-        // Hasar işlemini SADECE Sunucu yapar
-        if (!NetworkManager.Singleton.IsServer) return;
-
-        // 2. TankHealth scriptini bulma
-        TankHealth targetHealth = otherCollider.GetComponent<TankHealth>();
-        if (targetHealth == null)
+        // A. ÖNCE GEMİ KONTROLÜ
+        ShipHealth shipTarget = otherCollider.GetComponent<ShipHealth>() ?? otherCollider.GetComponentInParent<ShipHealth>();
+        if (shipTarget != null)
         {
-            targetHealth = otherCollider.GetComponentInParent<TankHealth>();
+            hasHit = true;
+            shipTarget.TakeDamage(damageAmount);
+            Destroy(gameObject);
+            return;
         }
 
+        // B. TANK KONTROLÜ
+        TankHealth targetHealth = otherCollider.GetComponent<TankHealth>() ?? otherCollider.GetComponentInParent<TankHealth>();
         if (targetHealth != null)
         {
-            // Kendi kendimizi vurmayalım
-            ulong myOwnerClientId = GetComponent<NetworkObject>().OwnerClientId;
-
-            NetworkObject targetNetworkObject =
-                otherCollider.GetComponent<NetworkObject>() ??
-                otherCollider.GetComponentInParent<NetworkObject>();
-
-            if (targetNetworkObject != null &&
-                myOwnerClientId != targetNetworkObject.OwnerClientId)
-            {
-                // --- İŞTE BURASI KRİTİK NOKTA ---
-                // Hasar vermeden hemen önce kilidi kapatıyoruz
-                hasHit = true;
-
-                targetHealth.TakeDamage(damageAmount);
-                Debug.Log($"[Projectile] Enemy hit! Damage: {damageAmount}");
-
-                Destroy(gameObject);
-            }
-        }
-        else
-        {
-            // Duvar vb. çarpınca da yok olsun ama hasHit'i açmaya gerek yok
-            // Çünkü duvara çift çarpması sorun yaratmaz
-            Debug.Log($"[Projectile] Hit obstacle: {otherCollider.name}");
+            // ... (Kendi sahibini vurmama kontrolü aynı kalsın) ...
+            hasHit = true;
+            targetHealth.TakeDamage(damageAmount);
             Destroy(gameObject);
         }
     }

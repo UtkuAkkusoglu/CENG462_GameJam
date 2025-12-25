@@ -3,39 +3,25 @@ using UnityEngine;
 
 public class ShipAI : NetworkBehaviour
 {
-    [Header("Hareket Ayarlar�")]
+    [Header("Hareket Ayarları")]
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float turningRate = 120f;
     [SerializeField] private float stopDistance = 8f;
 
-    [Header("Engel Alg�lama (Raycast)")]
-    [SerializeField] private float obstacleCheckDistance = 2.5f; // �arpma riski mesafesi
-    [SerializeField] private string obstacleTag = "Island";      // Durmas� gereken engel Tag'i
-
-    [Header("Sald�r� Ayarlar�")]
+    [Header("Saldırı Ayarları")]
     [SerializeField] private float attackRange = 15f;
     [SerializeField] private float fireRate = 2f;
-    [SerializeField] private float projectileSpeed = 15f;
 
     [Header("Referanslar")]
     [SerializeField] private Transform firePoint;
-    [SerializeField] private GameObject serverProjectilePrefab;
+    [SerializeField] private GameObject serverProjectilePrefab; // ShipProjectile scriptli prefab
     [SerializeField] private GameObject clientProjectilePrefab;
 
     private Transform currentTarget;
     private float lastFireTime;
     private Rigidbody2D rb;
-    /*
-    public override void OnNetworkSpawn()
-    {
-        rb = GetComponent<Rigidbody2D>();
-    }
-    */
-    private void Awake()
-    {
-        // Referansı burada almak, ağın hazır olmasını beklemez, hata riskini azaltır.
-        rb = GetComponent<Rigidbody2D>();
-    }
+
+    private void Awake() => rb = GetComponent<Rigidbody2D>();
 
     private void Update()
     {
@@ -46,118 +32,120 @@ public class ShipAI : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        // En başa rb kontrolü koyarak koruma kalkanı oluşturuyoruz
-        if (rb == null) return; 
-
-        if (!IsServer || currentTarget == null)
-        {
-            rb.linearVelocity = Vector2.zero;
-            rb.angularVelocity = 0f;
-            return;
-        }
-
-        HandleTankMovement();
+        if (rb == null || !IsServer || currentTarget == null) return;
+        HandleMovement();
     }
 
-    private void HandleTankMovement()
+    private void HandleMovement()
     {
-        Vector2 directionToTarget = (currentTarget.position - transform.position).normalized;
+        Vector2 dir = (currentTarget.position - transform.position).normalized;
         float distance = Vector2.Distance(transform.position, currentTarget.position);
 
-        // --- 1. �NCE D�NME ��LEM� (Engel olsa bile d�n!) ---
-        // Bu kodu 'if'lerin d���na ald�k ki gemi her zaman d�nmeye devam etsin.
-        float targetAngle = Mathf.Atan2(directionToTarget.y, directionToTarget.x) * Mathf.Rad2Deg - 90f;
-        Quaternion targetRotation = Quaternion.Euler(0, 0, targetAngle);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turningRate * Time.fixedDeltaTime);
+        // 1. DÖNME (Her zaman hedefe dönmeye çalış)
+        float targetAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, targetAngle), turningRate * Time.fixedDeltaTime);
 
-
-        // --- 2. ENGEL KONTROL� (Fren Sistemi) ---
-        // �n�me bak�yorum: Duvar var m�?
-        // (Layer maskesi eklemedik, Matrix ayarlar�n do�ruysa Raycast zaten WaterWall'a �arpar)
+        // 2. ENGEL KONTROLÜ (Raycast)
+        // Önümde ada (Island) veya su duvarı (WaterWall) var mı?
+        float obstacleCheckDistance = 3f; 
         RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, obstacleCheckDistance);
-
-        bool wallAhead = false;
+        
+        bool obstacleAhead = false;
         if (hit.collider != null)
         {
-            // E�er �arpt���m �eyin Tag'i "Island" ise VEYA Layer'� "WaterWall" ise
-            if (hit.collider.CompareTag(obstacleTag) || hit.collider.gameObject.layer == LayerMask.NameToLayer("WaterWall"))
+            // Tag veya Layer kontrolü yapıyoruz
+            if (hit.collider.CompareTag("Island") || hit.collider.gameObject.layer == LayerMask.NameToLayer("WaterWall"))
             {
-                wallAhead = true;
+                obstacleAhead = true;
             }
         }
 
-        // --- 3. �LERLEME ---
-        if (wallAhead)
+        // 3. HAREKET KARARI
+        if (obstacleAhead)
         {
-            // �n�mde duvar var! Motorlar� durdur ama d�nmeye devam et.
-            rb.linearVelocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero; // Karaya çıkma, dur!
         }
         else if (distance > stopDistance)
         {
-            // �n�m bo� ve tank uzakta. �lerle.
             rb.linearVelocity = (Vector2)transform.up * moveSpeed;
         }
         else
         {
-            // Tanka �ok yakla�t�m. Dur.
             rb.linearVelocity = Vector2.zero;
         }
 
-        rb.angularVelocity = 0f; // Fiziksel d�nmeyi kapat (Biz kodla d�n�yoruz)
+        rb.angularVelocity = 0f;
     }
-
-    // Sahne ekran�nda k�rm�z� �izgiyi g�rmek i�in
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, transform.position + transform.up * obstacleCheckDistance);
-    }
-
-    // ... (Di�er fonksiyonlar ayn�: FindNearestPlayer, TryShoot, FireServerSide vs.) ...
 
     private void FindNearestPlayer()
-    { /* Eski kodun ayn�s� */
+    {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         float closestDist = attackRange;
         currentTarget = null;
-        foreach (var player in players)
+        foreach (var p in players)
         {
-            float dist = Vector2.Distance(transform.position, player.transform.position);
-            if (dist < closestDist) { closestDist = dist; currentTarget = player.transform; }
+            float d = Vector2.Distance(transform.position, p.transform.position);
+            if (d < closestDist) { closestDist = d; currentTarget = p.transform; }
         }
     }
+
     private void TryShoot()
-    { /* Eski kodun ayn�s� */
+    {
+        // Ateş etme açısını kontrol et (Tank önündeyse ateş et)
         Vector2 dir = currentTarget.position - transform.position;
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
-        Quaternion idealRot = Quaternion.Euler(0, 0, angle);
-        if (Quaternion.Angle(transform.rotation, idealRot) < 20f)
+        if (Vector3.Angle(transform.up, dir) < 20f && Time.time >= lastFireTime + fireRate)
         {
-            if (Time.time >= lastFireTime + fireRate) { FireServerSide(); lastFireTime = Time.time; }
+            FireServerSide();
+            lastFireTime = Time.time;
         }
     }
+
     private void FireServerSide()
-    { /* Eski kodun ayn�s� */
+    {
         if (serverProjectilePrefab == null || firePoint == null) return;
-        GameObject serverProj = Instantiate(serverProjectilePrefab, firePoint.position, transform.rotation);
-        var projectileScript = serverProj.GetComponent<ServerProjectile>();
-        if (projectileScript != null) { projectileScript.canHitPlayers = true; projectileScript.canHitEnemies = false; }
-        IgnoreCollisionWithShip(serverProj.GetComponent<Collider2D>());
+        
+        Vector3 pos = firePoint.position;
+        Vector3 dir = firePoint.up;
+
+        // 1. Sunucu mermisini yarat ve hız ver
+        GameObject serverProj = Instantiate(serverProjectilePrefab, pos, firePoint.rotation);
+        if (serverProj.TryGetComponent<Rigidbody2D>(out var rb))
+        {
+            // Tanktaki gibi hızı buradan veriyoruz
+            rb.linearVelocity = dir * 15f; // Buradaki 15f, ShipProjectile içindeki speed ile aynı olmalı
+        }
+        
+        // 2. Ağa tanıt (Spawn)
         serverProj.GetComponent<NetworkObject>().Spawn();
-        SpawnDummyProjectileClientRpc(firePoint.position, transform.rotation);
+        
+        // 3. TÜM clientlara dummy mermi oluşturmasını söyle
+        // Tanktan farkı: Burada 'IsOwner' kontrolü olmadığı için herkes oluşturmalı.
+        SpawnDummyProjectileClientRpc(pos, dir);
     }
+
     [ClientRpc]
-    private void SpawnDummyProjectileClientRpc(Vector3 pos, Quaternion rot)
+    private void SpawnDummyProjectileClientRpc(Vector3 spawnPos, Vector3 direction)
     {
-        if (clientProjectilePrefab == null) return;
-        GameObject dummyProj = Instantiate(clientProjectilePrefab, pos, rot);
-        if (dummyProj.TryGetComponent(out Rigidbody2D rb)) rb.linearVelocity = dummyProj.transform.up * projectileSpeed;
-        IgnoreCollisionWithShip(dummyProj.GetComponent<Collider2D>());
-    }
-    private void IgnoreCollisionWithShip(Collider2D bulletCol)
-    {
-        if (bulletCol == null) return;
-        Collider2D[] myColliders = GetComponentsInChildren<Collider2D>();
-        foreach (var col in myColliders) Physics2D.IgnoreCollision(col, bulletCol);
+        // Sunucu zaten mermiyi teknik olarak görüyor, görseli sadece clientlara çizelim
+        if (IsServer) return; 
+
+        if (clientProjectilePrefab != null)
+        {
+            // 1. Oluştur
+            GameObject dummyProj = Instantiate(clientProjectilePrefab, spawnPos, Quaternion.identity);
+            
+            // 2. Yönünü ayarla (Up vektörünü direction yap)
+            dummyProj.transform.up = direction;
+
+            // 3. Hız ver (Tank kodundaki gibi Rigidbody kontrolü ile)
+            if (dummyProj.TryGetComponent<Rigidbody2D>(out var rb))
+            {
+                // Buradaki hız, sunucu mermisiyle senkronize olmalı (15f demiştik)
+                rb.linearVelocity = direction * 15f; 
+            }
+            
+            // 4. Mermiyi temizle (Ağ nesnesi olmadığı için Destroy yeterli)
+            Destroy(dummyProj, 3f);
+        }
     }
 }

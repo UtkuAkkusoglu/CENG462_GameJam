@@ -1,6 +1,7 @@
 using Unity.Netcode;
 using UnityEngine;
 using System.Collections; // Coroutine için gerekli
+using System;
 
 public class PlayerStats : NetworkBehaviour
 {
@@ -17,6 +18,16 @@ public class PlayerStats : NetworkBehaviour
     private Coroutine shieldCoroutine;
 
     [SerializeField] private GameObject shieldVisual; // Tankın etrafındaki kalkan görseli
+
+    public override void OnNetworkSpawn()
+    {
+        // ... eski UI kodların ...
+        if (IsServer)
+        {
+            // Panel sahnede sabit olduğu için direkt bulup ekleyebiliriz
+            FindFirstObjectByType<Leaderboard>()?.AddPlayerToLeaderboard(this);
+        }
+    }
 
     public void AddScore(int amount)
     {

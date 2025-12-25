@@ -263,18 +263,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 613654332026729364, guid: 42076d91fc158c24bad9833c0fc56f8e, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 6200000, guid: 46ce96b85b434a84bbd9db2b2b0fc545, type: 2}
-    - target: {fileID: 613654332026729364, guid: 42076d91fc158c24bad9833c0fc56f8e, type: 3}
-      propertyPath: m_Interpolate
-      value: 1
+    - target: {fileID: 2348443098775124124, guid: 42076d91fc158c24bad9833c0fc56f8e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 10.8
       objectReference: {fileID: 0}
-    - target: {fileID: 2310051765889563491, guid: 42076d91fc158c24bad9833c0fc56f8e, type: 3}
-      propertyPath: explosionPrefab
-      value: 
-      objectReference: {fileID: 8365956622083538456, guid: 4f31798152d1a8b4db751395e15809db, type: 3}
     - target: {fileID: 2672356997399952496, guid: 42076d91fc158c24bad9833c0fc56f8e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -31.8
@@ -321,8 +313,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6093438605730777243, guid: 42076d91fc158c24bad9833c0fc56f8e, type: 3}
       propertyPath: m_Name
+      value: Enemy Ship
+      objectReference: {fileID: 0}
+    - target: {fileID: 6093438605730777243, guid: 42076d91fc158c24bad9833c0fc56f8e, type: 3}
+      propertyPath: m_TagString
       value: EnemyShip
       objectReference: {fileID: 0}
+    - target: {fileID: 6140405384687072856, guid: 42076d91fc158c24bad9833c0fc56f8e, type: 3}
+      propertyPath: speed
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6140405384687072856, guid: 42076d91fc158c24bad9833c0fc56f8e, type: 3}
+      propertyPath: damageToPlayer
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 9180039397969381248, guid: 42076d91fc158c24bad9833c0fc56f8e, type: 3}
+      propertyPath: clientProjectilePrefab
+      value: 
+      objectReference: {fileID: 3982949196781095914, guid: a389879a70e37a4488917aa407ba4b38, type: 3}
+    - target: {fileID: 9180039397969381248, guid: 42076d91fc158c24bad9833c0fc56f8e, type: 3}
+      propertyPath: serverProjectilePrefab
+      value: 
+      objectReference: {fileID: 1422081444121569900, guid: 1008d8fa3a0ad074cab32e4856b57a64, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -880,7 +892,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: a37d6fcd00000000db88efe817fcf256
+  m_ApplyToSortingLayers: a37d6fcd00000000db88efe817fcf25633537c36
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -3080,7 +3092,8 @@ GameObject:
   - component: {fileID: 5750322595568900065}
   - component: {fileID: 2858895094326536359}
   - component: {fileID: 3312220491130801558}
-  - component: {fileID: 7372073033910782921}
+  - component: {fileID: 5750322595568900067}
+  - component: {fileID: 5750322595568900066}
   m_Layer: 5
   m_Name: Leaderboard Panel
   m_TagString: Untagged
@@ -3105,9 +3118,49 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -30, y: -50}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 1, y: 1}
+--- !u!114 &5750322595568900066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4033411635743924922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ab32043da631174199028fec68ef0b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Leaderboard
+  ShowTopMostFoldoutHeaderGroup: 1
+  container: {fileID: 8606227273118117280}
+  entryPrefab: {fileID: 7813572099911975890, guid: a10ad5633a848fd448eb388cec262035, type: 3}
+--- !u!114 &5750322595568900067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4033411635743924922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 264425299
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 1
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!222 &5964059423612855545
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3145,12 +3198,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1280, y: 720}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -3175,31 +3228,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &7372073033910782921
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4033411635743924922}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3504415556
-  InScenePlacedSourceGlobalObjectIdHash: 279160408
-  DeferredDespawnTick: 0
-  Ownership: 1
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 1
-  SceneMigrationSynchronization: 0
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
-  SyncOwnerTransformWhenParented: 1
-  AllowOwnerToParent: 0
 --- !u!114 &8153156663884533450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3227,12 +3255,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.VerticalLayoutGroup
   m_Padding:
-    m_Left: 10
-    m_Right: 10
-    m_Top: 10
-    m_Bottom: 10
+    m_Left: 2
+    m_Right: 2
+    m_Top: 5
+    m_Bottom: 5
   m_ChildAlignment: 0
-  m_Spacing: 10
+  m_Spacing: 5
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1

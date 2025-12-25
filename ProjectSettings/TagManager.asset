@@ -6,6 +6,8 @@ TagManager:
   tags:
   - HealthText
   - Island
+  - EnemyShip
+  - Enemy Ship
   layers:
   - Default
   - TransparentFX
@@ -38,7 +40,7 @@ TagManager:
   - Bridge
   - 
   - Projectile
-  - 
+  - EnemyProjectile
   m_SortingLayers:
   - name: Background
     uniqueID: 3446635939
@@ -51,6 +53,9 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 3908012251
+    locked: 0
+  - name: Projectile
+    uniqueID: 914117427
     locked: 0
   m_RenderingLayers:
   - Default
