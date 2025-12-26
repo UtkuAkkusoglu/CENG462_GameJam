@@ -37,7 +37,7 @@ public class ProjectileLauncher : NetworkBehaviour
         if (!IsOwner) return;
         if (!shouldFire) return;
 
-        float timeBetweenShots = 1f / (fireRate * stats.FireRateBoostMultiplier);
+        float timeBetweenShots = 1f / (fireRate * stats.FireRateBoostMultiplier.Value);
         if (Time.time < previousFireTime + timeBetweenShots) return; // yeterli süre geçmedi, henüz ateş edemez
         
         Vector3 spawnPos = projectileSpawnPoint.position;

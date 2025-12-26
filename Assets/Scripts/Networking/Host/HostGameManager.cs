@@ -36,6 +36,10 @@ public class HostGameManager : IDisposable
             await CreateLobby(_joinCode);
 
             Debug.Log($"Join Code: {_joinCode}");
+
+            // YENİ KISIM: Kodu sakla veya sahne yüklenince basılmasını sağla
+            // Sahne yüklendiğinde MatchManager'a kodu göndermek için bir PlayerPrefs veya Static kullanabiliriz
+            PlayerPrefs.SetString("LastJoinCode", _joinCode);
         }
         catch (Exception e)
         {

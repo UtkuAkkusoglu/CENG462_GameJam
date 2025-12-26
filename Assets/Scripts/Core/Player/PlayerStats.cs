@@ -1,65 +1,68 @@
 using Unity.Netcode;
 using UnityEngine;
-using System.Collections; // Coroutine için gerekli
-using System;
+using System.Collections;
+using Unity.Collections;
 
 public class PlayerStats : NetworkBehaviour
 {
     public NetworkVariable<int> Score = new NetworkVariable<int>(0);
     public NetworkVariable<int> Health = new NetworkVariable<int>(100);
-    
-    public float SpeedBoostMultiplier { get; private set; } = 1f;  // PlayerMovement'ta hızı ayarlarken kullanılacak çarpan
-    public float FireRateBoostMultiplier { get; private set; } = 1f; // ProjectileLauncher'ta ateş hızını ayarlarken kullanılacak çarpan
-    public bool IsShielded { get; private set; } = false; // Kalkan durumu
 
-    // Çalışan mevcut hız arttırıcıyı takip etmek için referans
+    // --- ARTIK BUNLAR NETWORKVARIABLE ---
+    public NetworkVariable<float> SpeedBoostMultiplier = new NetworkVariable<float>(1f);
+    public NetworkVariable<float> FireRateBoostMultiplier = new NetworkVariable<float>(1f);
+    public NetworkVariable<bool> IsShielded = new NetworkVariable<bool>(false);
+
     private Coroutine speedBoostCoroutine;
     private Coroutine fireRateCoroutine;
     private Coroutine shieldCoroutine;
 
-    [SerializeField] private GameObject shieldVisual; // Tankın etrafındaki kalkan görseli
+    [SerializeField] private GameObject shieldVisual; 
 
     public override void OnNetworkSpawn()
     {
-        // ... eski UI kodların ...
         if (IsServer)
         {
-            // Panel sahnede sabit olduğu için direkt bulup ekleyebiliriz
             FindFirstObjectByType<Leaderboard>()?.AddPlayerToLeaderboard(this);
         }
+
+        // --- CLIENT TARAFI İÇİN KALKAN GÖRSELİNİ GÜNCELLE ---
+        // Kalkan değişkeni ağda değiştiğinde görseli aç/kapat
+        IsShielded.OnValueChanged += (oldVal, newVal) => {
+            if (shieldVisual != null) shieldVisual.SetActive(newVal);
+        };
     }
 
     public void AddScore(int amount)
     {
         if (!IsServer) return; 
         Score.Value += amount;
-
-        // HAKEME SOR: Birisi kazandı mı?
         MatchManager.Instance?.CheckWinCondition(OwnerClientId, Score.Value);
-        
-        Debug.Log($"[Stats] Yeni Skor: {Score.Value}");
     }
 
     public void DeductScoreOnDeath(int penalty)
     {
         if (!IsServer) return;
-        Score.Value = Mathf.Max(0, Score.Value - penalty); // Puanın eksiye düşmesini engeller
-        Debug.Log($"[Stats] Ceza uygulandı! Yeni Skor: {Score.Value}");
+        Score.Value = Mathf.Max(0, Score.Value - penalty);
     }
 
+    // --- SPEED BOOST ---
     public void ApplySpeedBoost(float multiplier, float duration)
     {
-        if (!IsServer) return; // Etki sunucu tarafında hesaplanır
-
-        // Eğer halihazırda bir hız bonusu varsa, eskisini durdurup yenisini başlat
-        if (speedBoostCoroutine != null)
-        {
-            StopCoroutine(speedBoostCoroutine);
-        }
-
+        if (!IsServer) return;
+        if (speedBoostCoroutine != null) StopCoroutine(speedBoostCoroutine);
         speedBoostCoroutine = StartCoroutine(SpeedBoostRoutine(multiplier, duration));
     }
 
+    private IEnumerator SpeedBoostRoutine(float multiplier, float duration)
+    {
+        SpeedBoostMultiplier.Value = multiplier; // .Value eklendi
+        yield return new WaitForSeconds(duration);
+        SpeedBoostMultiplier.Value = 1f;
+        speedBoostCoroutine = null;
+    }
+
+    // --- FIRE RATE BOOST ---
     public void ApplyFireRateBoost(float multiplier, float duration)
     {
         if (!IsServer) return;
@@ -67,6 +70,15 @@ public class PlayerStats : NetworkBehaviour
         fireRateCoroutine = StartCoroutine(FireRateRoutine(multiplier, duration));
     }
 
+    private IEnumerator FireRateRoutine(float multiplier, float duration)
+    {
+        FireRateBoostMultiplier.Value = multiplier; // .Value eklendi
+        yield return new WaitForSeconds(duration);
+        FireRateBoostMultiplier.Value = 1f;
+        fireRateCoroutine = null;
+    }
+
+    // --- SHIELD ---
     public void ApplyShield(float duration)
     {
         if (!IsServer) return;
@@ -74,41 +86,10 @@ public class PlayerStats : NetworkBehaviour
         shieldCoroutine = StartCoroutine(ShieldRoutine(duration));
     }
 
-    private IEnumerator SpeedBoostRoutine(float multiplier, float duration)
-    {
-        SpeedBoostMultiplier = multiplier;
-        Debug.Log($"[Stats] Hız Arttı! Çarpan: {multiplier}");
-
-        // Belirlenen süre kadar bekle
-        yield return new WaitForSeconds(duration);
-
-        // Süre dolunca hızı eski haline döndür
-        SpeedBoostMultiplier = 1f;
-        speedBoostCoroutine = null;
-        Debug.Log("[Stats] Hız Etkisi Geçti.");
-    }
-
-    private IEnumerator FireRateRoutine(float multiplier, float duration)
-    {
-        FireRateBoostMultiplier = multiplier;
-        Debug.Log($"[Stats] Ateş Hızı Arttı! Çarpan: {multiplier}");
-
-        yield return new WaitForSeconds(duration);
-
-        FireRateBoostMultiplier = 1f;
-        fireRateCoroutine = null;
-        Debug.Log("[Stats] Ateş Hızı Etkisi Geçti.");
-    }
-
     private IEnumerator ShieldRoutine(float duration)
     {
-        IsShielded = true;
-        SetShieldVisualClientRpc(true); // Görseli ağda aç
+        IsShielded.Value = true; // .Value eklendi
         yield return new WaitForSeconds(duration);
-        IsShielded = false;
-        SetShieldVisualClientRpc(false); // Görseli ağda kapat
+        IsShielded.Value = false;
     }
-
-    [ClientRpc]
-    private void SetShieldVisualClientRpc(bool isActive) { if(shieldVisual) shieldVisual.SetActive(isActive); }
 }
